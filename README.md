@@ -2,15 +2,25 @@
 A Web-based guild strategy simulation game.
 
 ## Setting Up
-* Install [Vagrant](http://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org/).
+* Install [ruby](https://www.ruby-lang.org/en/downloads/) and [rails](http://rubyonrails.org/download/).
 
-* Run the development environment by running the following command:
+* Move to the directory for the server
     ```bash
-    $ vagrant up
+    $ cd guildmasters
     ```
-
-* SSH the virtual terminal by running:
+    
+* Download the gems
     ```bash
-    $ vagrant ssh
+    $ bundle
     ```
-
+    
+* Run the server
+    ```
+    $ Rails server
+    ```
+    or 
+    ```
+    $ rails server
+    ```
+    
+* You can access the website at: [http://localhost:3000/](http://localhost:3000/)
