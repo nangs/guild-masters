@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  difficulty: 1
+  state: MyString
+  reward: 1
+
+two:
+  difficulty: 1
+  state: MyString
+  reward: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019202109) do
+ActiveRecord::Schema.define(version: 20151019204021) do
 
   create_table "adventurers", force: :cascade do |t|
     t.integer  "hp"
@@ -22,6 +22,12 @@ ActiveRecord::Schema.define(version: 20151019202109) do
     t.integer  "defense"
     t.integer  "vision"
     t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "facilities", force: :cascade do |t|
+    t.integer  "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,6 +43,14 @@ ActiveRecord::Schema.define(version: 20151019202109) do
   create_table "guilds", force: :cascade do |t|
     t.integer  "level"
     t.integer  "popularity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.integer  "difficulty"
+    t.string   "state"
+    t.integer  "reward"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
