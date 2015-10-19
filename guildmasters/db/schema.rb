@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019204021) do
+ActiveRecord::Schema.define(version: 20151019205300) do
 
   create_table "adventurers", force: :cascade do |t|
     t.integer  "hp"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20151019204021) do
     t.integer  "defense"
     t.integer  "vision"
     t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spend"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
