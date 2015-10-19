@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gold: 1
+  game_time: 1
+  state: MyString
+
+two:
+  gold: 1
+  game_time: 1
+  state: MyString
