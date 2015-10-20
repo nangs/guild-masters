@@ -13,7 +13,12 @@ A Web-based guild strategy simulation game.
     ```bash
     $ bundle
     ```
-    
+
+* Do the migration in the `lib` folder
+    ```bash
+    $ rake db:migrate
+    ```
+
 * Run the server
     ```
     $ Rails server
