@@ -20,6 +20,7 @@
 //= require active-model-adapter
 //= require_self
 //= require ./app
+//= require fabric
 
 // for more details see: http://emberjs.com/guides/application/
 GM = Ember.Application.create();
