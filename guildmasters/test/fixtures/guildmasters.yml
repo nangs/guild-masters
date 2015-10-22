@@ -6,6 +6,6 @@ one:
   state: MyString
 
 two:
-  gold: 1
-  game_time: 1
+  gold: 200
+  game_time: 200
   state: MyString

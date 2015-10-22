@@ -3,7 +3,10 @@
 one:
   level: 1
   popularity: 1
+  guildmaster: two
+
 
 two:
-  level: 1
-  popularity: 1
+  level: 2
+  popularity: 2
+  guildmaster: two

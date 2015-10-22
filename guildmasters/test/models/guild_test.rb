@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class GuildTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+    test "should delete guild when delete guildmaster" do
+        guild = guilds(:one)
+        guild.guildmaster.destroy
+        assert_raises(ActiveRecord::RecordNotFound) {guild.reload}
+    end
+    
 end
