@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  max_hp: 1
+  max_energy: 1
+  attack: 1
+  defense: 1
+  vision: 1
+  region_id: 
+
+two:
+  max_hp: 1
+  max_energy: 1
+  attack: 1
+  defense: 1
+  vision: 1
+  region_id: 
