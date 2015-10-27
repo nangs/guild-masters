@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027044245) do
+ActiveRecord::Schema.define(version: 20151027052048) do
 
   create_table "adventurer_templates", force: :cascade do |t|
     t.integer  "max_hp"
@@ -37,7 +37,10 @@ ActiveRecord::Schema.define(version: 20151027044245) do
     t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "guild_id"
   end
+
+  add_index "adventurers", ["guild_id"], name: "index_adventurers_on_guild_id"
 
   create_table "events", force: :cascade do |t|
     t.integer  "start_time"
