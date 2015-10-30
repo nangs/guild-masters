@@ -1,4 +1,4 @@
-export default DS.Model.extend({
+var Quest = DS.Model.extend({
 	difficulty: DS.attr('number'),
 	state: DS.attr('string'),
 	reward: DS.attr('number'),

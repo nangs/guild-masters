@@ -1,4 +1,4 @@
-export default DS.Model.extend({
+var Adventurer = DS.Model.extend({
 	name: DS.attr('string'),
 	hp: DS.attr('number'),
 	max_hp: DS.attr('number'),

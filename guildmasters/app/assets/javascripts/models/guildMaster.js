@@ -1,4 +1,4 @@
-export default DS.Model.extend({
+var GuildMaster = DS.Model.extend({
 	gameTime: DS.attr('number'),
 	state: DS.attr('string'),
 	gold: DS.attr('number'),
