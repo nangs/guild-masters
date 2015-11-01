@@ -1,0 +1,15 @@
+<div class="quest">
+	Quest Description: {{description}}
+	<ul>
+		<li>This quest is {{state}}</li>
+		<li>Difficulty: {{difficulty}}</li>
+		<li>Reward: {{reward}}</li>
+		{{#if adventurers}}
+			<li>Adventurers: 
+				{{#each adventurers as |adventurer|}}
+					{{> adventurers_link}}
+				{{/each}}
+			</li>
+		{{/if}}
+	</ul>
+</div>
