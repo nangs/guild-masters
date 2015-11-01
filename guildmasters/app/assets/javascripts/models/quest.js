@@ -1,4 +1,4 @@
-var Quest = DS.Model.extend({
+GM.Quest = DS.Model.extend({
 	difficulty: DS.attr('number'),
 	state: DS.attr('string'),
 	reward: DS.attr('number'),
@@ -6,3 +6,6 @@ var Quest = DS.Model.extend({
 
 	adventurers: DS.hasMany('adventurer')
 });
+
+
+	

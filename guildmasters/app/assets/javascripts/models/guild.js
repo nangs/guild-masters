@@ -1,4 +1,4 @@
-var Guild = DS.Model.extend({
+GM.Guild = DS.Model.extend({
 	level: DS.attr('number'),
 	popularity: DS.attr('number'),
 
