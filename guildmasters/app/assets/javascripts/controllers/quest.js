@@ -26,8 +26,7 @@ quest_list = {
 
 Handlebars.registerPartial('quest',  HandlebarsTemplates['quest/quest']);
 var questsView = HandlebarsTemplates['quest/quest_list'];
-var view = questsView(quest_list);
-$(function(){
-	console.log(view);
-	$('#mainContainer').html(view);
-})
+// $(function(){
+// 	var view = questsView(quest_list);
+// 	$('#mainContainer').html(view);
+// })
