@@ -1,0 +1,22 @@
+<%= form_for(Adventurer.new) do |f| %>
+    <p>
+      <%= f.label :state %><br />
+      <%= f.text_field :state %><br />
+    </p>
+    <p>
+      <%= f.label :hp %><br />
+      <%= f.text_field :hp %><br />
+    </p>
+    <p>
+      <%= f.label :attack %><br />
+      <%= f.text_field :attack %><br />
+    </p>
+    <p>
+      <%= f.label :defense %><br />
+      <%= f.text_field :defense %><br />
+    </p>
+    <p>
+      <%= f.submit "Add new adventurer" %><br />
+    </p>
+
+<% end %>

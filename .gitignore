@@ -1,1 +1,15 @@
 .vagrant
+guildmasters/.idea/.rakeTasks
+guildmasters/.idea/dataSources.ids
+guildmasters/.idea/dataSources.local.xml
+guildmasters/.idea/dataSources.xml
+guildmasters/.idea/guildmasters.iml
+guildmasters/.idea/jsLibraryMappings.xml
+guildmasters/.idea/misc.xml
+guildmasters/.idea/modules.xml
+guildmasters/.idea/runConfigurations/Development__guildmasters.xml
+guildmasters/.idea/runConfigurations/Production__guildmasters.xml
+guildmasters/.idea/runConfigurations/test__guildmasters.xml
+guildmasters/.idea/vcs.xml
+guildmasters/.idea/workspace.xml
+guildmasters/0.4.2
