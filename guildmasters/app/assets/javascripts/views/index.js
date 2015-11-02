@@ -1,5 +1,5 @@
 $(function(){
-	$('.nav').click(function(){
+	$('button').click(function(){
 		var show = $(this).attr('id');
 		var view;
 		switch(show){
@@ -13,7 +13,6 @@ $(function(){
 				view = questsListTemplate(GM.QuestController.quest_list);
 				break;
 		};
-		console.log(view);
 		$('#mainContainer').html(view);
 	});
 })
