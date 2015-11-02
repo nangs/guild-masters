@@ -5,7 +5,7 @@ class AdventurersController < ApplicationController
   end
 
   def show
-    @adventurer = Adventurer.find(params[:id])
+    @adventurer = Adventurer.find(params[:state])
   end
 
   def new
@@ -13,7 +13,7 @@ class AdventurersController < ApplicationController
   end
 
   def create
-    @adventurer = Adventurer.new(params[:adventurer])
+    @adventurer = Adventurer.new(adventurer_params)
     if @adventurer.save
       redirect_to adventurer_path, :notice => "Adventurer was created"
     else
@@ -25,6 +25,11 @@ class AdventurersController < ApplicationController
   end
 
   def destroy
+  end
+
+  def adventurer_params
+    allow = [:state, :hp, :attack, :defense]
+    params.require(:adventurer).permit(allow)
   end
 
 end

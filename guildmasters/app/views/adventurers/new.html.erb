@@ -1,4 +1,4 @@
-<%= form_for(Adventurer.new) do |f| %>
+<%= form_for @adventurer, :url => { :action => "create" }  do |f| %>
     <p>
       <%= f.label :state %><br />
       <%= f.text_field :state %><br />
