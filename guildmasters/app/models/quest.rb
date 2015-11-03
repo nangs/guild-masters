@@ -8,12 +8,14 @@ class Quest < ActiveRecord::Base
 	end
 	
 	def self.generate
-	  level = Guild.find(1).level
+	  #level = Guild.find(1).level
+	  level = 1
 	  quest = Quest.new
 	  quest.difficulty = level
 	  quest.state = "pending"
 	  quest.reward = 1000*quest.difficulty
-	  quest.guild_id=Guild.find(1).id
+	  #quest.guild_id=Guild.find(1).id
+	  quest.guild_id = 1
 	  quest.save
 	  return quest
 	end
