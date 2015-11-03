@@ -1,5 +1,6 @@
 Handlebars.registerPartial('quest',  HandlebarsTemplates['quest/quest']);
 var questsListTemplate = HandlebarsTemplates['quest/quest_list'];
+var newQuestsTemplate = HandlebarsTemplates['quest/quest_new'];
 GM.QuestController = {
 	quest_list : {
 		quests:[
@@ -27,3 +28,26 @@ GM.QuestController = {
 			]
 	},
 };
+
+GM.QuestController.getNewQuests = function(){
+	$.ajax({
+		type: 'GET',
+	    url: 'quests/new_quests',
+	    success: function(data) {
+	    	GM.QuestController.new_quests = data;
+	    	showView(newQuestsTemplate(data));
+	    }
+	});
+}
+
+GM.QuestController.getAllQuests = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'quests.json',
+	    success: function(data) {
+	    	GM.QuestController.quest_list = data;
+	    }
+	});
+}
+
+GM.QuestController.getAllQuests();
