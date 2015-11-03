@@ -9,8 +9,8 @@ class Adventurer < ActiveRecord::Base
 	
 	def self.generate
 	  template = AdventurerTemplate.find(1)
-	  #level = Guild.find(1).level
-	  level = 1
+	  level = Guild.find(1).level
+	  #level = 1
 	  adventurer = Adventurer.new
 	  adventurer.name = "Alex"
 	  adventurer.max_hp = level*template.max_hp
@@ -21,8 +21,8 @@ class Adventurer < ActiveRecord::Base
 	  adventurer.defense = level*template.defense
 	  adventurer.vision = level*template.vision
 	  adventurer.state = "Pending"
-	  #adventurer.guild_id = Guild.find(1).id
-	  adventurer.guild_id = 1
+	  adventurer.guild_id = Guild.find(1).id
+	 # adventurer.guild_id = 1
 	  adventurer.save
 	  return adventurer
 	end
