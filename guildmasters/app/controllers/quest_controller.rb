@@ -2,10 +2,10 @@ class QuestController < ApplicationController
 # GET /adventurers
 # GET /adventurers.json
   def viewall
-    @quest = Quest.viewall
+    @quests = Quest.viewall
     respond_to do |format|
       #format.html # index.html.erb
-      format.json { render json: @quest }
+      format.json { render json: @quests }
     end
   end
 

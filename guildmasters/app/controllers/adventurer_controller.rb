@@ -2,10 +2,10 @@ class AdventurerController < ApplicationController
 # GET /adventurer
 # GET /adventurer.json
   def index
-    @adventurer = Adventurer.view_all
+    @adventurers = Adventurer.view_all
     respond_to do |format|
       #format.html # index.html.erb
-      format.json { render json: @adventurer }
+      format.json { render json: @adventurers }
     end
   end
 
