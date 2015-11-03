@@ -13,5 +13,15 @@ GM.AdventurerController.getAllAdventurers = function () {
 	});
 }
 
+GM.AdventurerController.getNewAdventurers = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'adventurers.json',
+	    success: function(data) {
+	    	console.log(data);
+	    	GM.AdventurerController.adventurers_list = data;
+	    }
+	});
+}
 
 GM.AdventurerController.getAllAdventurers();
