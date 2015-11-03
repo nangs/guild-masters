@@ -1,19 +1,19 @@
-class QuestsController < ApplicationController
+class QuestController < ApplicationController
 # GET /adventurers
 # GET /adventurers.json
   def viewall
-    @quests = Quest.viewall
+    @quest = Quest.viewall
     respond_to do |format|
       #format.html # index.html.erb
-      format.json { render json: @quests }
+      format.json { render json: @quest }
     end
   end
 
   def generate
-    @quests = Quest.generate
+    @quest = Quest.generate
     respond_to do |format|
       #format.html # index.html.erb
-      format.json { render json: @quests }
+      format.json { render json: @quest }
     end
   end
 #

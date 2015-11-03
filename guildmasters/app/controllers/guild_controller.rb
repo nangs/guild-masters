@@ -1,22 +1,10 @@
 class GuildController < ApplicationController
+  # GET /guild.json
   def index
-    @guilds = Guild.all
-  end
-
-  def show
-    @guild = Guild.find(params[:id])
-  end
-
-  def new
-    @guild = Guild.new
-  end
-
-  def create
-    @guild = Guild.new(params[:guild])
-    if @guild.save
-      #redirect_to adventurer_path, :notice => "Guild was created"
-    else
-      #render "new"
+    @guild = Guild.initialize
+    respond_to do |format|
+      #format.html # index.html.erb
+      format.json { render json: @guild }
     end
   end
 end

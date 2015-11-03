@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   #get 'welcome/index'
-  #get '/adventurers/:id', to: 'adventurer#new', as: 'adventurer'
+  #get '/adventurers/:hp', to: 'adventurer#show', as: 'adventurer'
   #get '/adventurers/:id', to: 'adventurer#new'
 
   #root 'adventurers#index'
   root to: 'application#index'
-  resources :adventurers
+  resources :adventurer
   resources :events
-  resources :facilitiess
-  resources :guilds
-  resources :guildmasters
-  resources :quests
+  resources :facilities
+  resources :guild
+  resources :guildmaster
+  resources :quest
 end
 
 #constraints subdomain: 'api' do
