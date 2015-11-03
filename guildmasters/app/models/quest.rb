@@ -3,7 +3,7 @@ class Quest < ActiveRecord::Base
 	has_many :adventurer
 
 	def self.view_all
-	  quests=Quest.find(:all)
+	  quests=Quest.all
 	  return quests
 	end
 	
