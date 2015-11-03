@@ -1,7 +1,8 @@
 class QuestsController < ApplicationController
-# GET /adventurers
-# GET /adventurers.json
-  def viewall
+  skip_before_action :verify_authenticity_token
+# GET /quests
+# GET /quests.json
+  def index
     @quests = Quest.view_all
     respond_to do |format|
       #format.html # index.html.erb
@@ -9,13 +10,20 @@ class QuestsController < ApplicationController
     end
   end
 
-  def generate
+# POST /quests.json
+  def create
     @quest = Quest.generate
     respond_to do |format|
       #format.html # index.html.erb
       format.json { render json: @quest }
     end
   end
+
+
+
+
+
+
 #
 # # GET /adventurers/1.json
 #   def show

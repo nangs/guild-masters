@@ -1,6 +1,7 @@
 class AdventurersController < ApplicationController
+  skip_before_action :verify_authenticity_token
 # GET /adventurer
-# GET /adventurer.json
+# GET /adventurers.json
   def index
     @adventurers = Adventurer.view_all
     respond_to do |format|
@@ -9,7 +10,7 @@ class AdventurersController < ApplicationController
     end
   end
 
-  # POST /adventurer.json
+  # POST /adventurers.json
   def create
     @adventurer = Adventurer.generate
     respond_to do |format|
