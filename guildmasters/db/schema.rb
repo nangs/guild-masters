@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103021106) do
+ActiveRecord::Schema.define(version: 20151103042653) do
 
   create_table "adventurer_templates", force: :cascade do |t|
     t.integer  "max_hp"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20151103021106) do
     t.datetime "updated_at", null: false
     t.integer  "guild_id"
     t.integer  "quest_id"
+    t.string   "name"
   end
 
   add_index "adventurers", ["guild_id"], name: "index_adventurers_on_guild_id"
@@ -91,6 +92,12 @@ ActiveRecord::Schema.define(version: 20151103021106) do
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scouts", force: :cascade do |t|
+    t.string   "scout_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
