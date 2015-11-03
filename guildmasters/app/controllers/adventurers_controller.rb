@@ -1,6 +1,6 @@
 class AdventurersController < ApplicationController
-# GET /contacts
-# GET /contacts.json
+# GET /adventurers
+# GET /adventurers.json
   def index
     @adventurers = Adventurer.all
 
@@ -10,7 +10,7 @@ class AdventurersController < ApplicationController
     end
   end
 
-# GET /contacts/1.json
+# GET /adventurers/1.json
   def show
     @adventurer = Adventurer.find(params[:id])
 
@@ -19,7 +19,7 @@ class AdventurersController < ApplicationController
     end
   end
 
-# POST /contacts.json
+# POST /adventurers.json
   def create
     @adventurer = Adventurer.new(params[:contact])
 
@@ -32,7 +32,7 @@ class AdventurersController < ApplicationController
     end
   end
 
-# PUT /contacts/1.json
+# PUT /adventurers/1.json
   def update
     @adventurer = Adventurer.find(params[:id])
 
@@ -45,7 +45,7 @@ class AdventurersController < ApplicationController
     end
   end
 
-# DELETE /contacts/1.json
+# DELETE /adventurers/1.json
   def destroy
     @adventurer = Adventurer.find(params[:id])
     @adventurer.destroy
