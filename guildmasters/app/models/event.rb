@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  def assign_quest(adventurer_id,quest_id)
+  def self.assign_quest(adventurer_id,quest_id)
     event = Event.new
     event.start_time = Guildmaster.find(1).game_time
     quest=Quest.find(quest_id)
