@@ -1,4 +1,4 @@
-class AdventurerController < ApplicationController
+class AdventurersController < ApplicationController
 # GET /adventurer
 # GET /adventurer.json
   def index

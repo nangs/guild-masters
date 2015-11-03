@@ -1,4 +1,4 @@
-class QuestController < ApplicationController
+class QuestsController < ApplicationController
 # GET /adventurers
 # GET /adventurers.json
   def viewall

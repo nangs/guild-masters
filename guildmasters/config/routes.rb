@@ -5,12 +5,12 @@ Rails.application.routes.draw do
 
   #root 'adventurers#index'
   root to: 'application#index'
-  resources :adventurer
+  resources :adventurers
   resources :events
   resources :facilities
   resources :guild
   resources :guildmaster
-  resources :quest
+  resources :quests
 end
 
 #constraints subdomain: 'api' do
