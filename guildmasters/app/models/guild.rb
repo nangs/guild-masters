@@ -3,7 +3,7 @@ class Guild < ActiveRecord::Base
 	has_many :quests, dependent: :destroy
 	has_many :adventurers, dependent: :destroy
 	
-	def initialize
+	def self.initialize
 	  guild=Guild.new
 	  guild.level = 1
 	  guild.popularity = 50
