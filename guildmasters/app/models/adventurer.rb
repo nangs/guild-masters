@@ -3,7 +3,7 @@ class Adventurer < ActiveRecord::Base
 	belongs_to :quest
 	
 	def self.view_all
-	  adventurers = Adventurer.find(:all)
+	  adventurers = Adventurer.all
 	  return adventurers
 	end
 	
