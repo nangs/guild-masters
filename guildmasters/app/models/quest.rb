@@ -2,12 +2,12 @@ class Quest < ActiveRecord::Base
 	belongs_to :guild
 	has_many :adventurer
 
-	def view_all
+	def self.view_all
 	  quests=Quest.find(:all)
 	  return quests
 	end
 	
-	def generate
+	def self.generate
 	  level = Guild.find(1).level
 	  quest = Quest.new
 	  quest.difficulty = level

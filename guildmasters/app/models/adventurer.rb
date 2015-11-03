@@ -2,12 +2,12 @@ class Adventurer < ActiveRecord::Base
 	belongs_to :guild
 	belongs_to :quest
 	
-	def view_all
+	def self.view_all
 	  adventurers = Adventurer.find(:all)
 	  return adventurers
 	end
 	
-	def generate
+	def self.generate
 	  template = AdventurerTemplate.find(1)
 	  level = Guild.find(1).level
 	  adventurer = Adventurer.new

@@ -1,7 +1,7 @@
 class Guildmaster < ActiveRecord::Base
 	has_many :guilds, dependent: :destroy
 	
-	def initialize
+	def self.initialize
 	  gm=Guildmaster.new
 	  gm.gold=1000
 	  gm.game_time = 0
