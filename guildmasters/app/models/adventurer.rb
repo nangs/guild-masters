@@ -12,6 +12,7 @@ class Adventurer < ActiveRecord::Base
 	  #level = Guild.find(1).level
 	  level = 1
 	  adventurer = Adventurer.new
+	  adventurer.name = "Alex"
 	  adventurer.max_hp = level*template.max_hp
 	  adventurer.hp=adventurer.max_hp
 	  adventurer.max_energy = level*template.max_energy
