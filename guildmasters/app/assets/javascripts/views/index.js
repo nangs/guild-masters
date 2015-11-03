@@ -13,6 +13,10 @@ $(function(){
 				view = questsListTemplate(GM.QuestController.quest_list);
 				break;
 		};
-		$('#mainContainer').html(view);
+		showView(view);
 	});
 })
+
+function showView(view){
+	$('#mainContainer').html(view);
+}
