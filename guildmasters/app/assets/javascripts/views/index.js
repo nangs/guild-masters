@@ -7,7 +7,7 @@ $(function(){
 				view = '';
 				break;
 			case 'adventurers':
-				view = adventurersListTemplate(GM.AdventurerController.adventurers_list);
+				view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
 				break;
 			case 'quests':
 				view = questsListTemplate(GM.QuestController.quest_list);
