@@ -1,5 +1,3 @@
-Handlebars.registerPartial('adventurer',  HandlebarsTemplates['adventurer/adventurer']);
-var adventurersListTemplate =  HandlebarsTemplates['adventurer/adventurer_list'];
 GM.AdventurerController = Ember.Controller.extend();
 
 GM.AdventurerController.getAllAdventurers = function () {
@@ -7,7 +5,6 @@ GM.AdventurerController.getAllAdventurers = function () {
 		type: 'GET',
 	    url: 'adventurers.json',
 	    success: function(data) {
-	    	console.log(data);
 	    	GM.AdventurerController.adventurers_list = data;
 	    }
 	});
@@ -15,11 +12,11 @@ GM.AdventurerController.getAllAdventurers = function () {
 
 GM.AdventurerController.getNewAdventurers = function () {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'adventurers.json',
 	    success: function(data) {
 	    	console.log(data);
-	    	GM.AdventurerController.adventurers_list = data;
+	    	GM.AdventurerController.new_adventure = data;
 	    }
 	});
 }
