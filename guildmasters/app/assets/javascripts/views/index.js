@@ -10,7 +10,7 @@ $(function(){
 				view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
 				break;
 			case 'quests':
-				view = questsListTemplate(GM.QuestController.quest_list);
+				view = questsTableTemplate(GM.QuestController.quest_list);
 				break;
 		};
 		showView(view);
