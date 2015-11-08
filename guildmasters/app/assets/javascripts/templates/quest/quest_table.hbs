@@ -5,6 +5,7 @@
         <th>State</th>
         <th>Difficulty</th>
         <th>Reward</th>
+        <th>Action</th>
       </tr>
     </thead>
 	{{#each quests as |quest|}}
@@ -13,6 +14,9 @@
 	        <td>{{state}}</td>
 	        <td>{{difficulty}}</td>
 	        <td>{{reward}}</td>
+	        <td>
+				<button type='button' class='btn btn-primary assignQuest' id={{id}}>Assign Adventurer</button>
+	        </td>
 		</tr>
 	{{/each}}
 </table>
