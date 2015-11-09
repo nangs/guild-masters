@@ -16,7 +16,10 @@ GM.AdventurerController.getNewAdventurers = function () {
 	    url: 'adventurers.json',
 	    success: function(data) {
 	    	console.log(data);
-	    	GM.AdventurerController.new_adventure = data;
+	    	// GM.AdventurerController.new_adventure = data;
+	    	var new_adventure = adventurerNewTemplate(data);
+	    	GM.AdventurerController.adventurers_list.adventurers.push(data);
+	    	showView(new_adventure);
 	    }
 	});
 }
