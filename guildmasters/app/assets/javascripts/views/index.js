@@ -15,7 +15,7 @@ function showSection(section){
 			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
 			break;
 		case 'quests':
-			view = questsTableTemplate(GM.QuestController.quest_list);
+			view = questNewButton + questsTableTemplate(GM.QuestController.quest_list);
 			break;
 	};
 	showView(view);
