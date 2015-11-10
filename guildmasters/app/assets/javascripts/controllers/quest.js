@@ -6,7 +6,16 @@ GM.QuestController.getNewQuests = function(){
 	    url: 'quests.json',
 	    success: function(data) {
 	    	GM.QuestController.new_quests = data;
-	    	showView(newQuestsTemplate(data));
+    		if (!('description' in data)) {
+	    		if (Math.random() > 0.2) {
+	    			data.description = 'A dangerous moster has to be killed';
+	    		}
+	    		else {
+	    			data.description = 'We are looking for a hidden treasurer';
+	    		}
+	    	}
+	    	GM.QuestController.quest_list.quests.push(data);
+	    	showView(questNewTemplate(data));
 	    }
 	});
 }
