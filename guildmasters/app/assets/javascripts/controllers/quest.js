@@ -29,10 +29,10 @@ GM.QuestController.getAllQuests = function () {
 	    	for (q in data['quests']) {
 	    		if (!('description' in data['quests'][q])) {
 		    		if (Math.random() > 0.2) {
-		    			data['quests'][q].description = 'A dangerous moster has to be killed';
+		    			data['quests'][q].description = 'A dangerous monster has to be killed';
 		    		}
 		    		else {
-		    			data['quests'][q].description = 'We are looking for a hidden treasurer';
+		    			data['quests'][q].description = 'We are looking for a hidden treasure';
 		    		}
 		    	}
 	    	}
