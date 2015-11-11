@@ -41,4 +41,14 @@ GM.QuestController.getAllQuests = function () {
 	});
 }
 
+GM.QuestController.assign = function(id) {
+	// Temporary way of getting the quest. 
+	// The API should be designed in a way that a particular Quest can be directly retrieved by id.
+	quest = GM.QuestController.quest_list['quests'][id-1];
+	var questView = questAssignTemplate(quest);
+	var adventurersView = adventurerAssignTemplate(GM.AdventurerController.adventurers_list);
+	showView(questView + adventurersView);
+}
+
+
 GM.QuestController.getAllQuests();
