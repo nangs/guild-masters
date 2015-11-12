@@ -1,0 +1,1 @@
+var guildTemplate = HandlebarsTemplates['guild/guild'];

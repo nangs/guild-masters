@@ -3,13 +3,14 @@ $(function(){
 		var section = $(this).attr('id');
 		showSection(section);
 	});
+	showSection('home');
 })
 
 function showSection(section){
 	var view;
 	switch(section){
 		case 'home':
-			view = '';
+			view = guildTemplate();
 			break;
 		case 'adventurers':
 			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
