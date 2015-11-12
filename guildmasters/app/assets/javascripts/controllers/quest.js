@@ -8,10 +8,10 @@ GM.QuestController.getNewQuests = function(){
 	    	GM.QuestController.new_quests = data;
     		if (!('description' in data)) {
 	    		if (Math.random() > 0.2) {
-	    			data.description = 'A dangerous moster has to be killed';
+	    			data.description = 'A dangerous monster has to be killed';
 	    		}
 	    		else {
-	    			data.description = 'We are looking for a hidden treasurer';
+	    			data.description = 'We are looking for a hidden treasure';
 	    		}
 	    	}
 	    	GM.QuestController.quest_list.quests.push(data);
