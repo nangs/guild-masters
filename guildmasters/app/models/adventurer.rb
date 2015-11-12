@@ -1,14 +1,16 @@
 class Adventurer < ActiveRecord::Base
 	belongs_to :guild
 	belongs_to :quest
-	
+	#This function returns a list of Adventurers to the controller
 	def self.view_all
 	  adventurers = Adventurer.all
 	  return adventurers
 	end
 
+	#This function creates and saves an Adventurer into the Database
+	#It will return the newly created Adventurer to the controller
 	def self.generate
-		@adventurer_names = ["Alex", "Daniel", "David", "John", "Ben", "Charles", "William", "Alvin", "Petter", "Nathan", "Howard" ]
+		@adventurer_names = ["Alex", "Daniel", "David", "John", "Ben", "Charles", "William", "Alvin", "Peter", "Nathan", "Howard" ]
 	  template = AdventurerTemplate.find(1)
 	  level = Guild.find(1).level
 	  #level = 1

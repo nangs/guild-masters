@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  #can the function name assign_quest be changed to a more suitable name?
   def self.assign_quest(adventurer_id,quest_id)
     event = Event.new
     event.start_time = Guildmaster.find(1).game_time
