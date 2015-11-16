@@ -71,6 +71,7 @@ GM.QuestController.assign = function(id) {
 	    	showView('Quest successfully assigned!');
 	    	GM.QuestController.getAllQuests();
 	    	GM.AdventurerController.getAllAdventurers();
+	    	GM.EventController.getAllEvents();
 	    }
 	});
 }

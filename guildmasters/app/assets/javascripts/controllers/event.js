@@ -37,5 +37,8 @@ GM.EventController.complete = function (id) {
 	    	showView();
 	    }
 	});
+	GM.EventController.getAllEvents();
+	GM.AdventurerController.getAllAdventurers();
+	GM.QuestController.getAllQuests();
 }
 GM.EventController.getAllEvents();
