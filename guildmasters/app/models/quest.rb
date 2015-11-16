@@ -22,4 +22,22 @@ class Quest < ActiveRecord::Base
 	  quest.save
 	  return quest
 	end
+	
+	def self.get(_quest_id)
+	  quest = Quest.find(_quest_id)
+	  return quest
+	end
+	
+	def self.assign(_quest_id,_adventurer_ids)
+	  adventurers = Adventurer.find(_adventurer_ids)
+	  quest=Quest.find(_quest_id)
+	  quest.adventurers = adventurers
+	  adventurers.state = "assigned"
+	  adventurers.quest = quest
+	  quest.state = "assigned"
+	  quest.save
+	  adventurers.save
+	  return quest
+	end
+	
 end

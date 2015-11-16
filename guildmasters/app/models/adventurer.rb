@@ -23,7 +23,7 @@ class Adventurer < ActiveRecord::Base
 	  adventurer.attack = level*template.attack
 	  adventurer.defense = level*template.defense
 	  adventurer.vision = level*template.vision
-	  adventurer.state = "Pending"
+	  adventurer.state = "Available"
 	  adventurer.guild_id = Guild.find(1).id
 	 # adventurer.guild_id = 1
 	  adventurer.save
