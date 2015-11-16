@@ -16,7 +16,6 @@ GM.EventController.getAllEvents = function () {
 	    url: 'events.json',
 	    success: function(data) {
 	    	GM.EventController.event_list = GM.EventController.filter(data);
-	    	console.log(GM.EventController.event_list)
 	    	GM.nextEvent = GM.EventController.event_list[0];
 	    }
 	});
