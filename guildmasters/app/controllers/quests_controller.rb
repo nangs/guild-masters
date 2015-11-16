@@ -24,7 +24,7 @@ class QuestsController < ApplicationController
       respond_to do |format|
         #returns quest
         # format.json { render json: adventurersIds }
-        format.json { render json: @quest }
+        format.json { render json: @quest.to_json }
       end
 
     elsif params[:cmd] == "complete"
