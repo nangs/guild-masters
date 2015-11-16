@@ -1,11 +1,3 @@
-$(function(){
-	$('button').click(function(){
-		var section = $(this).attr('id');
-		showSection(section);
-	});
-	showSection('home');
-})
-
 function showSection(section){
 	var view;
 	switch(section){
@@ -30,3 +22,11 @@ function showSection(section){
 function showView(view){
 	$('#mainContainer').html(view);
 }
+
+$(function(){
+	$('button').click(function(){
+		var section = $(this).attr('id');
+		showSection(section);
+	});
+	showSection('home');
+})
