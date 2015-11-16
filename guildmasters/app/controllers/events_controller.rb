@@ -13,7 +13,7 @@ class EventsController < ApplicationController
       eventId = params[:eventId]
       @questEvent = QuestEvent.complete(eventId)
       respond_to do |format|
-        format.json { render json: "completed" }
+        format.json { render json: {msg: @questEvent} }
       end
     end
   end
