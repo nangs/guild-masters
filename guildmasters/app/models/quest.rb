@@ -43,14 +43,10 @@ class Quest < ActiveRecord::Base
       adventurer.state = "assigned"
       adventurer.quest = quest
       adventurer.save
-
     end
 
-    if(quest.state=="failed")
-    quest_event = quest.quest_event
-    else
-      quest_event=QuestEvent.new
-    end
+    quest_event=QuestEvent.new
+
     gm = Guildmaster.find(1)
     quest_event.quest_id = quest.id
     quest_event.start_time = gm.game_time
@@ -97,6 +93,7 @@ class Quest < ActiveRecord::Base
     gm.game_time = quest.quest_event.end_time
     gm.save
     quest.save
+    quest.quest_event.destroy
     return msg
   end
 end
