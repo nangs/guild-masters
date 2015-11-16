@@ -9,7 +9,7 @@ class QuestEvent < ActiveRecord::Base
   
   def self.complete(event_id)
     event = QuestEvent.find(event_id)
-    Quest.complete(event.quest_id)
+    return Quest.complete(event.quest_id)
     
   end
 end

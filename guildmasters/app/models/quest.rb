@@ -46,7 +46,7 @@ class Quest < ActiveRecord::Base
 
     end
     quest.state = "assigned"
-    quest.save
+    
 
     quest_event = QuestEvent.new
     gm = Guildmaster.find(1)
@@ -57,6 +57,7 @@ class Quest < ActiveRecord::Base
     quest_event.save
     quest.quest_event_id=quest_event.id
     quest.quest_event = quest_event
+    quest.save
   end
 
   def self.complete(quest_id)
