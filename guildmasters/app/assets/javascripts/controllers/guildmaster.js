@@ -5,7 +5,7 @@ GM.GuildmasterController.getGuildmaster = function () {
 		type: 'GET',
 	    url: 'guildmaster.json',
 	    success: function(data) {
-
+	    	GM.GuildmasterController.guildmaster = data;
 	    }
 	});
 }

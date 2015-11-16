@@ -5,7 +5,6 @@
         <th>Name</th>
         <th>HP</th>
         <th>Energy</th>
-        <th>State</th>
     	<th>Attack</th>
     	<th>Defense</th>
     	<th>Vision</th>
@@ -13,11 +12,12 @@
       </tr>
     </thead>
 	{{#each adventurers as |adventurer|}}
+		{{#isAssigned state}}
+		{{else}}
 		<tr>
 			<td>{{name}}</td>
 			<td>{{hp}}/{{max_hp}}</td>
 			<td>{{energy}}/{{max_energy}}</td>
-			<td>{{state}}</td>
 			<td>{{attack}}</td>
 			<td>{{defense}}</td>
 			<td>{{vision}}</td>
@@ -29,6 +29,7 @@
 				</div>
 			</td>
 		</tr>
+		{{/isAssigned}}
 	{{/each}}
 </table>
 </div>

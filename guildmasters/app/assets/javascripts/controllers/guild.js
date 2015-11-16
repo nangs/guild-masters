@@ -5,7 +5,7 @@ GM.GuildController.getAllGuilds = function () {
 		type: 'GET',
 	    url: 'guild.json',
 	    success: function(data) {
-
+	    	GM.GuildController.guild = data;
 	    }
 	});
 }
