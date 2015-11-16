@@ -7,7 +7,11 @@ function showSection(section){
 			view = GM.GuildmasterView;
 			break;
 		case 'events':
-			view = nextEventTemplate(GM.nextEvent);
+			if (GM.nextEvent) {
+				view = nextEventTemplate(GM.nextEvent);
+			} else {
+				view = "There is no event that is in progress";
+			}
 			break;
 		case 'adventurers':
 			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
