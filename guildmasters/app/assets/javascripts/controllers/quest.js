@@ -5,7 +5,7 @@ GM.QuestController.getNewQuests = function(){
 		type: 'POST',
 	    url: 'quests.json',
 	   	data: {
-	    	action: 'generate'
+	    	cmd: 'generate'
 	    },
 	    success: function(data) {
 	    	GM.QuestController.new_quests = data;
@@ -62,7 +62,7 @@ GM.QuestController.assign = function(id) {
 		type: 'POST',
 	    url: 'quests.json',
 	    data: {
-	    	action: 'assign',
+	    	cmd: 'assign',
 	    	questId: id,
 	    	adventurersIds: assigned
 	    },
