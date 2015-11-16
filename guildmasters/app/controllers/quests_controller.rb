@@ -1,6 +1,6 @@
 class QuestsController < ApplicationController
   skip_before_action :verify_authenticity_token
-# GET /quests
+
 # GET /quests.json
   def index
     @quests = Quest.view_all
@@ -11,22 +11,29 @@ class QuestsController < ApplicationController
 
 # POST /quests.json
   def create
-    if params[:status] == "generate"
+    if params[:action] == "generate"
       @quest = Quest.generate
       respond_to do |format|
         format.json { render json: @quest }
       end
+
+    elsif params[:action] == "assign"
+      questId = params[:questId]
+      adventurersIds = params[:adventurersIds]
+      @quest = Quest.assign(questId,adventurersIds)
+      respond_to do |format|
+        #returns quest
+        format.json { render json: @quest }
+      end
+
+    elsif params[:action] == "complete"
+      questId = params[:questId]
+      @quest = Quest.complete(questId)
+      respond_to do |format|
+        #returns quest
+        format.json { render json: @quest }
+      end
     end
-  else if params[:status] == "assign"
-         questId = params[:questId]
-         adventurersIds = params[:adventurersIds]
-         @quest = Quest.assign(questId,adventurersIds)
-         respond_to do |format|
-           #returns quest
-           # format.json { render json: adventurersIds }
-           format.json { render json: @quest }
-         end
-       end
   end
 end
 
