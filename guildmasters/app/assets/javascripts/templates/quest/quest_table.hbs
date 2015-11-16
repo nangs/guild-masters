@@ -15,8 +15,12 @@
 	        <td>{{difficulty}}</td>
 	        <td>{{reward}}</td>
 	        <td>
-				<button type='button' class='btn btn-primary' onclick='GM.QuestController.showAssign({{id}})'>Assign Adventurer</button>
-	        </td>
+	        {{#isAssigned state}}
+	        	<p></p>
+	    	{{else}}
+		        <button type='button' class='btn btn-primary' onclick='GM.QuestController.showAssign({{id}})'>Assign Adventurer</button>
+		    {{/isAssigned}}
+		    </td>
 		</tr>
 	{{/each}}
 </table>
