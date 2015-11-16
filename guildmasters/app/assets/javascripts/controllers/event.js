@@ -31,7 +31,7 @@ GM.EventController.complete = function (id) {
 	    	eventId: id
 	    },
 	    success: function(data) {
-	    	showView(data.msg);
+	    	showView(data);
 	    },
 	});
 	GM.EventController.getAllEvents();
