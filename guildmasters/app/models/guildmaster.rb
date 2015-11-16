@@ -3,20 +3,8 @@ class Guildmaster < ActiveRecord::Base
 
 	#This function creates and saves a newly created Guild Master into the Database
 	#It will return the newly created Guild Master to the controller
-	def self.initialize
-	  gm=Guildmaster.new
-	  gm.gold=1000
-	  gm.game_time = 0
-	  gm.state="free"
-	  gm.save
-	  template = AdventurerTemplate.new	#should be moved to AdventurerTemplate class
-	  template.max_hp = 100
-	  template.max_energy = 100
-	  template.attack = 1000
-	  template.defense=1000
-	  template.vision =1000
-	  template.region_id = 1
-	  template.save
+	def self.get_info
+	  gm=Guildmaster.find(1)
 	  return gm
 	end
 	

@@ -1,6 +1,6 @@
 class AdventurersController < ApplicationController
   skip_before_action :verify_authenticity_token
-# GET /adventurer
+
 # GET /adventurers.json
   def index
     @adventurers = Adventurer.view_all

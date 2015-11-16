@@ -13,4 +13,10 @@ class Guild < ActiveRecord::Base
 	  guild.save
 	  return guild
 	end
+	
+	def self.get_info
+	  guild = Guild.find(1)
+	  return guild
+	end
+
 end

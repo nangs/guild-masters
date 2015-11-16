@@ -5,19 +5,36 @@ class QuestsController < ApplicationController
   def index
     @quests = Quest.view_all
     respond_to do |format|
-      #format.html # index.html.erb
       format.json { render json: @quests }
     end
   end
 
 # POST /quests.json
   def create
-    @quest = Quest.generate
-    respond_to do |format|
-      #format.html # index.html.erb
-      format.json { render json: @quest }
+    if params[:status] == "generate"
+      @quest = Quest.generate
+      respond_to do |format|
+        format.json { render json: @quest }
+      end
     end
+  else if params[:status] == "assign"
+         questId = params[:questId]
+         adventurersIds = params[:adventurersIds]
+         @quest = Quest.assign(questId,adventurersIds)
+         respond_to do |format|
+           #returns quest
+           # format.json { render json: adventurersIds }
+           format.json { render json: @quest }
+         end
+       end
   end
+end
+
+
+
+
+
+
 
 
 
@@ -30,6 +47,7 @@ class QuestsController < ApplicationController
 #     @quest = Quest.find(params[:id])
 #
 #     respond_to do |format|
+#format.html # index.html.erb
 #       format.json { render json: @adventurer }
 #     end
 #   end
@@ -69,7 +87,7 @@ class QuestsController < ApplicationController
 #       format.json { render json: nil, status: :ok }
 #     end
 #   end
-end
+# end
 
 
 
