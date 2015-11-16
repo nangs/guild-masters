@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103042653) do
+ActiveRecord::Schema.define(version: 20151116060740) do
 
   create_table "adventurer_templates", force: :cascade do |t|
     t.integer  "max_hp"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20151103042653) do
     t.integer  "gold_spend"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "type"
   end
 
   create_table "facilities", force: :cascade do |t|
@@ -78,6 +77,17 @@ ActiveRecord::Schema.define(version: 20151103042653) do
   end
 
   add_index "guilds", ["guildmaster_id"], name: "index_guilds_on_guildmaster_id"
+
+  create_table "quest_events", force: :cascade do |t|
+    t.integer  "quest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
+  end
+
+  add_index "quest_events", ["quest_id"], name: "index_quest_events_on_quest_id"
 
   create_table "quests", force: :cascade do |t|
     t.integer  "difficulty"

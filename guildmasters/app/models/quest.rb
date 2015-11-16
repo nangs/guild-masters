@@ -1,6 +1,8 @@
 class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :adventurers
+  has_one :quest_event
+
   #This function returns a list of Quests to the controller
   def self.view_all
     quests=Quest.all
