@@ -20,19 +20,29 @@ class Quest < ActiveRecord::Base
     return quest
   end
 
-  def self.get(_quest_id)
-    quest = Quest.find(_quest_id)
+  def self.get(quest_id)
+    quest = Quest.find(quest_id)
     return quest
   end
 
-  def self.assign(_quest_id,_adventurer_ids)
-    quest=Quest.find(_quest_id)
-    _adventurer_ids.each do |_adventurer_id|
-      adventurer = Adventurer.find(_adventurer_id)
+  def self.assign(quest_id,adventurer_ids)
+    quest=Quest.find(quest_id)
+    error_message = "Error, not available"
+    if(quest.state == "assigned")
+    return error_message
+    end
+    adventurer_ids.each do |adventurer_id|
+      adventurer = Adventurer.find(adventurer_id)
+      if(adventurer.state!="Available")
+      return error_message
+      end
+    end
+    adventurer_ids.each do |adventurer_id|
+      adventurer = Adventurer.find(adventurer_id)
       adventurer.state = "assigned"
       adventurer.quest = quest
       adventurer.save
-      quest.adventurers<<adventurer
+
     end
     quest.state = "assigned"
     quest.save
