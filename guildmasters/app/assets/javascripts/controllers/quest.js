@@ -4,6 +4,9 @@ GM.QuestController.getNewQuests = function(){
 	$.ajax({
 		type: 'POST',
 	    url: 'quests.json',
+	   	data: {
+	    	status: 'generate'
+	    },
 	    success: function(data) {
 	    	GM.QuestController.new_quests = data;
     		if (!('description' in data)) {
@@ -64,7 +67,7 @@ GM.QuestController.assign = function(id) {
 	    	adventurersIds: assigned
 	    },
 	    success: function(data) {
-	    	console.log(data);
+	    	showView('Quest successfully assigned!');
 	    }
 	});
 }
