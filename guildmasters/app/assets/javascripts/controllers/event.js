@@ -31,13 +31,12 @@ GM.EventController.complete = function (id) {
 	    	eventId: id
 	    },
 	    success: function(data) {
-	    	console.log('here');
-	    	console.log(data);
-	    	showView();
-	    }
+	    	showView(data.msg);
+	    },
 	});
 	GM.EventController.getAllEvents();
-	GM.AdventurerController.getAllAdventurers();
+	
 	GM.QuestController.getAllQuests();
+	GM.AdventurerController.getAllAdventurers();
 }
 GM.EventController.getAllEvents();
