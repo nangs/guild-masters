@@ -3,16 +3,15 @@ class EventsController < ApplicationController
   def index
     @questEvents = QuestEvent.view_all
     respond_to do |format|
-      # format.json { render json: @questEvents }
-      format.json { render json: @questEvents.to_json(:include => :quest) }
+      format.json { render json: @questEvents.to_json(:include => { :quest => { :include => :adventurers }}) }
     end
   end
 
   # POST /events.json
   def create
     if params[:cmd] == "complete"
-      questId = params[:questId]
-      @questEvent = QuestEvent.complete(questId)
+      eventId = params[:eventId]
+      @questEvent = QuestEvent.complete(eventId)
       respond_to do |format|
         format.json { render json: @questEvent }
       end
