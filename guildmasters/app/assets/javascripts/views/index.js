@@ -21,7 +21,7 @@ function showSection(section){
 			view = GM.GuildmasterView;
 			break;
 	};
-	return view;
+	showView(view);
 
 }
 function showView(view){
@@ -31,11 +31,8 @@ function showView(view){
 $(function(){
 	$('button').click(function(){
 		var section = $(this).attr('id');
-		var view = showSection(section);
-		showView(view);
+		showSection(section);
 	});
-	var view = showSection('home');
-	showView(view);
-	view = showSection('home');
-	showView(view);
+	GM.GuildmasterController.getGuildmaster();
+	showSection('home');
 })
