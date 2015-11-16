@@ -2,7 +2,6 @@ class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :adventurers
   has_one :quest_event
-
   #This function returns a list of Quests to the controller
   def self.view_all
     quests=Quest.all
@@ -30,12 +29,12 @@ class Quest < ActiveRecord::Base
   def self.assign(quest_id,adventurer_ids)
     quest=Quest.find(quest_id)
     error_message = "Error, not available"
-    if(quest.state == "assigned")
+    if(quest.state == "assigned"||quest.state=="successful")
     return error_message
     end
     adventurer_ids.each do |adventurer_id|
       adventurer = Adventurer.find(adventurer_id)
-      if(adventurer.state!="Available")
+      if(adventurer.state =="assigned"||adventurer.energy<=0)
       return error_message
       end
     end
@@ -48,7 +47,16 @@ class Quest < ActiveRecord::Base
     end
     quest.state = "assigned"
     quest.save
-    return quest
+
+    quest_event = QuestEvent.new
+    gm = Guildmaster.find(1)
+    quest_event.quest_id = quest.id
+    quest_event.start_time = gm.game_time
+    quest_event.end_time = quest_event.start_time + quest.difficulty*100+Random.rand(quest.difficulty*25)
+    quest_event.gold_spent = 0
+    quest_event.save
+    quest.quest_event_id=quest_event.id
+    quest.quest_event = quest_event
   end
 
   def self.complete(quest_id)
@@ -57,19 +65,34 @@ class Quest < ActiveRecord::Base
     sum=0
     for adventurer in adventurers
       sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
-      adventurer.energy = adventurer.enegegy - quest.difficulty*100-Random.rand(difficulty*50)
+      adventurer.energy = adventurer.energy - quest.difficulty*100-Random.rand(quest.difficulty*50)
+      if(adventurer.energy<=0)
+        adventurer.energy=0
+      end
       adventurer.state = "Available"
       adventurer.save
     end
     sum = sum/900
     gm = Guildmaster.find(1)
+    guild = Guild.find(1)
     if(sum>=quest.difficulty)
       quest.state="successful"
+    guild.popularity=guild.popularity+quest.difficulty
     gm.gold = gm.gold+quest.reward
+    msg= "Quest completed! Your guild earned %d gold and %d popularity!" % [quest.reward,quest.difficulty]
     else
       quest.state="failed"
+    guild.popularity=guild.popularity-quest.difficulty
+    msg = "Quest failed! Your guild lost %d popularity" % quest.difficulty
     end
+
+    if(quest.quest_event.end_time/1000>gm.game_time/1000)
+      Guild.refresh
+    end
+    guild.save
+    gm.game_time = quest.quest_event.end_time
     gm.save
     quest.save
+    return msg
   end
 end
