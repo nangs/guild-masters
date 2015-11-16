@@ -16,6 +16,7 @@ class QuestsController < ApplicationController
       respond_to do |format|
         format.json { render json: @quest }
       end
+
     elsif params[:cmd] == "assign"
       questId = params[:questId]
       adventurersIds = params[:adventurersIds]
