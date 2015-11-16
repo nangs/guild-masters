@@ -1,9 +1,13 @@
 GM.EventController = Ember.Controller.extend();
 
-GM.EventController.sort = function (events){
+GM.EventController.filter = function (events){
+	events = events.filter(function(e) {
+		return e.quest.state == 'assigned';
+	});
 	events.sort(function(event1, event2) {
 		return event1.end_time - event2.end_time;
-	});	
+	});
+	return events
 }
 
 GM.EventController.getAllEvents = function () {
@@ -11,8 +15,7 @@ GM.EventController.getAllEvents = function () {
 		type: 'GET',
 	    url: 'events.json',
 	    success: function(data) {
-	    	GM.EventController.event_list = data;
-	    	GM.EventController.sort(GM.EventController.event_list);
+	    	GM.EventController.event_list = GM.EventController.filter(data);
 	    	console.log(GM.EventController.event_list)
 	    	GM.nextEvent = GM.EventController.event_list[0];
 	    }
@@ -29,7 +32,9 @@ GM.EventController.complete = function (id) {
 	    	eventId: id
 	    },
 	    success: function(data) {
-	    	showView(data.responseText);
+	    	console.log('here');
+	    	console.log(data);
+	    	showView();
 	    }
 	});
 }
