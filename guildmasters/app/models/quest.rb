@@ -36,8 +36,7 @@ class Quest < ActiveRecord::Base
     end
     quest.state = "assigned"
     quest.save
-    event = Event.quest_event(quest.difficulty)
-    return event
+    return quest
   end
 
   def self.complete(quest_id)
