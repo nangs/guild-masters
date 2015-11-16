@@ -10,14 +10,12 @@ class Quest < ActiveRecord::Base
   #This function creates and saves a Quest into the Database
   #It will return the newly created Quest to the controller
   def self.generate
-    #level = Guild.find(1).level
-    level = 1
+    level = Guild.find(1).level
     quest = Quest.new
     quest.difficulty = level+Random.rand(2)
     quest.state = "pending"
     quest.reward = 1000*quest.difficulty+Random.rand(1000)
-    #quest.guild_id=Guild.find(1).id
-    quest.guild_id = 1
+    quest.guild_id=Guild.find(1).id
     quest.save
     return quest
   end
@@ -38,16 +36,17 @@ class Quest < ActiveRecord::Base
     end
     quest.state = "assigned"
     quest.save
-    return quest
+    event = Event.quest_event(quest.difficulty)
+    return event
   end
 
-  def self.complete(_quest_id)
-    quest = Quest.find(_quest_id)
+  def self.complete(quest_id)
+    quest = Quest.find(quest_id)
     adventurers = quest.adventurers
     sum=0
     for adventurer in adventurers
       sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
-      adventurer.energy = adventurer.enegegy - quest.difficulty*100-Random.rand(50)
+      adventurer.energy = adventurer.enegegy - quest.difficulty*100-Random.rand(difficulty*50)
       adventurer.state = "Available"
       adventurer.save
     end
