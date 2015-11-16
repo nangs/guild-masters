@@ -28,9 +28,9 @@ class Quest < ActiveRecord::Base
   end
 
   def self.assign(_quest_id,_adventurer_ids)
-    for id in _adventurers_ids
-      adventurer = Adventurer.find(id)
-      quest=Quest.find(_quest_id)
+    quest=Quest.find(_quest_id)
+    _adventurer_ids.each do |_adventurer_id|
+      adventurer = Adventurer.find(_adventurer_id)
       adventurer.state = "assigned"
       adventurer.quest = quest
       adventurer.save
@@ -48,7 +48,7 @@ class Quest < ActiveRecord::Base
     for adventurer in adventurers
       sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
       adventurer.energy = adventurer.enegegy - quest.difficulty*100-Random.rand(50)
-      adventurer.state = "available"
+      adventurer.state = "Available"
       adventurer.save
     end
     sum = sum/900
@@ -59,7 +59,6 @@ class Quest < ActiveRecord::Base
     else
       quest.state="failed"
     end
-    gm.game_time = gm.game_time+quest.difficulty*100
     gm.save
     quest.save
   end
