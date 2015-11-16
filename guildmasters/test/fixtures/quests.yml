@@ -2,10 +2,10 @@
 
 one:
   difficulty: 1
-  state: MyString
+  state: ongoing
   reward: 1
 
 two:
   difficulty: 1
-  state: MyString
+  state: ongoing
   reward: 1

@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  quest_id: 
+  start_time: 1
+  end_time: 2
+  gold_spent: 1
+  quest: one
 
 two:
-  quest_id: 
+  start_time: 1
+  end_time: 2
+  gold_spent: 1
+  quest: two
