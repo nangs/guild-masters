@@ -45,10 +45,12 @@ class Quest < ActiveRecord::Base
       adventurer.save
 
     end
-    quest.state = "assigned"
-    
 
-    quest_event = QuestEvent.new
+    if(quest.state=="failed")
+    quest_event = quest.quest_event
+    else
+      quest_event=QuestEvent.new
+    end
     gm = Guildmaster.find(1)
     quest_event.quest_id = quest.id
     quest_event.start_time = gm.game_time
@@ -57,6 +59,7 @@ class Quest < ActiveRecord::Base
     quest_event.save
     quest.quest_event_id=quest_event.id
     quest.quest_event = quest_event
+    quest.state = "assigned"
     quest.save
   end
 
@@ -68,7 +71,7 @@ class Quest < ActiveRecord::Base
       sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
       adventurer.energy = adventurer.energy - quest.difficulty*100-Random.rand(quest.difficulty*50)
       if(adventurer.energy<=0)
-        adventurer.energy=0
+      adventurer.energy=0
       end
       adventurer.state = "Available"
       adventurer.save
@@ -78,13 +81,13 @@ class Quest < ActiveRecord::Base
     guild = Guild.find(1)
     if(sum>=quest.difficulty)
       quest.state="successful"
-    guild.popularity=guild.popularity+quest.difficulty
-    gm.gold = gm.gold+quest.reward
-    msg= "Quest completed! Your guild earned %d gold and %d popularity!" % [quest.reward,quest.difficulty]
+      guild.popularity=guild.popularity+quest.difficulty
+      gm.gold = gm.gold+quest.reward
+      msg= "Quest completed! Your guild earned %d gold and %d popularity!" % [quest.reward,quest.difficulty]
     else
       quest.state="failed"
-    guild.popularity=guild.popularity-quest.difficulty
-    msg = "Quest failed! Your guild lost %d popularity" % quest.difficulty
+      guild.popularity=guild.popularity-quest.difficulty
+      msg = "Quest failed! Your guild lost %d popularity" % quest.difficulty
     end
 
     if(quest.quest_event.end_time/1000>gm.game_time/1000)
