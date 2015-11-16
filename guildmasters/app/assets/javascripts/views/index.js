@@ -14,6 +14,9 @@ function showSection(section){
 			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterController.guildmaster);
 			view = GM.GuildmasterView;
 			break;
+		case 'events':
+			view = nextEventTemplate(GM.nextEvent);
+			break;
 		case 'adventurers':
 			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
 			break;
