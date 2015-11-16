@@ -1,11 +1,6 @@
 function showSection(section){
 	var view;
 	switch(section){
-		case 'home':
-			GM.GuildmasterController.guildmaster.guild = GM.GuildController.guild;
-			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterController.guildmaster);
-			view = GM.GuildmasterView;
-			break;
 		case 'events':
 			if (GM.nextEvent) {
 				view = nextEventTemplate(GM.nextEvent);
@@ -19,8 +14,14 @@ function showSection(section){
 		case 'quests':
 			view = questNewButton + questsTableTemplate(GM.QuestController.quest_list);
 			break;
+		case 'home':
+			GM.GuildmasterController.getGuildmaster();
+			GM.GuildmasterController.guildmaster.guild = GM.GuildController.guild;
+			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterController.guildmaster);
+			view = GM.GuildmasterView;
+			break;
 	};
-	showView(view);
+	return view;
 
 }
 function showView(view){
@@ -30,7 +31,11 @@ function showView(view){
 $(function(){
 	$('button').click(function(){
 		var section = $(this).attr('id');
-		showSection(section);
+		var view = showSection(section);
+		showView(view);
 	});
-	showSection('home');
+	var view = showSection('home');
+	showView(view);
+	view = showSection('home');
+	showView(view);
 })
