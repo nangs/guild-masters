@@ -10,8 +10,8 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     if params[:cmd] == "complete"
-      questId = params[:questId]
-      @questEvent = QuestEvent.complete(questId)
+      eventId = params[:eventId]
+      @questEvent = QuestEvent.complete(eventId)
       respond_to do |format|
         format.json { render json: @questEvent }
       end
