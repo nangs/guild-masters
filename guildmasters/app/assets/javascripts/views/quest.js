@@ -1,5 +1,12 @@
-Handlebars.registerHelper('isAssigned', function(s, options){
-	if(s == 'assigned') {
+Handlebars.registerHelper('isAssigned', function(state, options){
+	if(state == 'assigned') {
+		return options.fn(this);
+	}
+	return options.inverse(this);
+});	
+
+Handlebars.registerHelper('isCompleted', function(state, options){
+	if(state == 'successful') {
 		return options.fn(this);
 	}
 	return options.inverse(this);
