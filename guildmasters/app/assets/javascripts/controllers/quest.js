@@ -10,7 +10,7 @@ GM.QuestController.getNewQuests = function(){
 	    success: function(data) {
 	    	GM.QuestController.new_quests = data;
     		if (!('description' in data)) {
-	    		if (Math.random() > 0.2) {
+	    		if (data.id % 3 != 1) {
 	    			data.description = 'A dangerous monster has to be killed';
 	    		}
 	    		else {
@@ -31,7 +31,7 @@ GM.QuestController.getAllQuests = function () {
 	    	// Stub descriptions
 	    	for (q in data['quests']) {
 	    		if (!('description' in data['quests'][q])) {
-		    		if (Math.random() > 0.2) {
+		    		if (data['quests'][q].id % 3 != 1) {
 		    			data['quests'][q].description = 'A dangerous monster has to be killed';
 		    		}
 		    		else {
