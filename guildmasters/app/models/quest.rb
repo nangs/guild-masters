@@ -38,6 +38,7 @@ class Quest < ActiveRecord::Base
       return error_message
       end
     end
+    quest.adventurers.clear
     adventurer_ids.each do |adventurer_id|
       adventurer = Adventurer.find(adventurer_id)
       adventurer.state = "assigned"
@@ -91,6 +92,7 @@ class Quest < ActiveRecord::Base
     #end
     gm.game_time = quest.quest_event.end_time
     gm.save
+    quest.adventurers.clear
     quest.save
     quest.quest_event.destroy
     return msg
