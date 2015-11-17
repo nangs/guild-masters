@@ -85,11 +85,10 @@ class Quest < ActiveRecord::Base
       guild.popularity=guild.popularity-quest.difficulty
       msg = "Quest failed! Your guild lost %d popularity" % quest.difficulty
     end
-
-    if(quest.quest_event.end_time/1000>gm.game_time/1000)
-      Guild.refresh
-    end
     guild.save
+    #if(quest.quest_event.end_time/1000>gm.game_time/1000)
+      #Guild.refresh
+    #end
     gm.game_time = quest.quest_event.end_time
     gm.save
     quest.save
