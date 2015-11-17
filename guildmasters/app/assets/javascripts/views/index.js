@@ -16,6 +16,7 @@ function showSection(section){
 			break;
 		case 'home':
 			GM.GuildmasterController.getGuildmaster();
+			GM.GuildController.getAllGuilds();
 			GM.GuildmasterController.guildmaster.guild = GM.GuildController.guild;
 			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterController.guildmaster);
 			view = GM.GuildmasterView;
