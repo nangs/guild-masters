@@ -7,15 +7,18 @@ class Adventurer < ActiveRecord::Base
     return adventurers
   end
 
+	def self.random_adventurer_name
+		return File.readlines(Rails.root.join "app", "models", "adventurerNames.txt").sample
+	end
+
   #This function creates and saves an Adventurer into the Database
   #It will return the newly created Adventurer to the controller
   def self.generate
-    @adventurer_names = ["Alex", "Daniel", "David", "John", "Ben", "Charles", "William", "Alvin", "Peter", "Nathan", "Howard" ]
     template = AdventurerTemplate.find(1)
     level = Guild.find(1).level
     #level = 1
     adventurer = Adventurer.new
-    adventurer.name = @adventurer_names.sample
+    adventurer.name = random_adventurer_name
     adventurer.max_hp = level*template.max_hp+Random.rand(1000)
     adventurer.hp=adventurer.max_hp
     adventurer.max_energy = level*template.max_energy+Random.rand(1000)
