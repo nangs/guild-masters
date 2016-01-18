@@ -14,5 +14,5 @@ GM.QuestController.assign = function(id) {
 	$.each($("input:checked"), function (){
 		assigned.push($(this).val());
 	});
-
+	GM.QuestModel.assign(id, assigned);
 }

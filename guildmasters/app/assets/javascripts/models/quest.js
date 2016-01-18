@@ -54,7 +54,7 @@ GM.QuestModel.getAllQuests = function () {
 	});
 }
 
-GM.QuestModel.assign = function(id) {
+GM.QuestModel.assign = function(id, assigned) {
 	$.ajax({
 		type: 'POST',
 	    url: 'quests.json',
