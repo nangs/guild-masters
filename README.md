@@ -17,9 +17,9 @@ You can access the website at nus school of computing: [http://172.25.79.43:3000
     $ bundle		
     ```		
 		
-* Do the migration:	
+* Setup the database:	
     ```bash		
-    $ rake db:migrate		
+    $ rake db:setup		
     ```		
 		
 * Run the server		
