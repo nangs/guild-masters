@@ -34,6 +34,22 @@ $(function(){
 		var section = $(this).attr('id');
 		showSection(section);
 	});
-	GM.GuildmasterController.getGuildmaster();
-	showSection('home');
+	GM.GuildmasterModel.getGuildmaster();
+	var isLoggedin = false;
+	if (isLoggedin) {
+		$('#indexPage').html(loginTemplate);
+	} else {
+		$('#indexPage').html(gameTemplate);
+		$('button').click(function(){
+			var section = $(this).attr('id');
+			showSection(section);
+		});
+		showSection('home');
+		console.log('here');
+		$('button').click(function(){
+			var section = $(this).attr('id');
+			showSection(section);
+		});
+	}
+	
 })
