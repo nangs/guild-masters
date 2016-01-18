@@ -3,3 +3,46 @@ GM.Event = DS.Model.extend({
 	endTime: DS.attr('number'),
 	goldSpent: DS.attr('number')
 });
+
+GM.EventModel = DS.Model.extend();
+
+GM.EventModel.filter = function (events){
+	events = events.filter(function(e) {
+		return e.quest.state == 'assigned';
+	});
+	events.sort(function(event1, event2) {
+		return event1.end_time - event2.end_time;
+	});
+	return events
+}
+
+GM.EventModel.getAllEvents = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'events.json',
+	    success: function(data) {
+	    	GM.EventModel.event_list = GM.EventModel.filter(data);
+	    	GM.nextEvent = GM.EventModel.event_list[0];
+	    }
+	});
+}
+
+
+GM.EventModel.complete = function (id) {
+	$.ajax({
+		type: 'POST',
+	    url: 'events.json',
+	    data :{
+	    	cmd: 'complete',
+	    	eventId: id
+	    },
+	    success: function(data) {
+	    	showView(data);
+	    },
+	});
+	GM.EventModel.getAllEvents();
+	
+	GM.QuestModel.getAllQuests();
+	GM.AdventurerModel.getAllAdventurers();
+}
+GM.EventModel.getAllEvents();

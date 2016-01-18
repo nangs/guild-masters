@@ -6,3 +6,17 @@ GM.Guild = DS.Model.extend({
 	quests: DS.hasMany('quest'),
 	facilities: DS.hasMany('facility')
 });
+
+GM.GuildModel = DS.Model.extend();
+
+GM.GuildModel.getAllGuilds = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'guild.json',
+	    success: function(data) {
+	    	GM.GuildModel.guild = data;
+	    }
+	});
+}
+
+GM.GuildModel.getAllGuilds();
