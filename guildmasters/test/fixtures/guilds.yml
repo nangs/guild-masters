@@ -10,3 +10,8 @@ two:
   level: 2
   popularity: 2
   guildmaster: two
+  
+TestGuild01:
+  level: 3
+  popularity: 50
+  guildmaster: TestMaster01

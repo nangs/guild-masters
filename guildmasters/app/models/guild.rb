@@ -7,14 +7,5 @@ class Guild < ActiveRecord::Base
 	  guild = Guild.find(1)
 	  return guild
 	end
-	
-	def self.refresh
-	  guild=Guild.find(1)
-	  repeat = guild.popularity/20
-	  repeat.times {
-	    Adventurer.generate
-	    Quest.generate
-	    }
-	end
 
 end
