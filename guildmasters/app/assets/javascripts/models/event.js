@@ -38,11 +38,12 @@ GM.EventModel.complete = function (id) {
 	    },
 	    success: function(data) {
 	    	showView(data);
+			GM.QuestModel.getAllQuests();
+			GM.AdventurerModel.getAllAdventurers();
+			GM.EventModel.getAllEvents();
 	    },
 	});
-	GM.EventModel.getAllEvents();
 	
-	GM.QuestModel.getAllQuests();
-	GM.AdventurerModel.getAllAdventurers();
+
 }
 GM.EventModel.getAllEvents();

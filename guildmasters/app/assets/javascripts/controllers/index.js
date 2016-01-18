@@ -2,6 +2,7 @@ function showSection(section){
 	var view;
 	switch(section){
 		case 'events':
+			GM.EventModel.getAllEvents();
 			if (GM.nextEvent) {
 				view = nextEventTemplate(GM.nextEvent);
 			} else {
