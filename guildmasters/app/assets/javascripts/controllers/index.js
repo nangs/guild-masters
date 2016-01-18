@@ -9,16 +9,16 @@ function showSection(section){
 			}
 			break;
 		case 'adventurers':
-			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerController.adventurers_list);
+			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerModel.adventurers_list);
 			break;
 		case 'quests':
-			view = questNewButton + questsTableTemplate(GM.QuestController.quest_list);
+			view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
 			break;
 		case 'home':
-			GM.GuildmasterController.getGuildmaster();
-			GM.GuildController.getAllGuilds();
-			GM.GuildmasterController.guildmaster.guild = GM.GuildController.guild;
-			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterController.guildmaster);
+			GM.GuildmasterModel.getGuildmaster();
+			GM.GuildModel.getAllGuilds();
+			GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guild;
+			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 			view = GM.GuildmasterView;
 			break;
 	};
