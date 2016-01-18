@@ -36,21 +36,23 @@ $(function(){
 		showSection(section);
 	});
 	GM.GuildmasterModel.getGuildmaster();
-	var isLoggedin = false;
+	var isLoggedin = true;
 	if (isLoggedin) {
-		$('#indexPage').html(loginTemplate);
+		showGame();
 	} else {
-		$('#indexPage').html(gameTemplate);
-		$('button').click(function(){
-			var section = $(this).attr('id');
-			showSection(section);
-		});
-		showSection('home');
-		console.log('here');
-		$('button').click(function(){
-			var section = $(this).attr('id');
-			showSection(section);
-		});
-	}
-	
+		$('#indexPage').html(signupTemplate);
+	}	
 })
+
+function showGame() {
+	$('#indexPage').html(gameTemplate);
+	$('button').click(function(){
+		var section = $(this).attr('id');
+		showSection(section);
+	});
+	showSection('home');
+	$('button').click(function(){
+		var section = $(this).attr('id');
+		showSection(section);
+	});
+}
