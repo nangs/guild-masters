@@ -19,3 +19,55 @@ two:
   defense: 1
   vision: 1
   state: MyString
+
+Tester01:
+  hp: 1000
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: assigned
+  quest: TestQuest01
+  
+Tester02:
+  hp: 1000
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: assigned
+  quest: TestQuest02
+  
+Tester03:
+  hp: 1000
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: Available
+
+Tester04:
+  hp: 1000
+  max_hp: 1000
+  energy: 0
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: Available
+  
+Tester05:
+  hp: 1000
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: Available

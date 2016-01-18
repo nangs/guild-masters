@@ -2,6 +2,7 @@ class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :adventurers
   has_one :quest_event
+  
   #This function returns a list of Quests to the controller
   def self.view_all
     quests=Quest.all
@@ -21,52 +22,32 @@ class Quest < ActiveRecord::Base
     return quest
   end
 
+  
   def self.get(quest_id)
     quest = Quest.find(quest_id)
     return quest
   end
 
+  #This function is a interface to assign adventurers to quest, it calls the actuall logic
+  #Return the result of assigning quest
   def self.assign(quest_id,adventurer_ids)
     quest=Quest.find(quest_id)
     adventurers = Adventurer.find(adventurer_ids)
-    #error_message = "Error, not available"
-    #if(quest.state == "assigned"||quest.state=="successful")
-    #return error_message
-    #end
-    #adventurer_ids.each do |adventurer_id|
-    #  adventurer = Adventurer.find(adventurer_id)
-    # if(adventurer.state =="assigned"||adventurer.energy<=0)
-    #  return error_message
-    #  end
-    #end
-    #quest.adventurers.clear
-    #adventurer_ids.each do |adventurer_id|
-    #  adventurer = Adventurer.find(adventurer_id)
-    #  adventurer.state = "assigned"
-    #  adventurer.quest = quest
-    #  adventurer.save
-    #end
     return quest.assign(adventurers)
-    #quest_event=QuestEvent.new
-
-    #gm = Guildmaster.find(1)
-    #quest_event.quest_id = quest.id
-    #quest_event.start_time = gm.game_time
-    #quest_event.end_time = quest_event.start_time + quest.difficulty*100+Random.rand(quest.difficulty*25)
-    #quest_event.gold_spent = 0
-    #quest_event.save
-    #quest.quest_event_id=quest_event.id
-    #quest.quest_event = quest_event
-    #quest.state = "assigned"
-    #quest.save
   end
 
+  #This function will check the availability of Quest and Adventures and assign them togather and generate a Quest event
+  #I need to REFACTOR this....
   def assign(adventurers)
     error_message = "Error, not available"
+    
+    #Check Quest Status. Done by front end too
     if(self.state == "assigned"||self.state=="successful")
       return error_message
     end
     self.adventurers.clear
+    
+    #Check Adventurers Status. Done by front end too
     adventurers.each do |adventurer|
       if(adventurer.state =="assigned"||adventurer.energy<=0)
         return error_message
@@ -76,30 +57,33 @@ class Quest < ActiveRecord::Base
         adventurer.save
       end
     end
+    
+    #Generate quest event
     quest_event = QuestEvent.new
-    start_time = Guildmaster.find(1).game_time
-    quest_event.setup(start_time,self)
+    quest_event.setup(self)
     self.quest_event_id = quest_event.id
     self.quest_event = quest_event
     self.state = "assigned"
     self.save
+    return "Successfully assigned"
   end
 
-  def self.complete(quest_id)
-    quest = Quest.find(quest_id)
-    return quest.complete
-  end
-  
+  #This function compute the result of quest, clearing the association and return message of result
+  #also need to REFACTOR
   def complete
+    
+    #Relief adventurers and calculate quest factor
     adventurers = self.adventurers
     sum=0
     for adventurer in adventurers
       sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
-      adventurer.return(self)
+      adventurer.return
     end
     sum = sum/900
-    gm = Guildmaster.find(1)
-    guild = Guild.find(1)
+    guild = self.guild
+    gm=guild.guildmaster
+    
+    #Success/Fail judgement
     if(sum>=self.difficulty)
       self.state="successful"
       guild.popularity=guild.popularity+self.difficulty
@@ -110,10 +94,8 @@ class Quest < ActiveRecord::Base
       guild.popularity=guild.popularity-self.difficulty
       msg = "Quest failed! Your guild lost %d popularity" % self.difficulty
     end
+    
     guild.save
-    #if(quest.quest_event.end_time/1000>gm.game_time/1000)
-    #Guild.refresh
-    #end
     gm.game_time = self.quest_event.end_time
     gm.save
     self.adventurers.clear

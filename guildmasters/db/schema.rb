@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116112354) do
+ActiveRecord::Schema.define(version: 20160118031955) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -74,7 +74,10 @@ ActiveRecord::Schema.define(version: 20160116112354) do
     t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "account_id"
   end
+
+  add_index "guildmasters", ["account_id"], name: "index_guildmasters_on_account_id"
 
   create_table "guilds", force: :cascade do |t|
     t.integer  "level"

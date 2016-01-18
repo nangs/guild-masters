@@ -1,17 +1,13 @@
 require 'test_helper'
 
 class QuestEventTest < ActiveSupport::TestCase
-
-  test "create quest event based on quest 1" do
-    q = Quest.create()
-    q.quest_event = QuestEvent.create()
-    qe = q.quest_event
-    assert_same(q, qe.quest, "failed to create quest event")
-  end  
-
-  test "create quest event based on quest 2" do
-    q = Quest.create()
-    qe = q.create_quest_event()
-    assert_same(q, qe.quest, "failed to create quest event")
+  test "test setup" do
+    quest_events(:TestQE01).setup(quests(:TestQuest03))
+    assert_equal guildmasters(:TestMaster01).game_time, quest_events(:TestQE01).start_time
+    assert_equal 0, quest_events(:TestQE01).gold_spent
+    assert_equal quests(:TestQuest03), quest_events(:TestQE01).quest
+    assert_operator quest_events(:TestQE01).end_time, :>=, 10400
+    assert_operator quest_events(:TestQE01).end_time, :<=, 10500
   end
+  
 end
