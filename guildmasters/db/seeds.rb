@@ -8,21 +8,21 @@ gm = Guildmaster.create(gold: 20,
 guild = gm.guilds.create(level: 3, popularity: 30)
 
 
-# 5.times do |i|
-#   guild.adventurers.create(hp: 100+i, 
-#   	                    max_hp: 120+i, 
-#   	                    energy: 50+i, 
-#   	                    max_energy: 60+i,
-#   	                    attack: 100,
-#   	                    defense: 50+i,
-#   	                    vision: 100+i,
-#   	                    state: "available",
-#   	                    name: "adventurer#{i}")
+5.times do |i|
+  guild.adventurers.create(hp: 100+i, 
+  	                    max_hp: 120+i, 
+  	                    energy: 50+i, 
+  	                    max_energy: 60+i,
+  	                    attack: 100,
+  	                    defense: 50+i,
+  	                    vision: 100+i,
+  	                    state: "available",
+  	                    name: "adventurer#{i}")
 
-#   Quest.create(difficulty: 1+i,
-#   	           state: "ongoing",
-#   	           reward: 100+i)
-# end
+  Quest.create(difficulty: 1+i,
+  	           state: "ongoing",
+  	           reward: 100+i)
+end
 
 AdventurerTemplate.create(max_hp: 1000,
 	                      max_energy: 1000,
