@@ -13,3 +13,31 @@ GM.Adventurer = DS.Model.extend({
 	quest: DS.belongsTo('quest'),
 	facility: DS.belongsTo('facility')
 });
+
+GM.AdventurerModel = DS.Model.extend();
+
+GM.AdventurerModel.getAllAdventurers = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'adventurers.json',
+	    success: function(data) {
+	    	GM.AdventurerModel.adventurers_list = data;
+	    }
+	});
+}
+
+GM.AdventurerModel.getNewAdventurers = function () {
+	$.ajax({
+		type: 'POST',
+	    url: 'adventurers.json',
+	    success: function(data) {
+	    	console.log(data);
+	    	// GM.AdventurerModel.new_adventure = data;
+	    	var new_adventure = adventurerNewTemplate(data);
+	    	GM.AdventurerModel.adventurers_list.adventurers.push(data);
+	    	showView(new_adventure);
+	    }
+	});
+}
+
+GM.AdventurerModel.getAllAdventurers();

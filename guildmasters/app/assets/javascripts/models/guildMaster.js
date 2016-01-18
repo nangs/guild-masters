@@ -6,3 +6,17 @@ GM.GuildMaster = DS.Model.extend({
 	guilds: DS.hasMany('guild'),
 	events: DS.hasMany('event')
 });
+
+GM.GuildmasterModel = DS.Model.extend();
+
+GM.GuildmasterModel.getGuildmaster = function () {
+	$.ajax({
+		type: 'GET',
+	    url: 'guildmaster.json',
+	    success: function(data) {
+	    	GM.GuildmasterModel.guildmaster = data;
+	    }
+	});
+}
+
+GM.GuildmasterModel.getGuildmaster();
