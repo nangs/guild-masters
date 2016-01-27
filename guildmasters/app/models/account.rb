@@ -5,14 +5,15 @@ class Account < ActiveRecord::Base
   #This function creates an account with user specified email and password
   #returns result of the creation
   def self.generate(email,password)
-    account = Account.new(password:password,email:email)
-    puts '1231'
-    puts email
-    puts '1232135346'
-    if account.save
-      return 'Account was successfully created.'
+    if Account.find_by(email: email)
+      return 'Taken'
     else
-      return 'Error creating account'
+      account = Account.new(password:password,email:email)
+      if account.save
+        return 'Success'
+      else
+        return 'Error'
+      end
     end
   end
 end

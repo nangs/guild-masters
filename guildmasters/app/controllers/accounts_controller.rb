@@ -35,22 +35,10 @@ class AccountsController < ApplicationController
   def create
     email = params[:email]
     password = params[:password]
-    puts 'helooooooo'
-    puts email
-    puts password
-    puts 'helloooooooooooooooooooooooo'
-    if Account.find_by(email: email)
-      # sessions[:account_id] = account.id
-      # redirect_to admin_url, alert:'password ok'
-      return 'Email taken'
-    else
-      # redirect_to login_url, alert:'Invalid Username or Password'
-
       account = Account.generate(email,password)
       respond_to do |format|
         format.json { render json: account.to_json}
       end
-    end
   end
 
 
