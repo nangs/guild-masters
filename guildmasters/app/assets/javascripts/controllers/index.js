@@ -48,7 +48,7 @@ $(function(){
 
 function setupSubmitPage() {
     var submitted = false;
-    $('#submit').mousedown(function() {
+    $('#signupButton').mousedown(function() {
 
         var email = $('#email').val();
         var password = $('#password').val();
