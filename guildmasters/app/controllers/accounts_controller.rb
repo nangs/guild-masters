@@ -33,18 +33,48 @@ class AccountsController < ApplicationController
   #if it is valid, it returns 'password ok'
   #if it is not valid, it creates an account with that given email and password and returns invalid username/password
   def create
-    account = Account.find_by(email: params[:email])
-    if account and account.authenticate(params[:password])
-      account = Account.generate(params[:email],params[:password])
+    email = params[:email]
+    password = params[:password]
+    puts 'helooooooo'
+    puts email
+    puts password
+    puts 'helloooooooooooooooooooooooo'
+    if Account.find_by(email: email)
+      # sessions[:account_id] = account.id
+      # redirect_to admin_url, alert:'password ok'
+      return 'Email taken'
+    else
+      # redirect_to login_url, alert:'Invalid Username or Password'
+
+      account = Account.generate(email,password)
       respond_to do |format|
         format.json { render json: account.to_json}
       end
-      # sessions[:account_id] = account.id
-      # redirect_to admin_url, alert:'password ok'
-    else
-      return 'Email is taken'
     end
   end
+
+
+
+  #
+  # account = Account.generate(params[:email],params[:password])
+  # respond_to do |format|
+  #   format.json { render json: account.to_json}
+  # end
+  # def create
+  #   account = Account.find_by(email: params[:email])
+  #   if account and account.authenticate(params[:password])
+  #     sessions[:account_id] = account.id
+  #     # redirect_to admin_url, alert:'password ok'
+  #     return 'password ok'
+  #   else
+  #     # redirect_to login_url, alert:'Invalid Username or Password'
+  #
+  #     return 'Invalid Username or Password'
+  #   end
+  # end
+
+
+
 
   # #PUT /accounts/1.json
   # def update

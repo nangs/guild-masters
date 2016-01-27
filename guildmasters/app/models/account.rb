@@ -6,6 +6,9 @@ class Account < ActiveRecord::Base
   #returns result of the creation
   def self.generate(email,password)
     account = Account.new(password:password,email:email)
+    puts '1231'
+    puts email
+    puts '1232135346'
     if account.save
       return 'Account was successfully created.'
     else
@@ -13,3 +16,4 @@ class Account < ActiveRecord::Base
     end
   end
 end
+# account = Account.generate(params[:email],params[:password])
