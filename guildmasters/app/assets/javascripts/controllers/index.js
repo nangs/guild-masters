@@ -48,11 +48,11 @@ $(function(){
 function setupLoginPage() {
     $('#signupPage').mouseup(function() {
     	$('#indexPage').html(signupTemplate);
-    	setupSubmitPage();
+    	setupSignupPage();
     });
 }
 
-function setupSubmitPage() {
+function setupSignupPage() {
     var submitted = false;
     $('#signupButton').mouseup(function() {
 
@@ -72,6 +72,7 @@ function setupSubmitPage() {
                     password: password
                 },
                 success: function(feedback) {
+                	console.log(feedback);
                 	showSuccessSignupPage();
                 }
             });
@@ -93,7 +94,7 @@ function showGame() {
 }
 
 function showDifferentPasswordError() {
-	console.log('Same password');
+	console.log('Password are different');
 }
 
 function showSuccessSignupPage() {
