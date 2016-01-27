@@ -36,13 +36,42 @@ $(function(){
 		showSection(section);
 	});
 	GM.GuildmasterModel.getGuildmaster();
-	var isLoggedin = true;
+	var isLoggedin = false;
 	if (isLoggedin) {
 		showGame();
 	} else {
 		$('#indexPage').html(signupTemplate);
+		setupSubmitPage();
 	}	
 })
+
+
+function setupSubmitPage() {
+    var submitted = false;
+    $('#submit').mousedown(function() {
+
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var confirmPassword = $('#confirmPassword').val();
+
+        if (password != confirmPassword) { // check whether the two passwords are the same
+        	showDifferentPasswordError();
+        } else {
+        	submitted = true;
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(feedback) {
+                	showSuccessSignupPage();
+                }
+            });
+        }
+    });
+}
 
 function showGame() {
 	$('#indexPage').html(gameTemplate);
@@ -55,4 +84,12 @@ function showGame() {
 		var section = $(this).attr('id');
 		showSection(section);
 	});
+}
+
+function showDifferentPasswordError() {
+	console.log('Same password');
+}
+
+function showSuccessSignupPage() {
+
 }
