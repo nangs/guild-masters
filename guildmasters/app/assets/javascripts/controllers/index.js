@@ -40,15 +40,21 @@ $(function(){
 	if (isLoggedin) {
 		showGame();
 	} else {
-		$('#indexPage').html(signupTemplate);
-		setupSubmitPage();
+		$('#indexPage').html(loginTemplate);
+		setupLoginPage();
 	}	
 })
 
+function setupLoginPage() {
+    $('#signupPage').mouseup(function() {
+    	$('#indexPage').html(signupTemplate);
+    	setupSubmitPage();
+    });
+}
 
 function setupSubmitPage() {
     var submitted = false;
-    $('#signupButton').mousedown(function() {
+    $('#signupButton').mouseup(function() {
 
         var email = $('#email').val();
         var password = $('#password').val();
