@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   #   get 'login' => :new
   #   post 'login' => :create
   #   delete 'logout' => :destroy
-  # 
+  #
   # end
 
   #root 'adventurers#index'
