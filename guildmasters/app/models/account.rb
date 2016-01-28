@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
   #To call this function: Account.login_account(params[:email],params[:password])
   def self.login_account(email,password)
     account = Account.find_by(email: email)
-    if account and account.authenticate(params[:password])
+    if account and account.authenticate(password:password)
       # sessions[:account_id] = account.id
       return 'success'
       # return 'success' + sessions[:account_id]

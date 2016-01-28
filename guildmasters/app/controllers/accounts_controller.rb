@@ -19,6 +19,15 @@ class AccountsController < ApplicationController
     end
   end
 
+#GET /accounts/new
+  def new
+    account = Account.new
+  end
+#
+# #GET /accounts/1/edit
+# def edit
+# end
+
 # POST /accounts.json
 #When a POST is done with parameters email and password, this function will check with if the post is a signup or login
   #it will then redirect to the respective function in the model
@@ -75,12 +84,4 @@ end
 #     end
 #   end
 # end
-
-# #GET /accounts/new
-# def new
-#   account = Account.new
-# end
 #
-# #GET /accounts/1/edit
-# def edit
-# end
