@@ -7,7 +7,7 @@ gm = Guildmaster.create(gold: 20,
 
 guild = gm.guilds.create(level: 3, popularity: 30)
 
-
+# create adventurers and quests
 5.times do |i|
   guild.adventurers.create(hp: 100+i, 
   	                    max_hp: 120+i, 
@@ -29,3 +29,13 @@ AdventurerTemplate.create(max_hp: 1000,
 	                      attack: 100,
 	                      defense: 100,
 	                      vision: 100)
+
+5.times do |i|
+  MonsterTemplate.create(name: "monster#{i}",
+                         max_hp: 120+i,
+                         max_energy: 60+i,
+                         attack: 100,
+                         defense: 50+i,
+                         invisibility: 100+i)
+end
+
