@@ -56,22 +56,31 @@ function setupSignupPage() {
     var submitted = false;
     $('#signupButton').mouseup(function() {
 
-        var email = $('#email').val();
+    	var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
         if (password != confirmPassword) { // check whether the two passwords are the same
         	showDifferentPasswordError();
-        } else {
+        } else if (password.length < 6){
+        	passwordTooShortError();
+        } else if (email == ''){
+        	showSignupNullError('email');
+        } else if (password == '') {
+        	showSignupNullError('password');
+        } 
+        else {
         	submitted = true;
             $.ajax({
                 type: 'POST',
                 url: 'accounts.json',
                 data: {
+                	cmd: 'signup',
                     email: email,
                     password: password
                 },
                 success: function(feedback) {
+                	console.log(feedback);
                 	switch(feedback) {
                 		case 'success':
                 			showSuccessSignupPage();
@@ -116,4 +125,12 @@ function showEmailTaken() {
 
 function showSignupError() {
 	console.log('Some error');
+}
+
+function showSignupNullError(field) {
+	alert('You must enter a valid ' + field);
+}
+
+function passwordTooShortError() {
+	alert('The password must be at least than 6 characters');
 }
