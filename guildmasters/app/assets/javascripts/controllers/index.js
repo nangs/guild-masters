@@ -40,12 +40,38 @@ $(function(){
 	if (isLoggedin) {
 		showGame();
 	} else {
-		$('#indexPage').html(loginTemplate);
 		setupLoginPage();
 	}	
 })
 
 function setupLoginPage() {
+	$('#indexPage').html(loginTemplate);
+	var submitted = false;
+    $('#loginButton').mouseup(function() {
+    	var email = $('#email').val();
+        var password = $('#password').val();
+
+		if (email == ''){
+        	showSignupNullError('email');
+        } else if (password == '') {
+        	showSignupNullError('password');
+        } 
+        else {
+        	submitted = true;
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                	cmd: 'login',
+                    email: email,
+                    password: password
+                },
+                success: function(feedback) {
+                	console.log(feedback);
+                }
+            });
+        }
+    });
     $('#signupPage').mouseup(function() {
     	$('#indexPage').html(signupTemplate);
     	setupSignupPage();
@@ -117,6 +143,10 @@ function showDifferentPasswordError() {
 
 function showSuccessSignupPage() {
 	console.log('Signup is successful!');
+	$('#indexPage').html(signupSuccessTemplate);
+    $('#backToLogin').mouseup(function() {
+    	setupLoginPage();
+    });
 }
 
 function showEmailTaken() {
