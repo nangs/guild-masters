@@ -11,13 +11,13 @@ class QuestsController < ApplicationController
 
 # POST /quests.json
   def create
-    if params[:cmd] == "generate"
+    if params[:cmd] == 'generate'
       @quest = Quest.generate
       respond_to do |format|
         format.json { render json: @quest }
       end
 
-    elsif params[:cmd] == "assign"
+    elsif params[:cmd] == 'assign'
       questId = params[:questId]
       adventurersIds = params[:adventurersIds]
       @quest = Quest.assign(questId,adventurersIds)
@@ -27,7 +27,7 @@ class QuestsController < ApplicationController
         format.json { render json: @quest.to_json }
       end
 
-    elsif params[:cmd] == "complete"
+    elsif params[:cmd] == 'complete'
       questId = params[:questId]
       @quest = Quest.complete(questId)
       respond_to do |format|

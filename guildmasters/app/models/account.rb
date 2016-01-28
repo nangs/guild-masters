@@ -4,17 +4,31 @@ class Account < ActiveRecord::Base
 
   #This function creates an account with user specified email and password
   #returns result of the creation
-  def self.generate(email,password)
+  #To call this function: Account.create_account(params[:email],params[:password])
+  def self.create_account(email,password)
     if Account.find_by(email: email)
-      return 'Taken'
+      return 'taken'
     else
       account = Account.new(password:password,email:email)
       if account.save
-        return 'Success'
+        return 'success'
       else
-        return 'Error'
+        return 'error'
       end
     end
   end
+
+  #This function logins with user specified email and password
+  #returns result of the login and if it is successful, it will return the sessionid
+  #To call this function: Account.login_account(params[:email],params[:password])
+  def self.login_account(email,password)
+    account = Account.find_by(email: email)
+    if account and account.authenticate(params[:password])
+      # sessions[:account_id] = account.id
+      return 'success'
+      # return 'success' + sessions[:account_id]
+    else
+      return 'fail'
+    end
+  end
 end
-# account = Account.generate(params[:email],params[:password])
