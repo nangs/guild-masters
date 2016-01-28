@@ -1,6 +1,20 @@
 class Account < ActiveRecord::Base
+  require 'mail'
   has_one :guildmaster, dependent: :destroy
   has_secure_password
+
+  options = {
+      :address              => "smtp.gmail.com",
+      :port                 => 587,
+      :user_name            => 'contact.guildmasters@gmail.com',
+      :password             => 'guildmasters12345',
+      :authentication       => 'plain',
+      :enable_starttls_auto => true
+  }
+  Mail.defaults do
+    delivery_method :smtp, options
+  end
+
 
   #This function creates an account with user specified email and password
   #returns result of the creation
@@ -11,6 +25,12 @@ class Account < ActiveRecord::Base
     else
       account = Account.new(password:password,email:email)
       if account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Thank You for signing up'
+          body 'Click here to activate your account'
+        end
         return 'success'
       else
         return 'error'
