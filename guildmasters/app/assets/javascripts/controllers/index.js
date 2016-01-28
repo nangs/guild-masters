@@ -40,12 +40,38 @@ $(function(){
 	if (isLoggedin) {
 		showGame();
 	} else {
-		$('#indexPage').html(loginTemplate);
 		setupLoginPage();
 	}	
 })
 
 function setupLoginPage() {
+	$('#indexPage').html(loginTemplate);
+	var submitted = false;
+    $('#loginButton').mouseup(function() {
+    	var email = $('#email').val();
+        var password = $('#password').val();
+
+		if (email == ''){
+        	showSignupNullError('email');
+        } else if (password == '') {
+        	showSignupNullError('password');
+        } 
+        else {
+        	submitted = true;
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                	cmd: 'login',
+                    email: email,
+                    password: password
+                },
+                success: function(feedback) {
+                	console.log(feedback);
+                }
+            });
+        }
+    });
     $('#signupPage').mouseup(function() {
     	$('#indexPage').html(signupTemplate);
     	setupSignupPage();
@@ -56,24 +82,42 @@ function setupSignupPage() {
     var submitted = false;
     $('#signupButton').mouseup(function() {
 
-        var email = $('#email').val();
+    	var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
         if (password != confirmPassword) { // check whether the two passwords are the same
         	showDifferentPasswordError();
-        } else {
+        } else if (password.length < 6){
+        	passwordTooShortError();
+        } else if (email == ''){
+        	showSignupNullError('email');
+        } else if (password == '') {
+        	showSignupNullError('password');
+        } 
+        else {
         	submitted = true;
             $.ajax({
                 type: 'POST',
                 url: 'accounts.json',
                 data: {
+                	cmd: 'signup',
                     email: email,
                     password: password
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                	showSuccessSignupPage();
+                	switch(feedback) {
+                		case 'success':
+                			showSuccessSignupPage();
+                			break;
+                		case 'taken':
+                			showEmailTaken();
+                			break;
+                		case 'error':
+                			showSignupError();
+                			break;
+                	}
                 }
             });
         }
@@ -98,5 +142,25 @@ function showDifferentPasswordError() {
 }
 
 function showSuccessSignupPage() {
+	console.log('Signup is successful!');
+	$('#indexPage').html(signupSuccessTemplate);
+    $('#backToLogin').mouseup(function() {
+    	setupLoginPage();
+    });
+}
 
+function showEmailTaken() {
+	console.log('The email you used to register is already taken.');
+}
+
+function showSignupError() {
+	console.log('Some error');
+}
+
+function showSignupNullError(field) {
+	alert('You must enter a valid ' + field);
+}
+
+function passwordTooShortError() {
+	alert('The password must be at least than 6 characters');
 }

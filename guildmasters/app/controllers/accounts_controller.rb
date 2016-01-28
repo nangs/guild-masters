@@ -23,57 +23,65 @@ class AccountsController < ApplicationController
   def new
     account = Account.new
   end
-
-#GET /accounts/1/edit
-  def edit
-  end
+#
+# #GET /accounts/1/edit
+# def edit
+# end
 
 # POST /accounts.json
-  #When a POST is done with parameters email and password, this function will check with the database if email and password is valid
-  #if it is valid, it returns 'password ok'
-  #if it is not valid, it creates an account with that given email and password and returns invalid username/password
+#When a POST is done with parameters email and password, this function will check with if the post is a signup or login
+  #it will then redirect to the respective function in the model
+  #it then returns a json format of what the model returns
   def create
     email = params[:email]
     password = params[:password]
-      account = Account.generate(email,password)
-      respond_to do |format|
-        format.json { render json: account.to_json}
-      end
+    if params[:cmd] == 'signup'
+      account = Account.create_account(email,password)
+      # UserMail.send_email(email).deliver
+    elsif params[:cmd] == 'login'
+      account = Account.login_account(email,password)
+    end
+    respond_to do |format|
+      format.json { render json: account.to_json}
+    end
   end
-
-
-
-  #
-  # account = Account.generate(params[:email],params[:password])
-  # respond_to do |format|
-  #   format.json { render json: account.to_json}
-  # end
-  # def create
-  #   account = Account.find_by(email: params[:email])
-  #   if account and account.authenticate(params[:password])
-  #     sessions[:account_id] = account.id
-  #     # redirect_to admin_url, alert:'password ok'
-  #     return 'password ok'
-  #   else
-  #     # redirect_to login_url, alert:'Invalid Username or Password'
-  #
-  #     return 'Invalid Username or Password'
-  #   end
-  # end
-
-
-
-
-  # #PUT /accounts/1.json
-  # def update
-  #   respond_to do |format|
-  #     if account.update(username,password)
-  #       format.html { redirect_to accounts_url, notice: 'Account was successfully updated.'}
-  #       format.json { head :no_content }
-  #     else
-  #       format.html { render action: 'edit' }
-  #       format.json { render json: account.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 end
+
+
+
+
+
+#
+# account = Account.generate(params[:email],params[:password])
+# respond_to do |format|
+#   format.json { render json: account.to_json}
+# end
+# def create
+#   account = Account.find_by(email: params[:email])
+#   if account and account.authenticate(params[:password])
+#     sessions[:account_id] = account.id
+#     # redirect_to admin_url, alert:'password ok'
+#     return 'password ok'
+#   else
+#     # redirect_to login_url, alert:'Invalid Username or Password'
+#
+#     return 'Invalid Username or Password'
+#   end
+# end
+
+
+
+
+# #PUT /accounts/1.json
+# def update
+#   respond_to do |format|
+#     if account.update(username,password)
+#       format.html { redirect_to accounts_url, notice: 'Account was successfully updated.'}
+#       format.json { head :no_content }
+#     else
+#       format.html { render action: 'edit' }
+#       format.json { render json: account.errors, status: :unprocessable_entity }
+#     end
+#   end
+# end
+#
