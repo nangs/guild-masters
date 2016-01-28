@@ -72,8 +72,17 @@ function setupSignupPage() {
                     password: password
                 },
                 success: function(feedback) {
-                	console.log(feedback);
-                	showSuccessSignupPage();
+                	switch(feedback) {
+                		case 'success':
+                			showSuccessSignupPage();
+                			break;
+                		case 'taken':
+                			showEmailTaken();
+                			break;
+                		case 'error':
+                			showSignupError();
+                			break;
+                	}
                 }
             });
         }
@@ -98,5 +107,13 @@ function showDifferentPasswordError() {
 }
 
 function showSuccessSignupPage() {
+	console.log('Signup is successful!');
+}
 
+function showEmailTaken() {
+	console.log('The email you used to register is already taken.');
+}
+
+function showSignupError() {
+	console.log('Some error');
 }
