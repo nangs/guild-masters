@@ -68,6 +68,12 @@ function setupLoginPage() {
                 },
                 success: function(feedback) {
                 	console.log(feedback);
+                    if (feedback.msg == 'success') {
+                        GM.sessionID = feedback.sessionID;
+                        showGame();
+                    } else {
+                        showLoginError();
+                    }
                 }
             });
         }
@@ -82,21 +88,21 @@ function setupSignupPage() {
     var submitted = false;
     $('#signupButton').mouseup(function() {
 
-    	var email = $('#email').val();
+        var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
         if (password != confirmPassword) { // check whether the two passwords are the same
-        	showDifferentPasswordError();
+            showDifferentPasswordError();
         } else if (password.length < 6){
-        	passwordTooShortError();
+            passwordTooShortError();
         } else if (email == ''){
-        	showSignupNullError('email');
+            showSignupNullError('email');
         } else if (password == '') {
-        	showSignupNullError('password');
+            showSignupNullError('password');
         } 
         else {
-        	submitted = true;
+            submitted = true;
             $.ajax({
                 type: 'POST',
                 url: 'accounts.json',
@@ -163,4 +169,8 @@ function showSignupNullError(field) {
 
 function passwordTooShortError() {
 	alert('The password must be at least than 6 characters');
+}
+
+function showLoginError() {
+    alert('Some error occured during login...');
 }
