@@ -2,6 +2,7 @@ class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :adventurers
   has_one :quest_event
+  belongs_to :monster_template
   
   #This function returns a list of Quests to the controller
   def self.view_all
