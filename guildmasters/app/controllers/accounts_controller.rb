@@ -30,16 +30,13 @@ class AccountsController < ApplicationController
 
 # POST /accounts.json
 #When a POST is done with parameters email and password, this function will check with if the post is a signup or login
-  #it will then redirect to the respective function in the model
-  #it then returns a json format of what the model returns
+#it will then redirect to the respective function in the model
+#it then returns a json format of what the model returns
   def create
-    email = params[:email]
-    password = params[:password]
     if params[:cmd] == 'signup'
-      account = Account.create_account(email,password)
-      # UserMail.send_email(email).deliver
-    elsif params[:cmd] == 'login'
-      account = Account.login_account(email,password)
+      account = Account.create_account(params[:email],[:password])
+    elsif params[:cmd] == 'activate_account'
+      account = Account.activate_account(params[:token])
     end
     respond_to do |format|
       format.json { render json: account.to_json}
