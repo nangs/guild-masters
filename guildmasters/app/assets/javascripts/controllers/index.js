@@ -179,6 +179,20 @@ function showSuccessSignupPage(email) {
             });
         }
     });
+    $('#resendEmail').mouseup(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'accounts.json',
+            data: {
+                cmd: 'sendEmail',
+                email: email
+            },
+            success: function(feedback) {
+                console.log(feedback);
+                alert("Another email has been sent to you.");
+            }
+        });
+    });
 }
 
 function showSuccessActivatePage() {
