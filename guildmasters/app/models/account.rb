@@ -41,16 +41,14 @@ class Account < ActiveRecord::Base
     # end
   end
 
-  def self.activate_account(token)
-    account = Account.find_by(confirm_token: token)
-    if account
+  def self.activate_account(email,confirm_token)
+    account = Account.find_by(email: email)
+    if !account.nil? and account.confirm_token == confirm_token
       account.email_confirmed = true
       account.session_id = account.id
       account.save
       return account
     else
-      account.email_confirmed = false
-      account.save
       return 'fail'
     end
   end

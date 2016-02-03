@@ -34,9 +34,13 @@ class AccountsController < ApplicationController
 #it then returns a json format of what the model returns
   def create
     if params[:cmd] == 'signup'
-      account = Account.create_account(params[:email],[:password])
+      email = params[:email]
+      password = params[:password]
+      account = Account.create_account(email,password)
     elsif params[:cmd] == 'activate_account'
-      account = Account.activate_account(params[:token])
+      email = params[:email]
+      confirm_token = params[:confirm_token]
+      account = Account.activate_account(email,confirm_token)
     end
     respond_to do |format|
       format.json { render json: account.to_json}
