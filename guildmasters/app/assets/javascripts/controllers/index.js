@@ -115,7 +115,7 @@ function setupSignupPage() {
                 	console.log(feedback);
                 	switch(feedback) {
                 		case 'success':
-                			showSuccessSignupPage();
+                			showSuccessSignupPage(email);
                 			break;
                 		case 'taken':
                 			showEmailTaken();
@@ -147,10 +147,40 @@ function showDifferentPasswordError() {
 	console.log('Password are different');
 }
 
-function showSuccessSignupPage() {
+function showSuccessSignupPage(email) {
 	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
-    $('#backToLogin').mouseup(function() {
+    $('#activateAccount').mouseup(function() {
+
+        var code = $('#activationCode').val();
+        if (!code) {
+            alert("Please enter the activation code");
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                    cmd: 'activate',
+                    code: code,
+                    email: email
+                },
+                success: function(feedback) {
+                    console.log(feedback);
+                    switch(feedback) {
+                        case 'success':
+                            showSuccessActivatePage();
+                            setupLoginPage();
+                            break;
+                        case 'fail':
+                            alert('The activation entered code is wrong');
+                            break;
+                    }
+                }
+            });
+        }
+    });
+}
     	setupLoginPage();
     });
 }
