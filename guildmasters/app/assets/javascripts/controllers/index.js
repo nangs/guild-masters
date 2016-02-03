@@ -181,6 +181,10 @@ function showSuccessSignupPage(email) {
         }
     });
 }
+
+function showSuccessActivatePage() {
+    $('#indexPage').html(activateSuccessTemplate);
+    $('#goToLogin').mouseup(function() {
     	setupLoginPage();
     });
 }
