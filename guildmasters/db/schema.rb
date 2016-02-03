@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203085752) do
+ActiveRecord::Schema.define(version: 20160203094529) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -139,6 +139,13 @@ ActiveRecord::Schema.define(version: 20160203085752) do
     t.string   "scout_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "treasures", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "invisibility"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
