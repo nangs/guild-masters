@@ -11,14 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127093114) do
+ActiveRecord::Schema.define(version: 20160203085752) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
     t.string   "password_digest"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "email_confirmed", default: false
+    t.string   "confirm_token"
+    t.integer  "session_id"
   end
 
   create_table "adventurer_templates", force: :cascade do |t|
@@ -115,13 +118,15 @@ ActiveRecord::Schema.define(version: 20160127093114) do
     t.integer  "difficulty"
     t.string   "state"
     t.integer  "reward"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "guild_id"
     t.integer  "quest_event_id"
+    t.integer  "monster_template_id"
   end
 
   add_index "quests", ["guild_id"], name: "index_quests_on_guild_id"
+  add_index "quests", ["monster_template_id"], name: "index_quests_on_monster_template_id"
   add_index "quests", ["quest_event_id"], name: "index_quests_on_quest_event_id"
 
   create_table "regions", force: :cascade do |t|
