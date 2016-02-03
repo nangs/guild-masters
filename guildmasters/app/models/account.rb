@@ -20,25 +20,30 @@ class Account < ActiveRecord::Base
   #returns result of the creation
   #To call this function: Account.create_account(params[:email],params[:password])
   def self.create_account(email,password)
-    # if Account.find_by(email: email)
-    #   return 'taken'
-    # else
-    account = Account.new(password:password,email:email)
-    if account.save
-      account.confirm_token = account.id * rand(999)
-      account.save
-      Mail.deliver do
-        to email
-        from 'contact.guildmasters@gmail.com'
-        subject 'Subject - Thank You for signing up'
-        body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+    account = Account.find_by(email: email)
+    if !account.nil?
+      if account.email_confirmed      #email created and activated
+        return 'taken'
+      elsif !account.email_confirmed  #email created but not activated
+        return 'not_activated'
       end
-      account.initialize_guildmaster
-      return 'success'
-    else
-      return 'error'
+    else                              #email does not exist
+      account = Account.new(password:password,email:email)
+      if account.save
+        account.confirm_token = account.id * rand(999)
+        account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Thank You for signing up'
+          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+        end
+        account.initialize_guildmaster
+        return 'success'
+      else
+        return 'error'
+      end
     end
-    # end
   end
 
   def self.activate_account(email,confirm_token)
