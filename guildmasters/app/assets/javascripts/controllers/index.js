@@ -144,14 +144,13 @@ function showGame() {
 }
 
 function showDifferentPasswordError() {
-	console.log('Password are different');
+	alert('The two password you entered are different');
 }
 
 function showSuccessSignupPage(email) {
 	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
     $('#activateAccount').mouseup(function() {
-
         var code = $('#activationCode').val();
         if (!code) {
             alert("Please enter the activation code");
@@ -185,16 +184,16 @@ function showSuccessSignupPage(email) {
 function showSuccessActivatePage() {
     $('#indexPage').html(activateSuccessTemplate);
     $('#goToLogin').mouseup(function() {
-    	setupLoginPage();
+        setupLoginPage();
     });
 }
 
 function showEmailTaken() {
-	console.log('The email you used to register is already taken.');
+	alert('The email you used to register is already taken.');
 }
 
 function showSignupError() {
-	console.log('Some error');
+	alert('Some error occured during the signup process, please be patient while we are fixing it.');
 }
 
 function showSignupNullError(field) {
