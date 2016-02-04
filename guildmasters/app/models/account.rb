@@ -66,17 +66,22 @@ class Account < ActiveRecord::Base
     gm.save
   end
 
-  #This function logins with user specified email and password
-  #returns result of the login and if it is successful, it will return the sessionid
-  #To call this function: Account.login_account(params[:email],params[:password])
-  def self.login_account(email,password)
-    account = Account.find_by(email: email)
-    if account and account.authenticate(password) and account.email_confirmed == true
-      sessions[:account_id] = account.id
-      return 'success'
-      # return 'success' + sessions[:account_id]
-    else
-      return 'fail'
-    end
+  def gm_info
+    return self.guildmaster
   end
+
+  # #This function logins with user specified email and password
+  # #returns result of the login and if it is successful, it will return the sessionid
+  # #To call this function: Account.login_account(params[:email],params[:password])
+  # def self.login_account(email,password)
+  #   account = Account.find_by(email: email)
+  #   if account and account.authenticate(password) and account.email_confirmed == true
+  #     sessions[:account_id] = account.id
+  #     gm = account.guildmaster
+  #     return gm
+  #     # return 'success' + sessions[:account_id]
+  #   else
+  #     return 'fail'
+  #   end
+  # end
 end

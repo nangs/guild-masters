@@ -46,9 +46,15 @@ class AccountsController < ApplicationController
       format.json { render json: account.to_json}
     end
   end
+
+  def show
+    acc = Account.find(params[:id])
+    gm = acc.guildmaster
+    respond_to do |format|
+      format.json { render json: gm }
+    end
+  end
 end
-
-
 
 
 
