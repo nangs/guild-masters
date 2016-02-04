@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'monster.rb'
 
 class QuestTest < ActiveSupport::TestCase
   # test "the truth" do
@@ -19,5 +20,15 @@ class QuestTest < ActiveSupport::TestCase
     quests(:TestQuest03).assign([adventurers(:Tester03)])
     assert_equal "assigned", adventurers(:Tester03).state
     assert_equal "assigned", quests(:TestQuest03).state
+  end
+  
+  test "test time cost" do
+    quests(:TestQuest06).assign([adventurers(:Tester03),adventurers(:Tester05)])
+    assert_equal 450, quests(:TestQuest06).time_cost
+  end
+  
+  test "test battle" do
+    quests(:TestQuest06).assign([adventurers(:Tester03),adventurers(:Tester05)])
+    quests(:TestQuest06).complete
   end
 end

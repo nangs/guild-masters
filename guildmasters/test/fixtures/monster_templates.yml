@@ -15,3 +15,10 @@ two:
   attack: 1
   defense: 1
   invisibility: 1
+
+TestMonster01:
+  name: Fei
+  max_hp: 1000
+  attack: 1000
+  defense: 1000
+  invisibility: 100
