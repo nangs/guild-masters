@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protected
   def authorize
     unless Account.find_by(id: session[:account_id])
-      # rendering to json is not needed. 
+      # rendering to json is not needed.
       # respond_to do |format|
       #   format.json { render json: 'unauthorized'.to_json}
       # end
