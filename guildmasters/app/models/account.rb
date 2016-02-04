@@ -51,7 +51,7 @@ class Account < ActiveRecord::Base
     if !account.nil? and account.confirm_token == confirm_token
       account.email_confirmed = true
       account.save
-      return account
+      return 'success'
     else
       return 'fail'
     end
