@@ -67,10 +67,11 @@ function setupLoginPage() {
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                    if (feedback == 'success') {
-                        showGame();
-                    } else {
+                    if (feedback == 'error') {
                         showLoginError();
+                    } else {
+                        localStorage.setItem('seesionID', feedback);
+                        showGame();
                     }
                 }
             });
