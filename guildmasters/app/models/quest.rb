@@ -1,3 +1,4 @@
+require 'monster.rb'
 class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :adventurers
@@ -9,26 +10,13 @@ class Quest < ActiveRecord::Base
     quests=Quest.all
     return quests
   end
-
-  #This function creates and saves a Quest into the Database
-  #It will return the newly created Quest to the controller
-  def self.generate
-    level = Guild.find(1).level
-    quest = Quest.new
-    quest.difficulty = level+Random.rand(2)
-    quest.state = "pending"
-    quest.reward = 1000*quest.difficulty+Random.rand(1000)
-    quest.guild_id=Guild.find(1).id
-    quest.save
-    return quest
-  end
-
   
-  def self.get(quest_id)
-    quest = Quest.find(quest_id)
-    return quest
+  #This function is a interface to create a new quest
+  def self.generate(guild_id)
+    guild = Guild.find(guild_id)
+    return guild.create_quest
   end
-
+  
   #This function is a interface to assign adventurers to quest, it calls the actuall logic
   #Return the result of assigning quest
   def self.assign(quest_id,adventurer_ids)
@@ -38,7 +26,6 @@ class Quest < ActiveRecord::Base
   end
 
   #This function will check the availability of Quest and Adventures and assign them togather and generate a Quest event
-  #I need to REFACTOR this....
   def assign(adventurers)
     error_message = "Error, not available"
     
@@ -50,7 +37,7 @@ class Quest < ActiveRecord::Base
     
     #Check Adventurers Status. Done by front end too
     adventurers.each do |adventurer|
-      if(adventurer.state =="assigned"||adventurer.energy<=0)
+      if(adventurer.state =="assigned"||adventurer.state=="dead"||adventurer.energy<=0)
         return error_message
       else
         adventurer.state = "assigned"
@@ -58,34 +45,29 @@ class Quest < ActiveRecord::Base
         adventurer.save
       end
     end
+    self.state = "assigned"
+    self.adventurers = adventurers
     
     #Generate quest event
-    quest_event = QuestEvent.new
-    quest_event.setup(self)
-    self.quest_event_id = quest_event.id
-    self.quest_event = quest_event
-    self.state = "assigned"
+    self.create_quest_event(start_time: self.guild.guildmaster.game_time,
+                            end_time: self.guild.guildmaster.game_time + self.time_cost, 
+                            gold_spent: 0)
     self.save
     return "Successfully assigned"
   end
 
   #This function compute the result of quest, clearing the association and return message of result
-  #also need to REFACTOR
   def complete
     
     #Relief adventurers and calculate quest factor
     adventurers = self.adventurers
-    sum=0
-    for adventurer in adventurers
-      sum = sum + adventurer.attack + adventurer.defense + adventurer.vision
-      adventurer.return
-    end
-    sum = sum/900
+    result = self.battle
+
     guild = self.guild
     gm=guild.guildmaster
     
     #Success/Fail judgement
-    if(sum>=self.difficulty)
+    if(result)
       self.state="successful"
       guild.popularity=guild.popularity+self.difficulty
       gm.gold = gm.gold+self.reward
@@ -101,8 +83,70 @@ class Quest < ActiveRecord::Base
     gm.save
     self.adventurers.clear
     self.save
-    self.quest_event.destroy
+    self.quest_event=nil
     return msg
   end
-
+  
+  #This function calculates the game time needed for the quest to complete
+  def time_cost
+    adv_vision=0
+    adventurers = self.adventurers
+    for adventurer in adventurers
+      adv_vision = adv_vision + adventurer.vision
+    end
+    mon_invis = self.difficulty*self.monster_template.invisibility
+    return 100*self.difficulty+100*mon_invis/adv_vision
+  end
+  
+  #This function simulates the battle process when carry out a quest
+  def battle
+    
+    adventurers = self.adventurers
+    #Generate monster instance according to template
+    monster = Monster.new(self.monster_template,self.difficulty)
+    end_of_battle=false
+    adv_victory = false
+    turn = 0
+    while(!end_of_battle)
+      turn = turn+1
+      #Adventurers` phase
+      for adventurer in adventurers
+        if(adventurer.hp>0)
+          if(monster.hp>0)
+            monster.hp=monster.hp-(adventurer.attack*adventurer.attack/monster.defense)
+            if(monster.hp<0)
+              monster.hp=0
+            end
+          end
+        end
+      end
+      #Monster`s phase
+      if(monster.hp>0)
+        target = adventurers.sample
+        target.hp = target.hp - (monster.attack*monster.attack/target.defense)
+        #Adventurer was killed
+        if(target.hp<=0)
+          target.hp=0
+          target.energy=0
+          target.state = "dead"
+          target.save
+          adventurers.delete(target)
+          if(adventurers.empty?)
+            end_of_battle=true
+          end
+        end
+      elsif(monster.hp==0)
+        end_of_battle = true
+        adv_victory=true
+      end
+    end
+    #Energy cost calculation
+    if(!adventurers.empty?)
+      for adventurer in adventurers
+        adventurer.energy = adventurer.energy - 10 - self.difficulty*5
+        adventurer.state = "available"
+      end
+    end
+    return adv_victory
+  end
 end
