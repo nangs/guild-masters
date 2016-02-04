@@ -50,7 +50,6 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil? and account.confirm_token == confirm_token
       account.email_confirmed = true
-      account.session_id = account.id
       account.save
       return account
     else
@@ -73,7 +72,7 @@ class Account < ActiveRecord::Base
   def self.login_account(email,password)
     account = Account.find_by(email: email)
     if account and account.authenticate(password) and account.email_confirmed == true
-      # sessions[:account_id] = account.id
+      sessions[:account_id] = account.id
       return 'success'
       # return 'success' + sessions[:account_id]
     else

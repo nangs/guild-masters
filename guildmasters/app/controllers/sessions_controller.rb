@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
     elsif !account.nil? and account.authenticate(password)
       session[:account_id] = account.id
       respond_to do |format|
-        format.json { render json: account.to_json}
+        format.json { render json: 'success'.to_json}
       end
     end
   end
