@@ -24,8 +24,8 @@ function showSection(section){
 			break;
 	};
 	showView(view);
-
 }
+
 function showView(view){
 	$('#mainContainer').html(view);
 }
@@ -60,16 +60,14 @@ function setupLoginPage() {
         	submitted = true;
             $.ajax({
                 type: 'POST',
-                url: 'accounts.json',
+                url: 'sessions.json',
                 data: {
-                	cmd: 'login',
                     email: email,
                     password: password
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                    if (feedback.msg == 'success') {
-                        GM.sessionID = feedback.sessionID;
+                    if (feedback == 'success') {
                         showGame();
                     } else {
                         showLoginError();
@@ -115,11 +113,14 @@ function setupSignupPage() {
                 	console.log(feedback);
                 	switch(feedback) {
                 		case 'success':
-                			showSuccessSignupPage(email);
+                			showSuccessSignupPage();
                 			break;
                 		case 'taken':
                 			showEmailTaken();
                 			break;
+                        case 'not_activated':
+                            showEmailNotActivated();
+                            break;
                 		case 'error':
                 			showSignupError();
                 			break;
@@ -147,11 +148,12 @@ function showDifferentPasswordError() {
 	alert('The two password you entered are different');
 }
 
-function showSuccessSignupPage(email) {
+function showSuccessSignupPage() {
 	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
     $('#activateAccount').mouseup(function() {
         var code = $('#activationCode').val();
+        var email = $('#email').val();
         if (!code) {
             alert("Please enter the activation code");
         }
@@ -160,8 +162,8 @@ function showSuccessSignupPage(email) {
                 type: 'POST',
                 url: 'accounts.json',
                 data: {
-                    cmd: 'activate',
-                    code: code,
+                    cmd: 'activate_account',
+                    confirm_token: code,
                     email: email
                 },
                 success: function(feedback) {
