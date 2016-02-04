@@ -64,6 +64,7 @@ class Account < ActiveRecord::Base
     gm.state = 'available'
     gm.account = self
     gm.save
+    gm.build_guild
   end
 
   def gm_info
