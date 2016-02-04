@@ -171,7 +171,6 @@ function showSuccessSignupPage() {
                     switch(feedback) {
                         case 'success':
                             showSuccessActivatePage();
-                            setupLoginPage();
                             break;
                         case 'fail':
                             alert('The activation entered code is wrong');
