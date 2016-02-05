@@ -17,11 +17,13 @@ function showSection(section){
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster();
+            sleep(100);
 			GM.GuildModel.getAllGuilds();
-			GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guild;
-			GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
-			view = GM.GuildmasterView;
-			break;
+            sleep(100);
+            GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guild;
+            GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
+            view = GM.GuildmasterView;
+            break;
 	};
 	showView(view);
 }
@@ -36,7 +38,7 @@ $(function(){
 		showSection(section);
 	});
 	GM.GuildmasterModel.getGuildmaster();
-	var isLoggedin = false;
+	var isLoggedin = false;//localStorage.getItem('seesionID');
 	if (isLoggedin) {
 		showGame();
 	} else {
@@ -222,4 +224,13 @@ function passwordTooShortError() {
 
 function showLoginError() {
     alert('Some error occured during login...');
+}
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
 }
