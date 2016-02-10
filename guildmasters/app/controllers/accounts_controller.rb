@@ -35,6 +35,9 @@ class AccountsController < ApplicationController
       password = params[:password]
       confirm_token = params[:confirm_token]
       account = Account.update_account(email,password,confirm_token)
+    elsif params[:cmd] == 'resend_email'
+      email = params[:email]
+      account = Account.resend_email(email)
     end
     respond_to do |format|
       format.json { render json: account.to_json}
