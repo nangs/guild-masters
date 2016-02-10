@@ -50,13 +50,7 @@ class Account < ActiveRecord::Base
 
   def self.resend_email(email)
     account = Account.find_by(email: email)
-    if !account.nil?
-      if account.email_confirmed
-        return 'activated'
-      elsif !account.email_confirmed
-        return 'not_activated'
-      end
-    else
+    if !account.nil? && !account.email_confirmed
       account.confirm_token = account.id * rand(999)
       if account.save
         Mail.deliver do
