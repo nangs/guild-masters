@@ -12,7 +12,8 @@ class QuestsController < ApplicationController
 # POST /quests.json
   def create
     if params[:cmd] == 'generate'
-      @quest = Quest.generate(guild_id)
+      guildId = params[:guildId]
+      @quest = Quest.generate(guildId)
       respond_to do |format|
         format.json { render json: @quest }
       end
