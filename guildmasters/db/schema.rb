@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210093302) do
+ActiveRecord::Schema.define(version: 20160210095205) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 20160210093302) do
   end
 
   add_index "adventurers", ["guild_id"], name: "index_adventurers_on_guild_id"
+
+  create_table "adventurers_quest_events", id: false, force: :cascade do |t|
+    t.integer "adventurer_id"
+    t.integer "quest_event_id"
+  end
+
+  add_index "adventurers_quest_events", ["adventurer_id"], name: "index_adventurers_quest_events_on_adventurer_id"
+  add_index "adventurers_quest_events", ["quest_event_id"], name: "index_adventurers_quest_events_on_quest_event_id"
 
   create_table "events", force: :cascade do |t|
     t.integer  "start_time"

@@ -1,5 +1,6 @@
 class QuestEvent < ActiveRecord::Base
   belongs_to :quest
+  has_and_belongs_to_many :adventurers
   accepts_nested_attributes_for :quest
   
   def self.view_all

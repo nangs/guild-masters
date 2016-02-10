@@ -1,5 +1,7 @@
 class Adventurer < ActiveRecord::Base
   belongs_to :guild
+  has_and_belongs_to_many :quest_events
+
   #This function returns a list of Adventurers to the controller
   def self.view_all
     adventurers = Adventurer.all
