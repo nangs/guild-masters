@@ -1,3 +1,4 @@
+#This class controller handles the login and sign up values with appropriate references to the database
 class SessionsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :verify_authenticity_token
@@ -21,6 +22,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # DELETE /sessions/1.json
   def destroy
     session[:account_id] = nil
     respond_to do |format|

@@ -1,29 +1,28 @@
 class GuildmasterController < ApplicationController
   # GET /guildmaster.json
   def index
-    @guildmaster = Guildmaster.get_info
-    respond_to do |format|
-      #format.html # index.html.erb
-      format.json { render json: @guildmaster }
-    end
   end
 
   def create
-    gmId = params[:id]
-    @guildmaster = Account.find_by(gmId).guildmaster
-    respond_to do |format|
-      #format.html # index.html.erb
-      format.json { render json: @guildmaster }
+    if !params[:id].nil?
+      gmId = params[:id]
+      @guildmaster = Account.find_by(gmId).guildmaster
+      respond_to do |format|
+        format.json { render json: @guildmaster }
+      end
+    else
     end
   end
 
   def show
-    acc = Account.find(params[:id])
-    gm = acc.guildmaster
-    respond_to do |format|
-      format.json { render json: gm }
+    if !params[:id].nil?
+      acc = Account.find(params[:id])
+      gm = acc.guildmaster
+      respond_to do |format|
+        format.json { render json: gm }
+      end
+    else
     end
   end
-
 end
 
