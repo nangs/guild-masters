@@ -68,7 +68,7 @@ class Account < ActiveRecord::Base
 
   def self.send_password_token(email)
     account = Account.find_by(email: email)
-    if !account.nil? && !account.email_confirmed
+    if !account.nil? && account.email_confirmed
       account.confirm_token = account.id * rand(999)
       if account.save
         Mail.deliver do
@@ -79,8 +79,12 @@ class Account < ActiveRecord::Base
         end
         return 'success'
       else
-        return 'error'
+        return 'error: sending email'
       end
+    elsif !account.email_confirmed
+      return 'error: not activated'
+    elsif account.nil?
+      return 'error: no such account'
     end
   end
 
@@ -97,19 +101,16 @@ class Account < ActiveRecord::Base
 
   def self.update_account(email,password,confirm_token)
     account = Account.find_by(email: email)
-    account.email_confirmed = false
-    if !account.nil? && account.confirm_token == confirm_token
-      account.email_confirmed = true
+    if !account.nil? && account.confirm_token == confirm_token && account.email_confirmed
       account.password = password
       account.save
       return 'success'
-    else
-      return 'fail'
+    elsif !account.email_confirmed
+      return 'error: account not activated'
     end
   end
 
   def initialize_guildmaster
-    acc = Account.find(session[:account_id])
     gm = Guildmaster.new
     gm.gold = 1000
     gm.game_time = 0
