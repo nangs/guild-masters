@@ -25,26 +25,22 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil?
       if account.email_confirmed
-        return 'taken'
+        return 'error: account in used'
       elsif !account.email_confirmed
-        return 'not_activated'
+        return 'error: not activated'
       end
-    else
+    elsif account.nil?
       account = Account.new(password:password,email:email)
-      if account.save
-        account.confirm_token = account.id * rand(999)
-        account.save
-        Mail.deliver do
-          to email
-          from 'contact.guildmasters@gmail.com'
-          subject 'Subject - Thank You for signing up'
-          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
-        end
-        account.initialize_guildmaster
-        return 'success'
-      else
-        return 'error'
+      account.confirm_token = account.id * rand(999)
+      account.save
+      Mail.deliver do
+        to email
+        from 'contact.guildmasters@gmail.com'
+        subject 'Subject - Thank You for signing up'
+        body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
       end
+      account.initialize_guildmaster
+      return 'success: activation email sent'
     end
   end
 
@@ -52,17 +48,18 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil? && !account.email_confirmed
       account.confirm_token = account.id * rand(999)
-      if account.save
-        Mail.deliver do
-          to email
-          from 'contact.guildmasters@gmail.com'
-          subject 'Subject - Thank You for signing up'
-          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
-        end
-        return 'success'
-      else
-        return 'error'
+      account.save
+      Mail.deliver do
+        to email
+        from 'contact.guildmasters@gmail.com'
+        subject 'Subject - Thank You for signing up'
+        body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
       end
+      return 'success: activation email sent'
+    elsif account.nil
+      return 'error: no such account'
+    elsif account.email_confirmed
+      return 'error: has already been activated'
     end
   end
 
@@ -70,17 +67,14 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil? && account.email_confirmed
       account.confirm_token = account.id * rand(999)
-      if account.save
-        Mail.deliver do
-          to email
-          from 'contact.guildmasters@gmail.com'
-          subject 'Subject - Password Change'
-          body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
-        end
-        return 'success'
-      else
-        return 'error: sending email'
+      account.save
+      Mail.deliver do
+        to email
+        from 'contact.guildmasters@gmail.com'
+        subject 'Subject - Password Change'
+        body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
       end
+      return 'success: activation email sent'
     elsif !account.email_confirmed
       return 'error: not activated'
     elsif account.nil?
@@ -93,9 +87,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token
       account.email_confirmed = true
       account.save
-      return 'success'
-    else
-      return 'fail'
+      return 'success: account activated'
+    elsif account.nil?
+      return 'error: no such account'
+    elsif account.email_confirmed
+      return 'error: has already been activated'
+    elsif account.confirm_token != confirm_token
+      return 'error: wrong confirm token'
     end
   end
 
@@ -104,9 +102,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token && account.email_confirmed
       account.password = password
       account.save
-      return 'success'
+      return 'success: update password'
     elsif !account.email_confirmed
       return 'error: account not activated'
+    elsif account.confirm_token != confirm_token
+      return 'error: wrong confirm token'
+    elsif account.nil
+      return 'error: no such account'
     end
   end
 
