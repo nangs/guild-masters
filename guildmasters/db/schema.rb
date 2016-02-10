@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203100007) do
+ActiveRecord::Schema.define(version: 20160210095205) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -55,12 +55,18 @@ ActiveRecord::Schema.define(version: 20160203100007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "guild_id"
-    t.integer  "quest_id"
     t.string   "name"
   end
 
   add_index "adventurers", ["guild_id"], name: "index_adventurers_on_guild_id"
-  add_index "adventurers", ["quest_id"], name: "index_adventurers_on_quest_id"
+
+  create_table "adventurers_quest_events", id: false, force: :cascade do |t|
+    t.integer "adventurer_id"
+    t.integer "quest_event_id"
+  end
+
+  add_index "adventurers_quest_events", ["adventurer_id"], name: "index_adventurers_quest_events_on_adventurer_id"
+  add_index "adventurers_quest_events", ["quest_event_id"], name: "index_adventurers_quest_events_on_quest_event_id"
 
   create_table "events", force: :cascade do |t|
     t.integer  "start_time"
@@ -127,13 +133,11 @@ ActiveRecord::Schema.define(version: 20160203100007) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "guild_id"
-    t.integer  "quest_event_id"
     t.integer  "monster_template_id"
   end
 
   add_index "quests", ["guild_id"], name: "index_quests_on_guild_id"
   add_index "quests", ["monster_template_id"], name: "index_quests_on_monster_template_id"
-  add_index "quests", ["quest_event_id"], name: "index_quests_on_quest_event_id"
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
