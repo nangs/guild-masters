@@ -10,11 +10,11 @@ class SessionsController < ApplicationController
     password = params[:password]
     email = params[:email]
     account = Account.find_by(email: email)
-    if account.nil?
+    if account.nil? || !account.authenticate(password) || !account.email_confirmed
       respond_to do |format|
         format.json { render json: 'error'.to_json}
       end
-    elsif !account.nil? and account.authenticate(password)
+    elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
       respond_to do |format|
         format.json { render json: session[:account_id].to_json}
