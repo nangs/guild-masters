@@ -127,13 +127,11 @@ ActiveRecord::Schema.define(version: 20160203100007) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "guild_id"
-    t.integer  "quest_event_id"
     t.integer  "monster_template_id"
   end
 
   add_index "quests", ["guild_id"], name: "index_quests_on_guild_id"
   add_index "quests", ["monster_template_id"], name: "index_quests_on_monster_template_id"
-  add_index "quests", ["quest_event_id"], name: "index_quests_on_quest_event_id"
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
