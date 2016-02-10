@@ -37,7 +37,6 @@ $(function(){
 		var section = $(this).attr('id');
 		showSection(section);
 	});
-	GM.GuildmasterModel.getGuildmaster();
 	var isLoggedin = false;//localStorage.getItem('seesionID');
 	if (isLoggedin) {
 		showGame();
