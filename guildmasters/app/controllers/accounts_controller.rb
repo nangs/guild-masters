@@ -2,8 +2,6 @@ class AccountsController < ApplicationController
   skip_before_action :authorize, only: [:new, :create, :index]
   skip_before_action :verify_authenticity_token
 
-
-
 ########
 ########for testing not for release
 ########
@@ -19,8 +17,6 @@ class AccountsController < ApplicationController
 ########
 
 
-
-
 # POST /accounts.json
 #When a POST is done with parameters email and password, this function will check with if the post is a signup or login
 #it will then redirect to the respective function in the model
@@ -34,6 +30,11 @@ class AccountsController < ApplicationController
       email = params[:email]
       confirm_token = params[:confirm_token]
       account = Account.activate_account(email,confirm_token)
+    elsif params[:cmd] == 'update_account'
+      email = params[:email]
+      password = params[:password]
+      confirm_token = params[:confirm_token]
+      account = Account.update_account(email,password,confirm_token)
     end
     respond_to do |format|
       format.json { render json: account.to_json}

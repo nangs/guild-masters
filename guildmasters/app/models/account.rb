@@ -83,6 +83,19 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def self.update_account(email,password,confirm_token)
+    account = Account.find_by(email: email)
+    account.email_confirmed = false
+    if !account.nil? && account.confirm_token == confirm_token
+      account.email_confirmed = true
+      account.password = password
+      account.save
+      return 'success'
+    else
+      return 'fail'
+    end
+  end
+
   def initialize_guildmaster
     gm=Guildmaster.new
     gm.gold = 1000
