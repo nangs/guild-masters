@@ -18,5 +18,3 @@ GM.GuildmasterModel.getGuildmaster = function () {
 	    }
 	});
 }
-
-GM.GuildmasterModel.getGuildmaster();

@@ -43,7 +43,4 @@ GM.EventModel.complete = function (id) {
 			GM.EventModel.getAllEvents();
 	    },
 	});
-	
-
 }
-GM.EventModel.getAllEvents();

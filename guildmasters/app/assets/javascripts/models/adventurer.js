@@ -39,5 +39,3 @@ GM.AdventurerModel.getNewAdventurers = function () {
 	    }
 	});
 }
-
-GM.AdventurerModel.getAllAdventurers();

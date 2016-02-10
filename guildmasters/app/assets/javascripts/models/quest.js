@@ -72,5 +72,3 @@ GM.QuestModel.assign = function(id, assigned) {
 	    }
 	});
 }
-
-GM.QuestModel.getAllQuests();

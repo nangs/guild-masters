@@ -18,5 +18,3 @@ GM.GuildModel.getAllGuilds = function () {
 	    }
 	});
 }
-
-GM.GuildModel.getAllGuilds();
