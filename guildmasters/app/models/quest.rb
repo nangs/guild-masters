@@ -1,7 +1,6 @@
 require 'monster.rb'
 class Quest < ActiveRecord::Base
   belongs_to :guild
-  has_many :adventurers
   has_many :quest_events
   belongs_to :monster_template
   
