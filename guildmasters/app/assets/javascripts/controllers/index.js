@@ -33,13 +33,13 @@ function showView(view){
 }
 
 $(function(){
+	var isLoggedin = false;//localStorage.getItem('seesionID');
+	if (isLoggedin) {
+		showGame();
 	$('button').click(function(){
 		var section = $(this).attr('id');
 		showSection(section);
 	});
-	var isLoggedin = false;//localStorage.getItem('seesionID');
-	if (isLoggedin) {
-		showGame();
 	} else {
 		setupLoginPage();
 	}	
@@ -77,6 +77,9 @@ function setupLoginPage() {
                 }
             });
         }
+    });
+    $('#forgetPassword').mouseup(function() {
+        setupForgetPasswordPage();
     });
     
     $('#signupPage').mouseup(function() {
@@ -151,7 +154,54 @@ function showDifferentPasswordError() {
 	alert('The two password you entered are different');
 }
 
-function showSuccessSignupPage() {
+function changePassword() {
+    $.ajax({
+        type: 'POST',
+        url: 'accounts.json',
+        data: {
+            cmd: 'update_account',
+            email: email,
+            password: password,
+            confirm_token: token
+        },
+        success: function(feedback) {
+            console.log(feedback);
+            if (feedback == 'success') {
+                showSuccessChangePasswordPage();
+            }
+        }
+    });
+}
+
+function setupForgetPasswordPage() {
+    $('#indexPage').html(resetPasswordTemplate);
+    $('#getTokenForReset').mouseup(function() {
+        var email = $('#email').val();
+        if (email == ''){
+            showSignupNullError('email');
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                    cmd: 'send_password_token',
+                    email: email
+                },
+                success: function(feedback) {
+                    console.log(feedback);
+                    alert("The confirmation token has been sent to your email.");
+                }
+            });
+        }
+    });
+}
+
+function showSuccessChangePasswordPage() {
+
+}
+
+function showSuccessSignupPage(email) {
 	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
     $('#activateAccount').mouseup(function() {
