@@ -66,6 +66,24 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def self.send_password_token(email)
+    account = Account.find_by(email: email)
+    if !account.nil? && !account.email_confirmed
+      account.confirm_token = account.id * rand(999)
+      if account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Password Change'
+          body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
+        end
+        return 'success'
+      else
+        return 'error'
+      end
+    end
+  end
+
   def self.activate_account(email,confirm_token)
     account = Account.find_by(email: email)
     if !account.nil? && account.confirm_token == confirm_token
@@ -91,7 +109,8 @@ class Account < ActiveRecord::Base
   end
 
   def initialize_guildmaster
-    gm=Guildmaster.new
+    acc = Account.find(session[:account_id])
+    gm = Guildmaster.new
     gm.gold = 1000
     gm.game_time = 0
     gm.state = 'available'
