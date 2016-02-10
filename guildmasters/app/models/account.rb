@@ -32,7 +32,42 @@ class Account < ActiveRecord::Base
     else
       account = Account.new(password:password,email:email)
       if account.save
-        send_mail(email,account)
+        account.confirm_token = account.id * rand(999)
+        account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Thank You for signing up'
+          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+        end
+        account.initialize_guildmaster
+        return 'success'
+      else
+        return 'error'
+      end
+    end
+  end
+
+  def self.resend_email(email)
+    account = Account.find_by(email: email)
+    if !account.nil?
+      if account.email_confirmed
+        return 'activated'
+      elsif !account.email_confirmed
+        return 'not_activated'
+      end
+    else
+      account.confirm_token = account.id * rand(999)
+      if account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Thank You for signing up'
+          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+        end
+        return 'success'
+      else
+        return 'error'
       end
     end
   end
@@ -46,21 +81,6 @@ class Account < ActiveRecord::Base
     else
       return 'fail'
     end
-  end
-
-  def send_mail(email,account)
-    account.confirm_token = account.id * rand(999)
-    account.save
-    Mail.deliver do
-      to email
-      from 'contact.guildmasters@gmail.com'
-      subject 'Subject - Thank You for signing up'
-      body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
-    end
-    account.initialize_guildmaster
-    return 'success'
-  else
-    return 'error'
   end
 
   def initialize_guildmaster
