@@ -10,14 +10,22 @@ class SessionsController < ApplicationController
     password = params[:password]
     email = params[:email]
     account = Account.find_by(email: email)
-    if account.nil? || !account.authenticate(password) || !account.email_confirmed
+    if account.nil?
       respond_to do |format|
-        format.json { render json: 'error'.to_json}
+        format.json { render json: 'error: email not valid'.to_json}
+      end
+    elsif !account.authenticate(password)
+      respond_to do |format|
+        format.json { render json: 'error: wrong password'.to_json}
+      end
+    elsif !account.email_confirmed
+      respond_to do |format|
+        format.json { render json: 'error: not activated'.to_json}
       end
     elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
       respond_to do |format|
-        format.json { render json: session[:account_id].to_json}
+        format.json { render json: 'success'.to_json}
       end
     end
   end
