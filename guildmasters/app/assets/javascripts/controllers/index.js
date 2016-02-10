@@ -78,6 +78,7 @@ function setupLoginPage() {
             });
         }
     });
+    
     $('#signupPage').mouseup(function() {
     	$('#indexPage').html(signupTemplate);
     	setupSignupPage();
@@ -115,7 +116,7 @@ function setupSignupPage() {
                 	console.log(feedback);
                 	switch(feedback) {
                 		case 'success':
-                			showSuccessSignupPage();
+                			showSuccessSignupPage(email);
                 			break;
                 		case 'taken':
                 			showEmailTaken();
@@ -187,7 +188,7 @@ function showSuccessSignupPage() {
             type: 'POST',
             url: 'accounts.json',
             data: {
-                cmd: 'sendEmail',
+                cmd: 'resend_email',
                 email: email
             },
             success: function(feedback) {
