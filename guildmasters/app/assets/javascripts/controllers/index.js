@@ -263,6 +263,11 @@ function showEmailTaken() {
 	alert('The email you used to register is already taken.');
 }
 
+function showEmailNotActivated() {
+    alert("The email address you entered is already taken, but not activated.\
+        If this email address belongs to you, please check your inbox for the confirmation email.");
+}
+
 function showSignupError() {
 	alert('Some error occured during the signup process, please be patient while we are fixing it.');
 }
