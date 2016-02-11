@@ -29,7 +29,6 @@ Tester01:
   defense: 100
   vision: 100
   state: assigned
-  quest: TestQuest01
   
 Tester02:
   hp: 1000
@@ -40,7 +39,6 @@ Tester02:
   defense: 100
   vision: 100
   state: assigned
-  quest: TestQuest02
   
 Tester03:
   hp: 1000
