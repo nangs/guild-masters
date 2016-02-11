@@ -121,20 +121,22 @@ function setupSignupPage() {
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                	switch(feedback) {
-                		case 'success':
-                			showSuccessSignupPage(email);
-                			break;
-                		case 'taken':
-                			showEmailTaken();
-                			break;
-                        case 'not_activated':
-                            showEmailNotActivated();
-                            break;
-                		case 'error':
-                			showSignupError();
-                			break;
-                	}
+                    var msg = feedback.msg;
+                    if (msg == 'success') {
+                        showSuccessSignupPage(email);
+                    } else {
+                        switch(feedback.detail) {
+                            case 'account_taken':
+                                showEmailTaken();
+                                break;
+                            case 'not_activated':
+                                showEmailNotActivated();
+                                break;
+                            case 'unknown':
+                                showSignupError();
+                                break;
+                        }                        
+                    }
                 }
             });
         }
@@ -176,7 +178,22 @@ function setupForgetPasswordPage() {
                 },
                 success: function(feedback) {
                     console.log(feedback);
-                    alert("The confirmation token has been sent to your email.");
+                    var msg = feedback.msg;
+                    if (msg == 'success') {
+                        alert("The confirmation token has been sent to your email.");
+                    } else {
+                        switch(feedback.detail) {
+                            case 'not_activated':
+                                showEmailNotActivated();
+                                break;
+                            case 'invalid_account':
+                                showEmailNotValid();
+                                break;
+                            case 'unknown':
+                                showSignupError();
+                                break;
+                        }
+                    }
                 }
             });
         }
@@ -211,8 +228,24 @@ function setupForgetPasswordPage() {
                 },
                 success: function(feedback) {
                     console.log(feedback);
-                    if (feedback == 'success') {
+                    var msg = feedback.msg;
+                    if (msg == 'success') {
                         showSuccessChangePasswordPage();
+                    } else {
+                        switch(feedback.detail) {
+                            case 'wrong_token':
+                                showWrongToken();
+                                break;
+                            case 'not_activated':
+                                showEmailNotActivated();
+                                break;
+                            case 'invalid_account':
+                                showEmailNotValid();
+                                break;
+                            case 'unknown':
+                                showSignupError();
+                                break;
+                        }
                     }
                 }
             });
@@ -247,13 +280,21 @@ function showSuccessSignupPage(email) {
                 },
                 success: function(feedback) {
                     console.log(feedback);
-                    switch(feedback) {
-                        case 'success':
-                            showSuccessActivatePage();
-                            break;
-                        case 'fail':
-                            alert('The activation entered code is wrong');
-                            break;
+                    if (feedback.msg = 'success') {
+                        showSuccessActivatePage();
+                    }
+                    else {
+                        switch(feedback.detail) {
+                            case 'wrong_token':
+                                showWrongToken();
+                                break;
+                            case 'already_activated':
+                                showEmailAlreadyActivated();
+                                break;
+                            case 'invalid_account':
+                                showEmailNotValid();
+                                break;
+                        }
                     }
                 }
             });
@@ -269,7 +310,22 @@ function showSuccessSignupPage(email) {
             },
             success: function(feedback) {
                 console.log(feedback);
-                alert("Another email has been sent to you.");
+                if (feedback.msg = 'success') {
+                    alert("Another email has been sent to you.");
+                }
+                else {
+                    switch(feedback.detail) {
+                        case 'not_activated':
+                            showEmailNotActivated();
+                            break;
+                        case 'invalid_account':
+                            showEmailNotValid();
+                            break;
+                        case 'unknown':
+                            showUnknownError();
+                            break;
+                    }
+                }
             }
         });
     });
