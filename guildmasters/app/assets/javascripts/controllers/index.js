@@ -72,7 +72,7 @@ function setupLoginPage() {
                 	console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
-                        sessionStorage.setItem('seesionID', feedback.session_id);
+                        sessionStorage.setItem('sessionID', feedback.session_id);
                         showGame();
                     } else {
                         var error = feedback.detail;
