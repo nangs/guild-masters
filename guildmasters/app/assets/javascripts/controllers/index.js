@@ -68,11 +68,13 @@ function setupLoginPage() {
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                    if (feedback == 'error') {
-                        showLoginError();
-                    } else {
-                        localStorage.setItem('seesionID', feedback);
+                    var msg = feedback.msg;
+                    if (msg == 'success') {
+                        localStorage.setItem('seesionID', feedback.session_id);
                         showGame();
+                    } else {
+                        var error = feedback.detail;
+                        console.log(error);
                     }
                 }
             });
@@ -276,6 +278,10 @@ function showSuccessActivatePage() {
     $('#goToLogin').mouseup(function() {
         setupLoginPage();
     });
+}
+
+function logout() {
+
 }
 
 function showEmailTaken() {
