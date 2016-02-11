@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
   has_secure_password
 
   options = {
-      :address              => "smtp.gmail.com",
+      :address              => 'smtp.gmail.com',
       :port                 => 587,
       :user_name            => 'contact.guildmasters@gmail.com',
       :password             => 'guildmasters12345',
@@ -25,11 +25,11 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil?
       if account.email_confirmed
-        return 'error: account_taken'
+        return {msg: "error", detail: "account_taken"}
       elsif !account.email_confirmed
-        return 'error: not_activated'
+        return {msg: "error", detail: "not_activated"}
       else
-        return 'error: unknown'
+        return {msg: "error", detail: "unknown"}
       end
     elsif account.nil?
       account = Account.new(password:password,email:email)
@@ -43,9 +43,9 @@ class Account < ActiveRecord::Base
           body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
         end
         account.initialize_guildmaster
-        return 'success'
+        return {msg: "success"}
       else
-        return 'error: creating_account'
+        return {msg: "error", detail: "creating_account"}
       end
     end
   end
@@ -61,13 +61,13 @@ class Account < ActiveRecord::Base
         subject 'Subject - Thank You for signing up'
         body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
       end
-      return 'success'
+      return {msg: "success"}
     elsif account.nil
-      return 'error: invalid_account'
+      return {msg: "error", detail: "invalid_account"}
     elsif account.email_confirmed
-      return 'error: account_activated'
+      return {msg: "error", detail: "already_activated"}
     else
-      return 'error: unknown'
+      return {msg: "error", detail: "unknown"}
     end
   end
 
@@ -82,13 +82,13 @@ class Account < ActiveRecord::Base
         subject 'Subject - Password Change'
         body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
       end
-      return 'success'
+      return {msg: "success"}
     elsif !account.nil? && !account.email_confirmed
-      return 'error: not_activated'
+      return {msg: "error", detail: "not_activated"}
     elsif account.nil?
-      return 'error: invalid_account'
+      return {msg: "error", detail: "invalid_account"}
     else
-      return 'error: unknown'
+      return {msg: "error", detail: "unknown"}
     end
   end
 
@@ -97,13 +97,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token
       account.email_confirmed = true
       account.save
-      return 'success'
+      return {msg: "success"}
     elsif account.nil?
-      return 'error: invalid_account'
+      return {msg: "error", detail: "invalid_account"}
     elsif account.email_confirmed
-      return 'error: account_activated'
+      return {msg: "error", detail: "already_activated"}
     elsif account.confirm_token != confirm_token
-      return 'error: wrong_confirmtoken'
+      return {msg: "error", detail: "wrong_token"}
     end
   end
 
@@ -112,15 +112,15 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token && account.email_confirmed
       account.password = password
       account.save
-      return 'success'
+      return {msg: "success"}
     elsif !account.email_confirmed
-      return 'error: account_notactivated'
+      return {msg: "error", detail: "not_activated"}
     elsif account.confirm_token != confirm_token
-      return 'error: wrong_confirmtoken'
+      return {msg: "error", detail: "wrong_token"}
     elsif account.nil
-      return 'error: invalid_account'
+      return {msg: "error", detail: "invalid_account"}
     else
-      return 'error: unknown'
+      return {msg: "error", detail: "unknown"}
     end
   end
 
