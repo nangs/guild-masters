@@ -27,9 +27,8 @@ class SessionsController < ApplicationController
       end
     elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
-      account.session_id = account.id * rand(999)
       account.save
-      msg = {msg: "success", session_id: "#{account.session_id}"}
+      msg = {msg: "success"}
       respond_to do |format|
         format.json { render json: msg.to_json}
       end
