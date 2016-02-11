@@ -21,14 +21,25 @@ class QuestTest < ActiveSupport::TestCase
     assert_equal "assigned", adventurers(:Tester03).state
     assert_equal "assigned", quests(:TestQuest03).state
   end
-  
-  test "test time cost" do
-    quests(:TestQuest06).assign([adventurers(:Tester03),adventurers(:Tester05)])
-    assert_equal 450, quests(:TestQuest06).time_cost
+  test "test battle single adventurer level 1" do
+    quests(:TestQuest05).battle([adventurers(:Tester03)])
   end
-  
-  test "test battle" do
-    quests(:TestQuest06).assign([adventurers(:Tester03),adventurers(:Tester05)])
-    quests(:TestQuest06).complete
+  test "test battle single adventurer level 2" do
+    quests(:TestQuest07).battle([adventurers(:Tester03)])
+  end
+  test "test battle single adventurer level 3" do
+    quests(:TestQuest06).battle([adventurers(:Tester03)])
+  end
+  test "test battle 2 adventurers level 1" do
+    quests(:TestQuest05).battle([adventurers(:Tester03),adventurers(:Tester05)])
+  end
+  test "test battle 2 adventurers level 2" do
+    quests(:TestQuest07).battle([adventurers(:Tester03),adventurers(:Tester05)])
+  end
+  test "test battle 2 adventurers level 3" do
+    quests(:TestQuest06).battle([adventurers(:Tester03),adventurers(:Tester05)])
+  end
+  test "test battle 3 adventurers level 3" do
+    quests(:TestQuest06).battle([adventurers(:Tester03),adventurers(:Tester05),adventurers(:Tester06)])
   end
 end

@@ -69,3 +69,13 @@ Tester05:
   defense: 100
   vision: 100
   state: Available
+  
+Tester06:
+  hp: 1000
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: Available

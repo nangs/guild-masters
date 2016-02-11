@@ -19,6 +19,6 @@ two:
 TestMonster01:
   name: Fei
   max_hp: 1000
-  attack: 1000
-  defense: 1000
+  attack: 100
+  defense: 100
   invisibility: 100

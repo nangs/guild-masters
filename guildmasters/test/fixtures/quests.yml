@@ -35,14 +35,21 @@ TestQuest04:
   monster_template: TestMonster01
   
 TestQuest05:
-  difficulty: 3
+  difficulty: 1
   state: failed
   reward: 1000
   guild: TestGuild01
   monster_template: TestMonster01
-  
+
 TestQuest06:
   difficulty: 3
+  state: pending
+  reward: 1000
+  guild: TestGuild01
+  monster_template: TestMonster01
+  
+TestQuest07:
+  difficulty: 2
   state: pending
   reward: 1000
   guild: TestGuild01
