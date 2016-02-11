@@ -38,6 +38,9 @@ class AccountsController < ApplicationController
     elsif params[:cmd] == 'resend_email'
       email = params[:email]
       account = Account.resend_email(email)
+    elsif params[:cmd] == 'send_password_token'
+      email = params[:email]
+      account = Account.send_password_token(email)
     end
     respond_to do |format|
       format.json { render json: account.to_json}
