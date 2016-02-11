@@ -4,9 +4,11 @@ class GuildController < ApplicationController
   ########
   # GET /guild.json
   def index
-    @guild = Guild.all
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    guilds = guildmaster.guilds
     respond_to do |format|
-      format.json { render json: @guild }
+      format.json { render json: guilds }
     end
   end
   ########
