@@ -25,9 +25,9 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil?
       if account.email_confirmed
-        return 'error: account in used'
+        return 'error: account_taken'
       elsif !account.email_confirmed
-        return 'error: not activated'
+        return 'error: not_activated'
       end
     elsif account.nil?
       account = Account.new(password:password,email:email)
@@ -41,9 +41,9 @@ class Account < ActiveRecord::Base
           body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
         end
         account.initialize_guildmaster
-        return 'success: account created and activation email sent'
+        return 'success'
       else
-        return 'error: creating account'
+        return 'error: creating_account'
       end
     end
   end
@@ -59,11 +59,11 @@ class Account < ActiveRecord::Base
         subject 'Subject - Thank You for signing up'
         body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
       end
-      return 'success: activation email sent'
+      return 'success'
     elsif account.nil
-      return 'error: no such account'
+      return 'error: invalid_account'
     elsif account.email_confirmed
-      return 'error: has already been activated'
+      return 'error: account_activated'
     end
   end
 
@@ -78,11 +78,11 @@ class Account < ActiveRecord::Base
         subject 'Subject - Password Change'
         body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
       end
-      return 'success: activation email sent'
+      return 'success'
     elsif !account.email_confirmed
-      return 'error: not activated'
+      return 'error: not_activated'
     elsif account.nil?
-      return 'error: no such account'
+      return 'error: invalid_account'
     end
   end
 
@@ -91,13 +91,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token
       account.email_confirmed = true
       account.save
-      return 'success: account activated'
+      return 'success'
     elsif account.nil?
-      return 'error: no such account'
+      return 'error: invalid_account'
     elsif account.email_confirmed
-      return 'error: has already been activated'
+      return 'error: account_activated'
     elsif account.confirm_token != confirm_token
-      return 'error: wrong confirm token'
+      return 'error: wrong_confirmtoken'
     end
   end
 
@@ -106,13 +106,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token && account.email_confirmed
       account.password = password
       account.save
-      return 'success: update password'
+      return 'success'
     elsif !account.email_confirmed
-      return 'error: account not activated'
+      return 'error: account_notactivated'
     elsif account.confirm_token != confirm_token
-      return 'error: wrong confirm token'
+      return 'error: wrong_confirmtoken'
     elsif account.nil
-      return 'error: no such account'
+      return 'error: invalid_account'
     end
   end
 
