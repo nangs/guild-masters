@@ -11,23 +11,27 @@ class SessionsController < ApplicationController
     email = params[:email]
     account = Account.find_by(email: email)
     if account.nil?
+      msg = {msg: "error", detail: "invalid_account"}
       respond_to do |format|
-        format.json { render json: 'error: invalid_account'.to_json}
+        format.json { render json: msg.to_json}
       end
     elsif !account.authenticate(password)
+      msg = {msg: "error", detail: "wrong_password"}
       respond_to do |format|
-        format.json { render json: 'error: wrong_password'.to_json}
+        format.json { render json: msg.to_json}
       end
     elsif !account.email_confirmed
+      msg = {msg: "error", detail: "not_activated"}
       respond_to do |format|
-        format.json { render json: 'error: not_activated'.to_json}
+        format.json { render json: msg.to_json}
       end
     elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
       account.session_id = account.id * rand(999)
       account.save
+      msg = {msg: "success", session_id: "#{account.session_id}"}
       respond_to do |format|
-        format.json { render json: account.session_id.to_json}
+        format.json { render json: msg.to_json}
       end
     end
   end
@@ -35,8 +39,9 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1.json
   def destroy
     session[:account_id] = nil
+    msg = {msg: "success"}
     respond_to do |format|
-      format.json { render json: 'destroyed'.to_json}
+      format.json { render json: msg.to_json}
     end
   end
 
