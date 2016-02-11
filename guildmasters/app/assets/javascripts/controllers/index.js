@@ -36,10 +36,10 @@ $(function(){
 	var isLoggedin = false;//localStorage.getItem('seesionID');
 	if (isLoggedin) {
 		showGame();
-	$('button').click(function(){
-		var section = $(this).attr('id');
-		showSection(section);
-	});
+        $('button').click(function(){
+            var section = $(this).attr('id');
+            showSection(section);
+        });
 	} else {
 		setupLoginPage();
 	}	
@@ -154,24 +154,6 @@ function showDifferentPasswordError() {
 	alert('The two password you entered are different');
 }
 
-function changePassword() {
-    $.ajax({
-        type: 'POST',
-        url: 'accounts.json',
-        data: {
-            cmd: 'update_account',
-            email: email,
-            password: password,
-            confirm_token: token
-        },
-        success: function(feedback) {
-            console.log(feedback);
-            if (feedback == 'success') {
-                showSuccessChangePasswordPage();
-            }
-        }
-    });
-}
 
 function setupForgetPasswordPage() {
     $('#indexPage').html(resetPasswordTemplate);
@@ -191,6 +173,43 @@ function setupForgetPasswordPage() {
                 success: function(feedback) {
                     console.log(feedback);
                     alert("The confirmation token has been sent to your email.");
+                }
+            });
+        }
+    });
+    $('#resetPassword').mouseup(function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var confirmPassword = $('#confirmPassword').val();
+        var token = $('#token').val();
+
+        if (password != confirmPassword) { // check whether the two passwords are the same
+            showDifferentPasswordError();
+        } else if (password.length < 6){
+            passwordTooShortError();
+        } else if (email == ''){
+            showSignupNullError('email');
+        } else if (password == '') {
+            showSignupNullError('password');
+        } else if (token == '') {
+            showSignupNullError('Confirmation code');
+        }
+        
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                    cmd: 'update_account',
+                    email: email,
+                    password: password,
+                    confirm_token: token
+                },
+                success: function(feedback) {
+                    console.log(feedback);
+                    if (feedback == 'success') {
+                        showSuccessChangePasswordPage();
+                    }
                 }
             });
         }
