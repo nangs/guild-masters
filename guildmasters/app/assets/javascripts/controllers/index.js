@@ -198,7 +198,10 @@ function setupForgetPasswordPage() {
 }
 
 function showSuccessChangePasswordPage() {
-
+    $('#indexPage').html(resetPasswordSuccessTemplate);
+    $('#goToLogin').mouseup(function() {
+        setupLoginPage();
+    });
 }
 
 function showSuccessSignupPage(email) {

@@ -3,3 +3,4 @@ var signupSuccessTemplate = HandlebarsTemplates['admin/signupSuccess'];
 var activateSuccessTemplate = HandlebarsTemplates['admin/activateSuccess'];
 var loginTemplate = HandlebarsTemplates['admin/login'];
 var resetPasswordTemplate = HandlebarsTemplates['admin/resetPassword'];
+var resetPasswordSuccessTemplate = HandlebarsTemplates['admin/resetPasswordSuccess'];
