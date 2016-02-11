@@ -33,14 +33,16 @@ function showView(view){
 }
 
 $(function(){
-	var isLoggedin = false;//localStorage.getItem('seesionID');
-	if (isLoggedin) {
-		showGame();
-	$('button').click(function(){
-		var section = $(this).attr('id');
-		showSection(section);
-	});
-	} else {
+    var isLoggedin = false;//localStorage.getItem('seesionID');
+    var sessionID = sessionStorage.getItem('seesionID');
+    if (sessionID) {
+        showGame();
+        $('button').click(function(){
+            var section = $(this).attr('id');
+            showSection(section);
+        });
+    }
+    else {
 		setupLoginPage();
 	}	
 })
@@ -68,11 +70,13 @@ function setupLoginPage() {
                 },
                 success: function(feedback) {
                 	console.log(feedback);
-                    if (feedback == 'error') {
-                        showLoginError();
-                    } else {
-                        localStorage.setItem('seesionID', feedback);
+                    var msg = feedback.msg;
+                    if (msg == 'success') {
+                        sessionStorage.setItem('seesionID', feedback.session_id);
                         showGame();
+                    } else {
+                        var error = feedback.detail;
+                        console.log(error);
                     }
                 }
             });
@@ -154,24 +158,6 @@ function showDifferentPasswordError() {
 	alert('The two password you entered are different');
 }
 
-function changePassword() {
-    $.ajax({
-        type: 'POST',
-        url: 'accounts.json',
-        data: {
-            cmd: 'update_account',
-            email: email,
-            password: password,
-            confirm_token: token
-        },
-        success: function(feedback) {
-            console.log(feedback);
-            if (feedback == 'success') {
-                showSuccessChangePasswordPage();
-            }
-        }
-    });
-}
 
 function setupForgetPasswordPage() {
     $('#indexPage').html(resetPasswordTemplate);
@@ -191,6 +177,43 @@ function setupForgetPasswordPage() {
                 success: function(feedback) {
                     console.log(feedback);
                     alert("The confirmation token has been sent to your email.");
+                }
+            });
+        }
+    });
+    $('#resetPassword').mouseup(function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var confirmPassword = $('#confirmPassword').val();
+        var token = $('#token').val();
+
+        if (password != confirmPassword) { // check whether the two passwords are the same
+            showDifferentPasswordError();
+        } else if (password.length < 6){
+            passwordTooShortError();
+        } else if (email == ''){
+            showSignupNullError('email');
+        } else if (password == '') {
+            showSignupNullError('password');
+        } else if (token == '') {
+            showSignupNullError('Confirmation code');
+        }
+        
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'accounts.json',
+                data: {
+                    cmd: 'update_account',
+                    email: email,
+                    password: password,
+                    confirm_token: token
+                },
+                success: function(feedback) {
+                    console.log(feedback);
+                    if (feedback == 'success') {
+                        showSuccessChangePasswordPage();
+                    }
                 }
             });
         }
@@ -259,8 +282,17 @@ function showSuccessActivatePage() {
     });
 }
 
+function logout() {
+
+}
+
 function showEmailTaken() {
 	alert('The email you used to register is already taken.');
+}
+
+function showEmailNotActivated() {
+    alert("The email address you entered is already taken, but not activated.\
+        If this email address belongs to you, please check your inbox for the confirmation email.");
 }
 
 function showSignupError() {
