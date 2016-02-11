@@ -83,7 +83,7 @@ class Account < ActiveRecord::Base
         body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
       end
       return 'success'
-    elsif !account.nul? && !account.email_confirmed
+    elsif !account.nil? && !account.email_confirmed
       return 'error: not_activated'
     elsif account.nil?
       return 'error: invalid_account'
