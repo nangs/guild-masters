@@ -33,14 +33,16 @@ function showView(view){
 }
 
 $(function(){
-	var isLoggedin = false;//localStorage.getItem('seesionID');
-	if (isLoggedin) {
-		showGame();
+    var isLoggedin = false;//localStorage.getItem('seesionID');
+    var sessionID = sessionStorage.getItem('seesionID');
+    if (sessionID) {
+        showGame();
         $('button').click(function(){
             var section = $(this).attr('id');
             showSection(section);
         });
-	} else {
+    }
+    else {
 		setupLoginPage();
 	}	
 })
@@ -70,7 +72,7 @@ function setupLoginPage() {
                 	console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
-                        localStorage.setItem('seesionID', feedback.session_id);
+                        sessionStorage.setItem('seesionID', feedback.session_id);
                         showGame();
                     } else {
                         var error = feedback.detail;
