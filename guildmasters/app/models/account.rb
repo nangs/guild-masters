@@ -31,16 +31,20 @@ class Account < ActiveRecord::Base
       end
     elsif account.nil?
       account = Account.new(password:password,email:email)
-      account.confirm_token = account.id * rand(999)
-      account.save
-      Mail.deliver do
-        to email
-        from 'contact.guildmasters@gmail.com'
-        subject 'Subject - Thank You for signing up'
-        body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+      if account.save
+        account.confirm_token = account.id * rand(999)
+        account.save
+        Mail.deliver do
+          to email
+          from 'contact.guildmasters@gmail.com'
+          subject 'Subject - Thank You for signing up'
+          body "Please activate your account with the code provided:\nActivation Code: #{account.confirm_token}"
+        end
+        account.initialize_guildmaster
+        return 'success: account created and activation email sent'
+      else
+        return 'error: creating account'
       end
-      account.initialize_guildmaster
-      return 'success: activation email sent'
     end
   end
 
