@@ -28,6 +28,8 @@ class Account < ActiveRecord::Base
         return 'error: account_taken'
       elsif !account.email_confirmed
         return 'error: not_activated'
+      else
+        return 'error: unknown'
       end
     elsif account.nil?
       account = Account.new(password:password,email:email)
@@ -64,6 +66,8 @@ class Account < ActiveRecord::Base
       return 'error: invalid_account'
     elsif account.email_confirmed
       return 'error: account_activated'
+    else
+      return 'error: unknown'
     end
   end
 
@@ -79,10 +83,12 @@ class Account < ActiveRecord::Base
         body "Please change your account password with the code provided:\nCode: #{account.confirm_token}"
       end
       return 'success'
-    elsif !account.email_confirmed
+    elsif !account.nil? && !account.email_confirmed
       return 'error: not_activated'
     elsif account.nil?
       return 'error: invalid_account'
+    else
+      return 'error: unknown'
     end
   end
 
@@ -113,6 +119,8 @@ class Account < ActiveRecord::Base
       return 'error: wrong_confirmtoken'
     elsif account.nil
       return 'error: invalid_account'
+    else
+      return 'error: unknown'
     end
   end
 
