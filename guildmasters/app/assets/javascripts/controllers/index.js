@@ -276,7 +276,7 @@ function showSuccessSignupPage(email) {
                 },
                 success: function(feedback) {
                     console.log(feedback);
-                    if (feedback.msg = 'success') {
+                    if (feedback.msg == 'success') {
                         showSuccessActivatePage();
                     }
                     else {
@@ -306,7 +306,7 @@ function showSuccessSignupPage(email) {
             },
             success: function(feedback) {
                 console.log(feedback);
-                if (feedback.msg = 'success') {
+                if (feedback.msg == 'success') {
                     alert("Another email has been sent to you.");
                 }
                 else {
