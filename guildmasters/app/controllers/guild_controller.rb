@@ -2,7 +2,7 @@ class GuildController < ApplicationController
   ########
   ########for testing not for release
   ########
-  # GET /guilds.json
+  # GET /guild.json
   def index
     guild = Guild.find(session[:guild_id])
     respond_to do |format|
