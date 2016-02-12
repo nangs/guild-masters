@@ -10,12 +10,6 @@ class Quest < ActiveRecord::Base
     return quests
   end
 
-  #This function is a interface to create a new quest
-  def self.generate(guild_id)
-    guild = Guild.find(guild_id)
-    return guild.create_quest
-  end
-
   #This function is a interface to assign adventurers to quest, it calls the actuall logic
   #Return the result of assigning quest
   def self.assign(quest_id,adventurer_ids)
