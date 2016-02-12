@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :quests
   resources :accounts
   resources :sessions
+  resources :guildsessions
 end
 
 #constraints subdomain: 'api' do
