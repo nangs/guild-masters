@@ -2,18 +2,21 @@ class GuildController < ApplicationController
   ########
   ########for testing not for release
   ########
-  # GET /guild.json
+  # GET /guilds.json
   def index
-    acc = Account.find(session[:account_id])
-    guildmaster = acc.guildmaster
-    guilds = guildmaster.guilds
+    guild = Guild.find(session[:guild_id])
     respond_to do |format|
-      format.json { render json: guilds }
+      format.json { render json: guild }
     end
   end
   ########
   ########for testing not for release
   ########
+
+  # POST /guilds.json
+  def create
+    guildmaster.build_guild
+  end
 
 end
 
