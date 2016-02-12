@@ -10,27 +10,18 @@ class Quest < ActiveRecord::Base
     return quests
   end
 
-  #This function is a interface to assign adventurers to quest, it calls the actuall logic
-  #Return the result of assigning quest
-  def self.assign(quest_id,adventurer_ids)
-    quest=Quest.find(quest_id)
-    adventurers = Adventurer.find(adventurer_ids)
-    return quest.assign(adventurers)
-  end
-
   #This function will check the availability of Quest and Adventures and assign them togather and generate a Quest event
   def assign(adventurers)
-    error_message = "Error, not available"
-
+    msg = {msg: "error", detail: "not available"}
     #Check Quest Status. Done by front end too
     if(self.state == "assigned"||self.state=="successful")
-    return error_message
+    return msg
     end
 
     #Check Adventurers Status. Done by front end too
     adventurers.each do |adventurer|
       if(adventurer.state =="assigned"||adventurer.state=="dead"||adventurer.energy<=0)
-      return error_message
+      return msg
       end
     end
     self.state = "assigned"
@@ -38,7 +29,8 @@ class Quest < ActiveRecord::Base
     #Generate quest event
     self.quest_events << QuestEvent.assign(self,adventurers)
     self.save
-    return "Successfully assigned"
+    msg = {msg: "success"}
+    return msg
   end
 
   #This function simulates the battle process when carry out a quest
