@@ -12,8 +12,5 @@ class Adventurer < ActiveRecord::Base
 	def self.random_adventurer_name
 		return File.readlines(Rails.root.join "app", "models", "adventurerNames.txt").sample
 	end
-  def self.generate(guild_id)
-    guild = Guild.find(guild_id)
-    return guild.create_adventurer
-  end
+
 end
