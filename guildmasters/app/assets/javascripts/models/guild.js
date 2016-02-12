@@ -14,7 +14,9 @@ GM.GuildModel.getAllGuilds = function () {
 		type: 'GET',
 	    url: 'guild.json',
 	    success: function(data) {
-	    	GM.GuildModel.guild = data;
+	    	GM.GuildModel.guilds = data.guild;
+	    	GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guilds[0];
+	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    }
 	});
 }

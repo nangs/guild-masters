@@ -17,11 +17,7 @@ function showSection(section){
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster();
-            sleep(100);
-			GM.GuildModel.getAllGuilds();
-            sleep(100);
-            GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guild;
-            GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
+            
             view = GM.GuildmasterView;
             break;
 	};
@@ -34,7 +30,7 @@ function showView(view){
 
 $(function(){
     var isLoggedin = false;//localStorage.getItem('seesionID');
-    var sessionID = sessionStorage.getItem('seesionID');
+    var sessionID = sessionStorage.getItem('loggedIn');
     if (sessionID) {
         showGame();
         $('button').click(function(){
@@ -72,7 +68,7 @@ function setupLoginPage() {
                 	console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
-                        sessionStorage.setItem('sessionID', feedback.session_id);
+                        sessionStorage.setItem('loggedIn', 1);
                         showGame();
                     } else {
                         var error = feedback.detail;

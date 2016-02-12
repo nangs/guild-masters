@@ -12,9 +12,11 @@ GM.GuildmasterModel = DS.Model.extend();
 GM.GuildmasterModel.getGuildmaster = function () {
 	$.ajax({
 		type: 'GET',
-	    url: 'guildmaster/' + localStorage.getItem('seesionID') + '.json',
+	    url: 'guildmaster.json',
 	    success: function(data) {
 	    	GM.GuildmasterModel.guildmaster = data;
+	    	GM.GuildModel.getAllGuilds();
+
 	    }
 	});
 }
