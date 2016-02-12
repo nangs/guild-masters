@@ -3,34 +3,32 @@ class QuestsController < ApplicationController
 # GET /quests
 # GET /quests.json
   def index
-    @quests = Quest.view_all
+    guild = Guild.find(session[:guild_id])
+    quests = guild.quests
     respond_to do |format|
-      format.json { render json: @quests }
+      format.json { render json: quests }
     end
   end
 
 # POST /quests.json
   def create
     if params[:cmd] == 'generate'
-      guildId = params[:guildId]
-      @quest = Quest.generate(guildId)
+      guild = Guild.find(session[:guild_id])
+      quest = guild.create_quest
       respond_to do |format|
-        format.json { render json: @quest }
+        format.json { render json: quest }
       end
-
     elsif params[:cmd] == 'assign'
-      questId = params[:questId]
-      adventurersIds = params[:adventurersIds]
-      @quest = Quest.assign(questId,adventurersIds)
+      quest_id = params[:quest_id]
+      adventurers_ids = params[:adventurers_ids]
+      assign_quest = Quest.assign(quest_id,adventurers_ids)
       respond_to do |format|
-        format.json { render json: @quest.to_json }
+        format.json { render json: assign_quest }
       end
-
     elsif params[:cmd] == 'complete'
-      questId = params[:questId]
-      @quest = Quest.complete(questId)
+      complete_quest = QuestEvent.complete
       respond_to do |format|
-        format.json { render json: @quest }
+        format.json { render json: complete_quest }
       end
     end
   end
