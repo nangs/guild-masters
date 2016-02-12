@@ -6,7 +6,7 @@ class AdventurersController < ApplicationController
   ########
 # GET /adventurers.json
   def index
-    guild = Guild.find(session[:guild])
+    guild = Guild.find(session[:guild_id])
     adventurers = guild.adventurers
     respond_to do |format|
       format.json { render json: adventurers }
@@ -19,7 +19,10 @@ class AdventurersController < ApplicationController
   # POST /adventurers.json
   # Call this to create adventurers
   def create
-    guild = Guild.find(session[:guild])
-    return guild.create_adventurer
+    guild = Guild.find(session[:guild_id])
+    new_adventurer = guild.create_adventurer
+    respond_to do |format|
+      format.json { render json: new_adventurer }
+    end
   end
 end
