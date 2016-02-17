@@ -71,8 +71,17 @@ function setupLoginPage() {
                         sessionStorage.setItem('loggedIn', 1);
                         showGame();
                     } else {
-                        var error = feedback.detail;
-                        console.log(error);
+                        switch(feedback.detail) {
+                            case 'not_activated':
+                                showEmailNotActivated();
+                                break;
+                            case 'wrong_password':
+                                showWrongPasswordError();
+                                break;
+                            case 'unknown':
+                                showLoginError();
+                                break;
+                        }    
                     }
                 }
             });
