@@ -22,6 +22,12 @@ class Account < ActiveRecord::Base
   #email does not exist
   #To call this function: Account.create_account(params[:email],params[:password])
   def self.create_account(email,password)
+    if email.nil?
+      return {msg: "error", detail: "email_nil"}
+    end
+    if password.nil?
+      return {msg: "error", detail: "password_nil"}
+    end
     account = Account.find_by(email: email)
     if !account.nil?
       if account.email_confirmed
