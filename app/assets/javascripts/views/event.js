@@ -1,0 +1,1 @@
+var nextEventTemplate = HandlebarsTemplates['event/nextEvent'];

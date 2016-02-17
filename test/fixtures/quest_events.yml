@@ -1,0 +1,18 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 1
+  end_time: 2
+  gold_spent: 1
+  quest: one
+
+two:
+  start_time: 1
+  end_time: 2
+  gold_spent: 1
+  quest: two
+
+TestQE01:
+  start_time: 0
+  end_time: 0
+  gold_spent: 10

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: 1
+  popularity: 1
+  guildmaster: two
+
+
+two:
+  level: 2
+  popularity: 2
+  guildmaster: two
+  
+TestGuild01:
+  level: 3
+  popularity: 50
+  guildmaster: TestMaster01

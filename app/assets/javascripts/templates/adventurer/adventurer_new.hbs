@@ -1,0 +1,21 @@
+<p>New adventurer:</p>
+<p class="Adventurer">
+	Adventurer: {{name}}<br>
+	<ul>
+		<li>HP: {{hp}}/{{max_hp}}</li>
+		<li>Energy: {{energy}}/{{max_energy}}</li>
+		<li>Attack: {{attack}}</li>
+		<li>Defense: {{defense}}</li>
+		<li>Vision: {{vision}}</li>
+		{{#if quest}}
+			This adventurer is currently on {{> quest_link}}
+		{{else}}
+			{{#if facility}}
+				This adventurer is currently in the {{> facility_link}}.
+			{{else}}
+				This adventurer is currently {{state}}.
+			{{/if}}
+		{{/if}}
+	</ul>
+	<button type="button" class="btn btn-primary" onclick='showSection("adventurers")'>Back to list of adventurers</button>
+</p>
