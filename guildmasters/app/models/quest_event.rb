@@ -37,7 +37,23 @@ class QuestEvent < ActiveRecord::Base
   
   #This function will create the relationship between adventurer and quest_event and quest
   def self.assign(quest,adventurers)
-    qe= QuestEvent.new
+    msg = {msg: "error", detail: "not available"}
+    
+    #Check Quest Status. Done by front end too
+    if(quest.state == "assigned"||quest.state=="successful")
+    return msg
+    end
+
+    #Check Adventurers Status. Done by front end too
+    adventurers.each do |adventurer|
+      if(adventurer.state =="assigned"||adventurer.state=="dead"||adventurer.energy<=0)
+      return msg
+      end
+    end
+    quest.state = "assigned"
+    
+    #Generate new quest_event
+    qe = QuestEvent.new
     adventurers.each do |adventurer|
       adventurer.state = "assigned"
       adventurer.quest_events << qe
@@ -48,7 +64,10 @@ class QuestEvent < ActiveRecord::Base
     qe.end_time = qe.start_time + qe.time_cost
     qe.gold_spent=0
     qe.save
-    return qe
+    quest.quest_events << qe
+    quest.save
+    msg = {msg: "success"}
+    return msg
   end
   
   #This function calculates the game time needed for the quest to complete
