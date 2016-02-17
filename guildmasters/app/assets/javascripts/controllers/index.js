@@ -353,10 +353,9 @@ function logout() {
 function showEmailTaken() {
 	alert('The email you used to register is already taken.');
 }
-
+    
 function showEmailNotActivated() {
-    alert("The email address you entered is already taken, but not activated.\
-        If this email address belongs to you, please check your inbox for the confirmation email.");
+    $('#indexPage').html(emailNotActivatedTemplate);
 }
 
 function showSignupError() {
