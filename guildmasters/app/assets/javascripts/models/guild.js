@@ -12,10 +12,9 @@ GM.GuildModel = DS.Model.extend();
 GM.GuildModel.getAllGuilds = function () {
 	$.ajax({
 		type: 'GET',
-	    url: 'guild.json',
+	    url: 'guildsessions.json',
 	    success: function(data) {
-	    	GM.GuildModel.guilds = data.guild;
-	    	GM.GuildmasterModel.guildmaster.guild = GM.GuildModel.guilds[0];
+	    	GM.GuildmasterModel.guildmaster.guild = data.guildsessions[0];
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    }
 	});
