@@ -69,10 +69,22 @@ function setupLoginPage() {
                     var msg = feedback.msg;
                     if (msg == 'success') {
                         sessionStorage.setItem('loggedIn', 1);
+                        var guild = feedback.guilds[0];
+                        GM.GuildController.postGuildID(guild.id);
+
                         showGame();
                     } else {
-                        var error = feedback.detail;
-                        console.log(error);
+                        switch(feedback.detail) {
+                            case 'not_activated':
+                                showEmailNotActivated();
+                                break;
+                            case 'wrong_password':
+                                showWrongPasswordError();
+                                break;
+                            case 'unknown':
+                                showLoginError();
+                                break;
+                        }    
                     }
                 }
             });
@@ -341,10 +353,9 @@ function logout() {
 function showEmailTaken() {
 	alert('The email you used to register is already taken.');
 }
-
+    
 function showEmailNotActivated() {
-    alert("The email address you entered is already taken, but not activated.\
-        If this email address belongs to you, please check your inbox for the confirmation email.");
+    $('#indexPage').html(emailNotActivatedTemplate);
 }
 
 function showSignupError() {

@@ -16,7 +16,6 @@ GM.GuildmasterModel.getGuildmaster = function () {
 	    success: function(data) {
 	    	GM.GuildmasterModel.guildmaster = data;
 	    	GM.GuildModel.getAllGuilds();
-
 	    }
 	});
 }
