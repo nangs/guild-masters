@@ -19,9 +19,9 @@ class QuestsController < ApplicationController
         format.json { render json: quest }
       end
     elsif params[:cmd] == 'assign'
-      quest_id = params[:quest_id]
-      adventurers_ids = params[:adventurers_ids]
-      assign_quest = Quest.assign(quest_id,adventurers_ids)
+      quest = Quest.find(params[:quest_id])
+      adventurers = Adventurer.find(params[:adventurers_ids])
+      assign_quest = QuestEvent.assign(quest,adventurers)
       respond_to do |format|
         format.json { render json: assign_quest }
       end
