@@ -38,10 +38,9 @@ class SessionsController < ApplicationController
     end
   end
 
-  # DELETE /sessions/1.json
+  # DELETE /sessions.json
   def destroy
-    session[:account_id] = nil
-    session[:guild_id] = nil
+    reset_session
     msg = {msg: "success"}
     respond_to do |format|
       format.json { render json: msg}

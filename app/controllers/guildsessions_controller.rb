@@ -19,14 +19,4 @@ class GuildsessionsController < ApplicationController
       format.json { render json: guild.to_json}
     end
   end
-
-  # DELETE /sessions/1.json
-  def destroy
-    session[:guild_id] = nil
-    msg = {msg: "success"}
-    respond_to do |format|
-      format.json { render json: msg.to_json}
-    end
-  end
-
 end
