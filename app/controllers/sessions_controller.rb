@@ -41,6 +41,7 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1.json
   def destroy
     session[:account_id] = nil
+    session[:guild_id] = nil
     msg = {msg: "success"}
     respond_to do |format|
       format.json { render json: msg}
