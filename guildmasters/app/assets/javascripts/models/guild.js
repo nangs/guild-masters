@@ -13,9 +13,12 @@ GM.GuildModel.getAllGuilds = function () {
 	$.ajax({
 		type: 'GET',
 	    url: 'guildsessions.json',
-	    success: function(data) {
-	    	GM.GuildmasterModel.guildmaster.guild = data.guildsessions[0];
+	    success: function(feedback) {
+	    	var guild = feedback.guildsessions[0];
+            GM.GuildmasterModel.guildmaster.guild = guild;
+            console.log(feedback);
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
+	    	GM.GuildController.postGuildID(guild.id);
 	    }
 	});
 }

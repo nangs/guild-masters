@@ -69,9 +69,6 @@ function setupLoginPage() {
                     var msg = feedback.msg;
                     if (msg == 'success') {
                         sessionStorage.setItem('loggedIn', 1);
-                        var guild = feedback.guilds[0];
-                        GM.GuildController.postGuildID(guild.id);
-
                         showGame();
                     } else {
                         switch(feedback.detail) {
@@ -347,7 +344,7 @@ function showSuccessActivatePage() {
 }
 
 function logout() {
-
+    sessionStorage.removeItem('loggedIn');
 }
 
 function showEmailTaken() {
