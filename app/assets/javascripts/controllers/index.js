@@ -1,3 +1,17 @@
+function showAdventurePage(data) {
+    view = adventurerNewButton + adventurersTableTemplate(data);
+    showView(view);
+}
+
+function showQuestPage(data) {
+    view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
+    showView(view);
+}
+
+function showHomePage(data) {
+    showView(data);
+}
+
 function showSection(section){
 	var view;
 	switch(section){
@@ -8,20 +22,19 @@ function showSection(section){
 			} else {
 				view = "There is no event that is in progress";
 			}
+            showView(view);
 			break;
+            
 		case 'adventurers':
-			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerModel.adventurers_list);
+            GM.AdventurerModel.getAllAdventurers(showAdventurePage);
 			break;
 		case 'quests':
-			view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
+            GM.QuestModel.getAllQuests(showQuestPage);
 			break;
 		case 'home':
-			GM.GuildmasterModel.getGuildmaster();
-            
-            view = GM.GuildmasterView;
+			GM.GuildmasterModel.getGuildmaster(showHomePage);
             break;
 	};
-	showView(view);
 }
 
 function showView(view){
@@ -33,10 +46,6 @@ $(function(){
     var sessionID = sessionStorage.getItem('loggedIn');
     if (sessionID) {
         showGame();
-        $('button').click(function(){
-            var section = $(this).attr('id');
-            showSection(section);
-        });
     }
     else {
 		setupLoginPage();
@@ -155,10 +164,6 @@ function showGame() {
 		showSection(section);
 	});
 	showSection('home');
-	$('button').click(function(){
-		var section = $(this).attr('id');
-		showSection(section);
-	});
 }
 
 function showDifferentPasswordError() {
@@ -345,6 +350,14 @@ function showSuccessActivatePage() {
 
 function logout() {
     sessionStorage.removeItem('loggedIn');
+    $.ajax({
+        type: 'DELETE',
+        url: 'sessions/1.json',
+        success: function(feedback) {
+            console.log(feedback);
+        }
+    });
+    location.reload();
 }
 
 function showEmailTaken() {

@@ -33,7 +33,7 @@ GM.QuestModel.getNewQuests = function(){
 	});
 }
 
-GM.QuestModel.getAllQuests = function () {
+GM.QuestModel.getAllQuests = function (func) {
 	$.ajax({
 		type: 'GET',
 	    url: 'quests.json',
@@ -50,6 +50,7 @@ GM.QuestModel.getAllQuests = function () {
 		    	}
 	    	}
 	    	GM.QuestModel.quest_list = data;
+	    	func(GM.QuestModel.quest_list);
 	    }
 	});
 }
