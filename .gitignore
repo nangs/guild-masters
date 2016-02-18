@@ -26,7 +26,7 @@ log/test.log
 
 # Ignore bundler config.
 /.bundle
-
+.bundle
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -35,3 +35,6 @@ log/test.log
 /log/*
 !/log/.keep
 /tmp
+*.cache
+*.log
+
