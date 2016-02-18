@@ -1,5 +1,10 @@
-function showAdventure(data) {
+function showAdventurePage(data) {
     view = adventurerNewButton + adventurersTableTemplate(data);
+    showView(view);
+}
+
+function showQuestPage(data) {
+    view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
     showView(view);
 }
 
@@ -17,11 +22,10 @@ function showSection(section){
 			break;
             
 		case 'adventurers':
-            GM.AdventurerModel.getAllAdventurers(showAdventure);
+            GM.AdventurerModel.getAllAdventurers(showAdventurePage);
 			break;
 		case 'quests':
-			view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
-            showView(view);
+            GM.QuestModel.getAllQuests(showQuestPage);
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster();
@@ -345,6 +349,14 @@ function showSuccessActivatePage() {
 
 function logout() {
     sessionStorage.removeItem('loggedIn');
+    $.ajax({
+        type: 'DELETE',
+        url: 'sessions/1.json',
+        success: function(feedback) {
+            console.log(feedback);
+        }
+    });
+    location.reload();
 }
 
 function showEmailTaken() {
