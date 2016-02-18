@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    fabric-rails (1.0.10)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fabric-rails!
