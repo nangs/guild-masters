@@ -8,6 +8,10 @@ function showQuestPage(data) {
     showView(view);
 }
 
+function showHomePage(data) {
+    showView(data);
+}
+
 function showSection(section){
 	var view;
 	switch(section){
@@ -28,10 +32,7 @@ function showSection(section){
             GM.QuestModel.getAllQuests(showQuestPage);
 			break;
 		case 'home':
-			GM.GuildmasterModel.getGuildmaster();
-            
-            view = GM.GuildmasterView;
-            showView(view);
+			GM.GuildmasterModel.getGuildmaster(showHomePage);
             break;
 	};
 }
