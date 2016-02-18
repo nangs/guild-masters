@@ -16,12 +16,14 @@ GM.Adventurer = DS.Model.extend({
 
 GM.AdventurerModel = DS.Model.extend();
 
-GM.AdventurerModel.getAllAdventurers = function () {
+GM.AdventurerModel.getAllAdventurers = function (func) {
 	$.ajax({
 		type: 'GET',
 	    url: 'adventurers.json',
 	    success: function(data) {
 	    	GM.AdventurerModel.adventurers_list = data;
+	    	console.log(data);
+	    	func(data);
 	    }
 	});
 }

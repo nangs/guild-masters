@@ -1,3 +1,8 @@
+function showAdventure(data) {
+    view = adventurerNewButton + adventurersTableTemplate(data);
+    showView(view);
+}
+
 function showSection(section){
 	var view;
 	switch(section){
@@ -8,20 +13,23 @@ function showSection(section){
 			} else {
 				view = "There is no event that is in progress";
 			}
+            showView(view);
 			break;
+            
 		case 'adventurers':
-			view = adventurerNewButton + adventurersTableTemplate(GM.AdventurerModel.adventurers_list);
+            GM.AdventurerModel.getAllAdventurers(showAdventure);
 			break;
 		case 'quests':
 			view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
+            showView(view);
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster();
             
             view = GM.GuildmasterView;
+            showView(view);
             break;
 	};
-	showView(view);
 }
 
 function showView(view){
@@ -33,10 +41,6 @@ $(function(){
     var sessionID = sessionStorage.getItem('loggedIn');
     if (sessionID) {
         showGame();
-        $('button').click(function(){
-            var section = $(this).attr('id');
-            showSection(section);
-        });
     }
     else {
 		setupLoginPage();
@@ -155,10 +159,6 @@ function showGame() {
 		showSection(section);
 	});
 	showSection('home');
-	$('button').click(function(){
-		var section = $(this).attr('id');
-		showSection(section);
-	});
 }
 
 function showDifferentPasswordError() {
