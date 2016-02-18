@@ -87,6 +87,9 @@ function setupLoginPage() {
                             case 'wrong_password':
                                 showWrongPasswordError();
                                 break;
+                            case 'invalid_account':
+                                showEmailNotValid();
+                                break;
                             case 'unknown':
                                 showLoginError();
                                 break;
@@ -362,6 +365,10 @@ function logout() {
 
 function showEmailTaken() {
 	alert('The email you used to register is already taken.');
+}
+
+function showEmailNotValid() {
+    alert('The email you entered is not valid');
 }
     
 function showEmailNotActivated() {
