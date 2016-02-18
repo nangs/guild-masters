@@ -39,3 +39,4 @@ log/test.log
 -/tmp
 .bundle
 *.cache
+tmp
