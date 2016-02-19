@@ -61,8 +61,8 @@ GM.QuestModel.assign = function(id, assigned) {
 	    url: 'quests.json',
 	    data: {
 	    	cmd: 'assign',
-	    	questId: id,
-	    	adventurersIds: assigned
+	    	quest_id: id,
+	    	adventurers_ids: assigned
 	    },
 	    success: function(data) {
 	    	console.log(data);
