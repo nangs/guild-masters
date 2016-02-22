@@ -6,11 +6,6 @@ You can access the website at nus school of computing: [http://172.25.79.43:3000
 
 ## Setting Up For developers:
 * Install [ruby](https://www.ruby-lang.org/en/downloads/) and [rails](http://rubyonrails.org/download/).		
- 		 
-* Move to the directory for the server		
-    ```bash		
-    $ cd guildmasters		
-    ```		
     		
 * Download the gems		
     ```bash		
