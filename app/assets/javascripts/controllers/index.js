@@ -378,6 +378,9 @@ function logout() {
         }
     });
 }
+function showWrongPasswordError() {
+    showAlertMessage('The password you entered is wrong.');
+}
 
 function showEmailTaken() {
 	showAlertMessage('The email you used to register is already taken.');
