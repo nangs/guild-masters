@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   def index
     @questEvents = QuestEvent.view_all
     respond_to do |format|
-      format.json { render json: @questEvents.to_json(:include => { :quest => { :include => :adventurers }}) }
+      format.json { render json: @questEvents.to_json }
     end
   end
 
