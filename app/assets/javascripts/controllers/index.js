@@ -111,6 +111,11 @@ function setupLoginPage() {
     	$('#indexPage').html(signupTemplate);
     	setupSignupPage(email, password);
     });
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            $('#loginButton').mouseup();
+        }
+    });
 }
 
 function setupSignupPage(email, password) {
@@ -162,6 +167,11 @@ function setupSignupPage(email, password) {
                     }
                 }
             });
+        }
+    });
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            $('#signupButton').mouseup();
         }
     });
 }
