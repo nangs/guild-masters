@@ -105,13 +105,18 @@ function setupLoginPage() {
     });
     
     $('#signupPage').mouseup(function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+
     	$('#indexPage').html(signupTemplate);
-    	setupSignupPage();
+    	setupSignupPage(email, password);
     });
 }
 
-function setupSignupPage() {
+function setupSignupPage(email, password) {
     var submitted = false;
+    $('#email').val(email);
+    $('#password').val(password);
     $('#signupButton').mouseup(function() {
 
         var email = $('#email').val();
