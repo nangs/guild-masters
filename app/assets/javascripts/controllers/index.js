@@ -16,13 +16,14 @@ function showSection(section){
 	var view;
 	switch(section){
 		case 'events':
-			GM.EventModel.getAllEvents();
-			if (GM.nextEvent) {
-				view = nextEventTemplate(GM.nextEvent);
-			} else {
-				view = "There is no event that is in progress";
-			}
-            showView(view);
+			GM.EventModel.getAllEvents(function () {
+                if (GM.nextEvent) {
+                    view = nextEventTemplate(GM.nextEvent);
+                } else {
+                    view = "There is no event that is in progress";
+                }
+                showView(view);            
+            });
 			break;
             
 		case 'adventurers':
@@ -104,13 +105,18 @@ function setupLoginPage() {
     });
     
     $('#signupPage').mouseup(function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
+
     	$('#indexPage').html(signupTemplate);
-    	setupSignupPage();
+    	setupSignupPage(email, password);
     });
 }
 
-function setupSignupPage() {
+function setupSignupPage(email, password) {
     var submitted = false;
+    $('#email').val(email);
+    $('#password').val(password);
     $('#signupButton').mouseup(function() {
 
         var email = $('#email').val();
