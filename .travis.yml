@@ -6,3 +6,6 @@ rvm:
 
 env:
   - DB=sqlite3
+
+before_script:
+  - bundle exec db:migrate RAILS_ENV=test
