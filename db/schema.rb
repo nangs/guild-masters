@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226070357) do
+ActiveRecord::Schema.define(version: 20160226074248) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -91,11 +91,13 @@ ActiveRecord::Schema.define(version: 20160226070357) do
     t.integer  "start_time"
     t.integer  "end_time"
     t.integer  "gold_spent"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "facility_id"
+    t.integer  "adventurer_id"
   end
 
+  add_index "facility_events", ["adventurer_id"], name: "index_facility_events_on_adventurer_id"
   add_index "facility_events", ["facility_id"], name: "index_facility_events_on_facility_id"
 
   create_table "guildmasters", force: :cascade do |t|
