@@ -101,7 +101,9 @@ function setupLoginPage() {
         }
     });
     $('#forgetPassword').mouseup(function() {
-        setupForgetPasswordPage();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        setupForgetPasswordPage(email, password);
     });
     
     $('#signupPage').mouseup(function() {
@@ -190,8 +192,10 @@ function showDifferentPasswordError() {
 }
 
 
-function setupForgetPasswordPage() {
+function setupForgetPasswordPage(email, password) {
     $('#indexPage').html(resetPasswordTemplate);
+    $('#email').val(email);
+    $('#password').val(password);
     $('#getTokenForReset').mouseup(function() {
         var email = $('#email').val();
         if (email == ''){
