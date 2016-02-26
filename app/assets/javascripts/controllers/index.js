@@ -16,13 +16,14 @@ function showSection(section){
 	var view;
 	switch(section){
 		case 'events':
-			GM.EventModel.getAllEvents();
-			if (GM.nextEvent) {
-				view = nextEventTemplate(GM.nextEvent);
-			} else {
-				view = "There is no event that is in progress";
-			}
-            showView(view);
+			GM.EventModel.getAllEvents(function () {
+                if (GM.nextEvent) {
+                    view = nextEventTemplate(GM.nextEvent);
+                } else {
+                    view = "There is no event that is in progress";
+                }
+                showView(view);            
+            });
 			break;
             
 		case 'adventurers':

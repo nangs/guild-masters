@@ -16,17 +16,29 @@ GM.EventModel.filter = function (events){
 	return events
 }
 
-GM.EventModel.getAllEvents = function () {
+GM.EventModel.getNextEvent = function (func) {
 	$.ajax({
 		type: 'GET',
 	    url: 'events.json',
 	    success: function(data) {
 	    	GM.EventModel.event_list = GM.EventModel.filter(data);
 	    	GM.nextEvent = GM.EventModel.event_list[0];
+	    	func(GM.nextEvent);
 	    }
 	});
 }
 
+GM.EventModel.getAllEvents = function (func) {
+	$.ajax({
+		type: 'GET',
+	    url: 'events.json',
+	    success: function(data) {
+	    	GM.EventModel.event_list = GM.EventModel.filter(data);
+	    	GM.nextEvent = GM.EventModel.event_list[0];
+	    	func(GM.event_list);
+	    }
+	});
+}
 
 GM.EventModel.complete = function (id) {
 	$.ajax({
