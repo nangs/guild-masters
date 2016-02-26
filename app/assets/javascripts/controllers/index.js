@@ -358,15 +358,15 @@ function showSuccessActivatePage() {
 }
 
 function logout() {
-    sessionStorage.removeItem('loggedIn');
     $.ajax({
         type: 'DELETE',
         url: 'sessions.json',
         success: function(feedback) {
             console.log(feedback);
+            sessionStorage.removeItem('loggedIn');
+            location.reload();
         }
     });
-    location.reload();
 }
 
 function showEmailTaken() {
