@@ -3,7 +3,9 @@ class QuestsController < ApplicationController
 # GET /quests
 # GET /quests.json
   def index
-    guild = Guild.find(session[:guild_id])
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    guild = Guild.find(guildmaster.current_guild_id)
     quests = guild.quests
     respond_to do |format|
       format.json { render json: quests }
@@ -12,14 +14,16 @@ class QuestsController < ApplicationController
 
 # POST /quests.json
   def create
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    guild = Guild.find(guildmaster.current_guild_id)
     if params[:cmd] == 'generate'
-      guild = Guild.find(session[:guild_id])
       quest = guild.create_quest
       respond_to do |format|
         format.json { render json: quest }
       end
     elsif params[:cmd] == 'assign'
-      quest = Quest.find(params[:quest_id])
+      quest = guild.quests.find(params[:quest_id])
       adventurers = Adventurer.find(params[:adventurers_ids])
       assign_quest = QuestEvent.assign(quest,adventurers)
       respond_to do |format|

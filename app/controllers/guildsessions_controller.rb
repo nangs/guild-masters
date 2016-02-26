@@ -13,8 +13,11 @@ class GuildsessionsController < ApplicationController
   end
 
   def create
-    session[:guild_id] = params[:guild_id]
-    guild = Guild.find(session[:guild_id])
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    guildmaster.current_guild_id = params[:guild_id]
+    guildmaster.save
+    guild = Guild.find(guildmaster.current_guild_id)
     respond_to do |format|
       format.json { render json: guild.to_json}
     end
