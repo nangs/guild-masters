@@ -93,6 +93,7 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil? && account.confirm_token == confirm_token
       account.password = password
+      account.email_confirmed = true
       account.save
       return {msg: "success"}
     elsif account.confirm_token != confirm_token
