@@ -186,7 +186,7 @@ function showGame() {
 }
 
 function showDifferentPasswordError() {
-	alert('The two password you entered are different');
+	showAlertMessage('The two password you entered are different');
 }
 
 
@@ -209,7 +209,7 @@ function setupForgetPasswordPage() {
                     console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
-                        alert("The confirmation token has been sent to your email.");
+                        showAlertMessage("The confirmation token has been sent to your email.");
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
@@ -296,7 +296,7 @@ function showSuccessSignupPage(email) {
         var code = $('#activationCode').val();
         var email = $('#email').val();
         if (!code) {
-            alert("Please enter the activation code");
+            showAlertMessage("Please enter the activation code");
         }
         else {
             $.ajax({
@@ -340,7 +340,7 @@ function showSuccessSignupPage(email) {
             success: function(feedback) {
                 console.log(feedback);
                 if (feedback.msg == 'success') {
-                    alert("Another email has been sent to you.");
+                    showAlertMessage("Another email has been sent to you.");
                 }
                 else {
                     switch(feedback.detail) {
@@ -380,11 +380,11 @@ function logout() {
 }
 
 function showEmailTaken() {
-	alert('The email you used to register is already taken.');
+	showAlertMessage('The email you used to register is already taken.');
 }
 
 function showEmailNotValid() {
-    alert('The email you entered is not valid');
+    showAlertMessage('The email you entered is not valid');
 }
     
 function showEmailNotActivated() {
@@ -392,26 +392,23 @@ function showEmailNotActivated() {
 }
 
 function showSignupError() {
-	alert('Some error occured during the signup process, please be patient while we are fixing it.');
+	showAlertMessage('Some error occured during the signup process, please be patient while we are fixing it.');
 }
 
 function showSignupNullError(field) {
-	alert('You must enter a valid ' + field);
+	showAlertMessage('You must enter a valid ' + field);
 }
 
 function passwordTooShortError() {
-	alert('The password must be at least than 6 characters');
+	showAlertMessage('The password must be at least than 6 characters');
 }
 
 function showLoginError() {
-    alert('Some error occured during login...');
+    showAlertMessage('Some error occured during login...');
 }
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-            break;
-        }
-    }
+function showAlertMessage(message) {
+    var alertMessage = alertMessageTemplate({'message' : message});
+    $('#alert').html(alertMessage);
 }
+
