@@ -25,25 +25,43 @@ class AccountsController < ApplicationController
     if params[:cmd] == 'signup'
       email = params[:email]
       password = params[:password]
-      account = Account.create_account(email,password)
+      result = Account.create_account(email,password)
+      respond_to do |format|
+        format.json { render json: result.to_json}
+      end
+      thr = Thread.new { Account.send_email(email,'signup') }
+      thr.join(0)
     elsif params[:cmd] == 'activate_account'
       email = params[:email]
       confirm_token = params[:confirm_token]
-      account = Account.activate_account(email,confirm_token)
+      result = Account.activate_account(email,confirm_token)
+      respond_to do |format|
+        format.json { render json: result.to_json}
+      end
     elsif params[:cmd] == 'update_account'
       email = params[:email]
       password = params[:password]
       confirm_token = params[:confirm_token]
-      account = Account.update_account(email,password,confirm_token)
+      result = Account.update_account(email,password,confirm_token)
+      respond_to do |format|
+        format.json { render json: result.to_json}
+      end
     elsif params[:cmd] == 'resend_email'
       email = params[:email]
-      account = Account.resend_email(email)
+      result = Account.resend_email(email)
+      respond_to do |format|
+        format.json { render json: result.to_json}
+      end
+      thr = Thread.new { Account.send_email(email,'signup') }
+      thr.join(0)
     elsif params[:cmd] == 'send_password_token'
       email = params[:email]
-      account = Account.send_password_token(email)
-    end
-    respond_to do |format|
-      format.json { render json: account.to_json}
+      result = Account.send_password_token(email)
+      respond_to do |format|
+        format.json { render json: result.to_json}
+      end
+      thr = Thread.new { Account.send_email(email,'reset_password') }
+      thr.join(0)
     end
   end
 end
