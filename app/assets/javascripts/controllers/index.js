@@ -83,7 +83,7 @@ function setupLoginPage() {
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated();
+                                showEmailNotActivated(email);
                                 break;
                             case 'wrong_password':
                                 showWrongPasswordError();
@@ -160,7 +160,7 @@ function setupSignupPage(email, password) {
                                 showEmailTaken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated();
+                                showEmailNotActivated(email);
                                 break;
                             case 'unknown':
                                 showSignupError();
@@ -217,7 +217,7 @@ function setupForgetPasswordPage(email, password) {
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated();
+                                showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -270,7 +270,7 @@ function setupForgetPasswordPage(email, password) {
                                 showWrongToken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated();
+                                showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -296,6 +296,11 @@ function showSuccessChangePasswordPage() {
 function showSuccessSignupPage(email) {
 	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
+    setupActivateAccountButton(email);
+    setupResendEmailButton(email);
+}
+
+function setupActivateAccountButton(email) {
     $('#activateAccount').mouseup(function() {
         var code = $('#activationCode').val();
         var email = $('#email').val();
@@ -333,6 +338,9 @@ function showSuccessSignupPage(email) {
             });
         }
     });
+}
+
+function setupResendEmailButton(email) {
     $('#resendEmail').mouseup(function() {
         $.ajax({
             type: 'POST',
@@ -394,8 +402,10 @@ function showEmailNotValid() {
     showAlertMessage('The email you entered is not valid');
 }
     
-function showEmailNotActivated() {
+function showEmailNotActivated(email) {
     $('#indexPage').html(emailNotActivatedTemplate);
+    setupActivateAccountButton(email);
+    setupResendEmailButton(email);
 }
 
 function showSignupError() {
