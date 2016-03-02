@@ -1,9 +1,22 @@
 class EventsController < ApplicationController
 # GET /events.json
   def index
-    @questEvents = QuestEvent.view_all
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+
+    @questEvents = guildmaster.quest_events
+    msg = Array.new
+    for @questEvent in @questEvents
+      msg << {
+          type: "QuestEvent",
+          startTime: @questEvent.start_time,
+          endTime: @questEvent.end_time,
+          adventurers: @questEvent.adventurers,
+          quest: @questEvent.quest
+      }
+    end
     respond_to do |format|
-      format.json { render json: @questEvents.to_json }
+      format.json { render json: msg}
     end
   end
 

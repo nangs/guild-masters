@@ -9,9 +9,12 @@ Rails.application.routes.draw do
   resources :guildmaster
   resources :quests
   resources :accounts
+  resources :questevents
+  resources :facilityevents
+  resources :guildsessions
   delete 'sessions' => 'sessions#destroy'
   resources :sessions
-  resources :guildsessions
+
 end
 
 #constraints subdomain: 'api' do
