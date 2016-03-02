@@ -28,8 +28,7 @@ class QuesteventsController < ApplicationController
         format.json { render json: assign_quest }
       end
     elsif params[:cmd] == 'complete'
-      quest_id = params[:quest_id]
-      @questEvent = guildmaster.quest_events.find_by(quest_id: quest_id)
+      @questEvent = guildmaster.quest_events.find_by(id: params[:quest_event_id])
       complete_quest = @questEvent.complete
       respond_to do |format|
         format.json { render json: complete_quest }
