@@ -1,5 +1,11 @@
-GM.Facility = DS.Model.extend({
-	level: DS.attr('number'),
+GM.FacilityModel = DS.Model.extend();
 
-	adventurers: DS.hasMany('adventurer')
-});
+GM.FacilityModel.getFacilities = function (func) {
+	$.ajax({
+		type: 'GET',
+	    url: 'facilities.json',
+	    success: function(data) {
+	    	func(data);
+	    }
+	});
+}
