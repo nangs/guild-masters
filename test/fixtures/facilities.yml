@@ -5,3 +5,15 @@ one:
 
 two:
   level: 1
+
+TestFac01:
+  level: 1
+  name: "clinic"
+  capacity: 2
+  guild: TestGuild01
+
+TestFac02:
+  level: 1
+  name: "canteen"
+  capacity: 2
+  guild: TestGuild01
