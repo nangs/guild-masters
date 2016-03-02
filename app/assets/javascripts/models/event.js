@@ -14,7 +14,7 @@ GM.EventModel.filter = function (events){
 	events.sort(function(event1, event2) {
 		return event1.end_time - event2.end_time;
 	});
-	return events
+	return events;
 }
 
 GM.EventModel.getNextEvent = function (func) {
@@ -36,7 +36,7 @@ GM.EventModel.getAllEvents = function (func) {
 	    success: function(data) {
 	    	GM.EventModel.event_list = GM.EventModel.filter(data);
 	    	GM.nextEvent = GM.EventModel.event_list[0];
-	    	func(GM.event_list);
+	    	func(GM.EventModel.event_list);
 	    }
 	});
 }

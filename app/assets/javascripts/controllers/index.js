@@ -51,7 +51,7 @@ $(function(){
     else {
 		setupLoginPage();
 	}	
-})
+});
 
 function setupLoginPage() {
 	$('#indexPage').html(loginTemplate);
