@@ -19,21 +19,23 @@ class Quest < ActiveRecord::Base
     #Generate monster instance according to template
     advs = adventurers.clone
     survivers = (0..advs.size-1).to_a
+    attacks = Array.new(advs.size,0)
+    defenses = Array.new(advs.size,0)
     monster = Monster.new(self.monster_template,self.difficulty)
-    puts advs.inspect
-    puts monster.inspect
+    
     end_of_battle=false
     adv_victory = false
     turn = 0
+    
     while(!end_of_battle)
       turn = turn+1
-      puts turn
+      
       #Adventurers` phase
       for adv_id in survivers
         adventurer = adventurers[adv_id]
         if(monster.hp>0)
           monster.hp=monster.hp-(adventurer.attack*adventurer.attack/monster.defense)
-          puts "adventurer: %d >> monster: %d " % [adventurer.hp, monster.hp]
+          attacks[adv_id]=attacks[adv_id]+1
           if(monster.hp<0)
             monster.hp=0
           end
@@ -44,7 +46,7 @@ class Quest < ActiveRecord::Base
         target_id = survivers.sample
         target=advs[target_id]
         target.hp = target.hp - (monster.attack*monster.attack/target.defense)
-        puts "monster: %d >> adventurers %d" % [monster.hp,target.hp]
+        defenses[target_id]=defenses[target_id]+1
         #Adventurer was killed
         if(target.hp<=0)
           target.hp=0
@@ -61,6 +63,14 @@ class Quest < ActiveRecord::Base
       end
 
     end
+    
+    for adv_id in survivers
+      adventurers[adv_id].attack = adventurers[adv_id].attack + attacks[adv_id]*self.difficulty
+      adventurers[adv_id].defense = adventurers[adv_id].defense + defenses[adv_id]*self.difficulty
+      adventurers[adv_id].max_hp = adventurers[adv_id].defense + defenses[adv_id]*self.difficulty*5
+      adventurers[adv_id].max_energy = adventurers[adv_id].max_energy + self.difficulty
+    end
+    
     #Energy cost calculation
     for adventurer in advs
       adventurer.energy = adventurer.energy - 5 - self.difficulty*5
@@ -68,7 +78,7 @@ class Quest < ActiveRecord::Base
       adventurer.energy = 0 if adventurer.energy<0
       adventurer.save
     end
-    puts adv_victory
+    
     return adv_victory
   end
 end

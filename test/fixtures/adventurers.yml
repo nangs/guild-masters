@@ -48,7 +48,7 @@ Tester03:
   attack: 100
   defense: 100
   vision: 100
-  state: Available
+  state: available
 
 Tester04:
   hp: 1000
@@ -58,7 +58,7 @@ Tester04:
   attack: 100
   defense: 100
   vision: 100
-  state: Available
+  state: available
   
 Tester05:
   hp: 1000
@@ -68,7 +68,7 @@ Tester05:
   attack: 100
   defense: 100
   vision: 100
-  state: Available
+  state: available
   
 Tester06:
   hp: 1000
@@ -78,4 +78,45 @@ Tester06:
   attack: 100
   defense: 100
   vision: 100
-  state: Available
+  state: available
+ 
+Tester07:
+  hp: 1
+  max_hp: 1000
+  energy: 1
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: available
+  
+Tester08:
+  hp: 999
+  max_hp: 1000
+  energy: 999
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: available
+  
+  
+Tester09:
+  hp: 1000
+  max_hp: 1000
+  energy: 999
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: available
+  
+Tester10:
+  hp: 999
+  max_hp: 1000
+  energy: 1000
+  max_energy: 1000
+  attack: 100
+  defense: 100
+  vision: 100
+  state: available
