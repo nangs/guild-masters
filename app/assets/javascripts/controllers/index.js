@@ -17,8 +17,9 @@ function showSection(section){
 	switch(section){
 		case 'events':
 			GM.EventModel.getAllEvents(function () {
-                if (GM.nextEvent) {
-                    view = nextEventTemplate(GM.nextEvent);
+                if (GM.EventModel.nextEvent) {
+                    console.log(GM.EventModel.nextEvent);
+                    view = nextEventTemplate(GM.EventModel.nextEvent);
                 } else {
                     view = "There is no event that is in progress";
                 }
