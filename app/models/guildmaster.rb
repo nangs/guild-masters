@@ -1,8 +1,13 @@
 class Guildmaster < ActiveRecord::Base
   has_many :guilds, dependent: :destroy
+  belongs_to :account
+
+  # shortcuts to quest_events and facility_events
   has_many :quests, through: :guilds
   has_many :quest_events, through: :quests
-  belongs_to :account
+  has_many :facilities, through: :guilds
+  has_many :facility_events, through: :facilities
+
   
   def build_guild
     guild = Guild.new

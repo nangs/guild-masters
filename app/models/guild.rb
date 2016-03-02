@@ -3,7 +3,9 @@ class Guild < ActiveRecord::Base
 	has_many :quests, dependent: :destroy
 	has_many :facilities, dependent: :destroy
 	has_many :adventurers, dependent: :destroy
+
 	has_many :quest_events, through: :quests
+	has_many :facility_events, through: :facilities
 
 
 	#This function creates a quest based on current level of guild

@@ -2,6 +2,9 @@ class FacilityEvent < ActiveRecord::Base
 	belongs_to :facility
 	belongs_to :adventurer
 	
+	delegate :guild, to: :facility
+  delegate :guildmaster, to: :facility
+
 	def self.assign(facility,adventurers)
 	  
 	  if(adventurers.size>facility.capacity)
