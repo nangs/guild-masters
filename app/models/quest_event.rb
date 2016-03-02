@@ -24,11 +24,11 @@ class QuestEvent < ActiveRecord::Base
       self.quest.state="successful"
       guild.popularity=guild.popularity+self.quest.difficulty
       gm.gold = gm.gold+self.quest.reward
-      msg= "Quest completed! Your guild earned %d gold and %d popularity!" % [self.quest.reward,self.quest.difficulty]
+      msg= {msg: "success", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty}
     else
       self.quest.state="failed"
       guild.popularity=guild.popularity-self.quest.difficulty
-      msg = "Quest failed! Your guild lost %d popularity" % self.quest.difficulty
+      msg = {msg: "failed", popularity_lost: self.quest.difficulty}
     end
     
     guild.save
