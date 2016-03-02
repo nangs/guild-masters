@@ -44,7 +44,7 @@ GM.EventModel.getAllEvents = function (func) {
 GM.EventModel.complete = function (id) {
 	$.ajax({
 		type: 'POST',
-	    url: 'events.json',
+	    url: 'questevents.json',
 	    data :{
 	    	cmd: 'complete',
 	    	eventId: id
