@@ -9,8 +9,9 @@ class EventsController < ApplicationController
     event_id = 1
     for @questEvent in @questEvents
       msg << {
-          type: "QuestEvent",
           event_id: event_id,
+          type: "QuestEvent",
+          quest_event_id: @questEvent.id,
           start_time: @questEvent.start_time,
           end_time: @questEvent.end_time,
           quest: @questEvent.quest,
@@ -18,18 +19,19 @@ class EventsController < ApplicationController
       }
       event_id += 1
     end
-    # @facilityEvents = guildmaster.facility_events
-    # for @facilityEvent in @facilityEvents
-    #   msg << {
-    #       type: "FacilityEvent",
-    #       event_id: event_id,
-    #       start_time: @facilityEvent.start_time,
-    #       end_time: @facilityEvent.end_time,
-    #       facility: @facilityEvent.facility,
-    #       adventurers: @facilityEvent.adventurers
-    #   }
-    #   event_id += 1
-    # end
+    @facilityEvents = guildmaster.facility_events
+    for @facilityEvent in @facilityEvents
+      msg << {
+          event_id: event_id,
+          type: "FacilityEvent",
+          facility_event_id: @facilityEvent.id,
+          start_time: @facilityEvent.start_time,
+          end_time: @facilityEvent.end_time,
+          facility: @facilityEvent.facility,
+          adventurers: @facilityEvent.adventurers
+      }
+      event_id += 1
+    end
     respond_to do |format|
       format.json { render json: msg}
     end
