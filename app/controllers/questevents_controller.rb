@@ -1,10 +1,12 @@
 class QuesteventsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   # GET /questevents.json
   def index
     acc = Account.find(session[:account_id])
     @guildmaster = acc.guildmaster
     @guild = Guild.find(@guildmaster.current_guild_id)
-    @questevents = @guild.questevents
+    @questevents = @guild.quest_events
     respond_to do |format|
       format.json { render json: @questevents }
     end
@@ -26,7 +28,9 @@ class QuesteventsController < ApplicationController
         format.json { render json: assign_quest }
       end
     elsif params[:cmd] == 'complete'
-      complete_quest = QuestEvent.complete
+      quest_id = params[:quest_id]
+      @questEvent = guildmaster.quest_events.find_by(quest_id: quest_id)
+      complete_quest = @questEvent.complete
       respond_to do |format|
         format.json { render json: complete_quest }
       end
