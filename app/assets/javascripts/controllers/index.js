@@ -185,6 +185,12 @@ function showGame() {
 		showSection(section);
 	});
 	showSection('home');
+    GM.GuildmasterModel.getGuildmaster(function() {
+        GM.EventModel.getAllEvents(function(events) {
+            console.log(events);
+            setupTimeBar(events, GM.GuildmasterModel.guildmaster.game_time);
+        });        
+    })
 }
 
 function showDifferentPasswordError() {
