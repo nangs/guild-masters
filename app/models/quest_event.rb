@@ -3,6 +3,9 @@ class QuestEvent < ActiveRecord::Base
   has_and_belongs_to_many :adventurers
   accepts_nested_attributes_for :quest
   
+  delegate :guild, to: :quest
+  delegate :guildmaster, to: :quest
+
   def self.view_all
     events = QuestEvent.all
     return events

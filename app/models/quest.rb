@@ -4,6 +4,9 @@ class Quest < ActiveRecord::Base
   belongs_to :guild
   has_many :quest_events
   belongs_to :monster_template
+
+  delegate :guildmaster, to: :guild
+
   #This function returns a list of Quests to the controller
   def self.view_all
     quests=Quest.all
