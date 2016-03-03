@@ -16,7 +16,6 @@ GM.FacilityModel.assign = function(id, assigned) {
 		type: 'POST',
 	    url: 'facilityevents.json',
 	    data: {
-	    	cmd: 'assign',
 	    	facility_id: id,
 	    	adventurers_ids: assigned
 	    },

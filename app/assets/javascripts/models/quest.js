@@ -60,7 +60,6 @@ GM.QuestModel.assign = function(id, assigned) {
 		type: 'POST',
 	    url: 'questevents.json',
 	    data: {
-	    	cmd: 'assign',
 	    	quest_id: id,
 	    	adventurers_ids: assigned
 	    },
