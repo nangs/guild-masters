@@ -46,7 +46,7 @@ GM.EventModel.completeNextQuest = function (id) {
 		type: 'POST',
 	    url: 'events.json',
 	    data :{
-	    	cmd: 'complete',
+	    	cmd: 'complete_next',
 	    },
 	    success: function(data) {
 	    	showView(data);

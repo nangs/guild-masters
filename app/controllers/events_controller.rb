@@ -39,19 +39,18 @@ class EventsController < ApplicationController
 
   # POST /events.json
   def create
-    if params[:cmd] == 'complete'
-      eventId = params[:eventId]
-      @questEvent = QuestEvent.complete(eventId)
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    if params[:cmd] == 'complete_next'
+      @complete_event = Event.complete_next(guildmaster)
       respond_to do |format|
-        format.json { render json: @questEvent.to_json}
+        format.json { render json: @complete_event}
+      end
+    elsif params[:cmd] == 'complete'
+      @complete_event = Event.complete(guildmaster,params[:end_time])
+      respond_to do |format|
+        format.json { render json: @complete_event}
       end
     end
   end
-
-  def update
-  end
-
-  def destroy
-  end
-
 end
