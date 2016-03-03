@@ -46,5 +46,24 @@ class FacilityEvent < ActiveRecord::Base
 	  end
 	  return msg = {msg:"success"}
 	end
+	
+	def complete
+	  gm=self.guildmaster
+	  fac=self.facility
+	  adv=self.adventurer
+	  msg = {msg:"success"}
+	  if(fac.name=="canteen")
+	    adv.energy=adv.max_energy
+	  else
+	    adv.hp = adv.max_hp
+	  end
+	  adv.state="available"
+	  adv.save
+	  fac.capacity=fac.capacity+1
+	  fac.save
+	  gm.game_time = self.end_time
+	  gm.save
+	  return msg
+	end
 
 end

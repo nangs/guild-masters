@@ -15,12 +15,21 @@ class FacilityEventTest < ActiveSupport::TestCase
     assert_equal nospace, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester07),adventurers(:Tester08),adventurers(:Tester09)])
     assert_equal noavai, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester02)])
     assert_equal fullhp, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester09)])
-    puts adventurers(:Tester09).inspect
+
     assert_equal fullenergy, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester10)])
     assert_equal nogold, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester07)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester08)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester10)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
-    puts guildmasters(:TestMaster02).inspect
+
+  end
+  
+  test "test complete" do
+    success = {msg:"success"}
+    FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
+    qe=adventurers(:Tester09).facility_events.first
+    assert_equal success,qe.complete
+    assert_equal adventurers(:Tester09).max_hp, adventurers(:Tester09).hp
+
   end
 end
