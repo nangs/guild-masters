@@ -1,10 +1,10 @@
 function showAdventurePage(data) {
-    view = adventurerNewButton + adventurersTableTemplate(data);
+    var view = adventurerNewButton + adventurersTableTemplate(data);
     showView(view);
 }
 
 function showQuestPage(data) {
-    view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
+    var view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
     showView(view);
 }
 
@@ -199,10 +199,14 @@ function showGame() {
 		showSection(section);
 	});
 	showSection('home');
+    setupTimeBar();
+}
+
+function setupTimeBar(){
     GM.GuildmasterModel.getGuildmaster(function() {
         GM.EventModel.getAllEvents(function(events) {
             console.log(events);
-            setupTimeBar(events, GM.GuildmasterModel.guildmaster.game_time);
+            renderTimeBar(events, GM.GuildmasterModel.guildmaster.game_time);
         });        
     })
 }
