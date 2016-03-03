@@ -26,6 +26,5 @@ class QuestEventTest < ActiveSupport::TestCase
     qe = quests(:TestQuest06).quest_events.first
     msg = qe.complete
     assert_equal 1,qe.adventurers.count
-    assert_equal "Quest failed! Your guild lost 3 popularity",msg
   end
 end
