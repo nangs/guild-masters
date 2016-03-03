@@ -41,10 +41,10 @@ GM.EventModel.getAllEvents = function (func) {
 	});
 }
 
-GM.EventModel.complete = function (id) {
+GM.EventModel.completeNextQuest = function (id) {
 	$.ajax({
 		type: 'POST',
-	    url: 'questevents.json',
+	    url: 'events.json',
 	    data :{
 	    	cmd: 'complete',
 	    },

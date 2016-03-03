@@ -1,1 +1,1 @@
-var nextEventTemplate = HandlebarsTemplates['event/nextEvent'];
+var nextQuestEventTemplate = HandlebarsTemplates['event/nextQuestEvent'];
