@@ -7,7 +7,6 @@ GM.GuildController.postGuildID = function (guildID) {
 	    	guild_id : guildID
 	    },
 	    success: function(feedback) {
-	    	console.log(feedback);
 	    }
 	});
 }
