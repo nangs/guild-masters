@@ -5,23 +5,23 @@ class EventsController < ApplicationController
     guildmaster = acc.guildmaster
 
     @questEvents = guildmaster.quest_events
-    msg = Array.new
+    arrayOfAllEventsDetails = Array.new
     event_id = 1
     for @questEvent in @questEvents
-      msg << {
+      arrayOfAllEventsDetails << {
           event_id: event_id,
           type: "QuestEvent",
           quest_event_id: @questEvent.id,
           start_time: @questEvent.start_time,
           end_time: @questEvent.end_time,
-          quest: @questEvent.quest,
+          quest: @questEvent.quest( except: :created_at),
           adventurers: @questEvent.adventurers
       }
       event_id += 1
     end
     @facilityEvents = guildmaster.facility_events
     for @facilityEvent in @facilityEvents
-      msg << {
+      arrayOfAllEventsDetails << {
           event_id: event_id,
           type: "FacilityEvent",
           facility_event_id: @facilityEvent.id,
@@ -33,7 +33,7 @@ class EventsController < ApplicationController
       event_id += 1
     end
     respond_to do |format|
-      format.json { render json: msg}
+      format.json { render json: arrayOfAllEventsDetails.to_json(except: [:updated_at, :created_at])}
     end
   end
 
@@ -42,14 +42,14 @@ class EventsController < ApplicationController
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     if params[:cmd] == 'complete_next'
-      @complete_event = Event.complete_next(guildmaster)
+      @result_complete_next_event = Event.complete_next(guildmaster)
       respond_to do |format|
-        format.json { render json: @complete_event}
+        format.json { render json: @result_complete_next_event}
       end
     elsif params[:cmd] == 'complete'
-      @complete_event = Event.complete(guildmaster,params[:end_time])
+      @result_complete_event = Event.complete(guildmaster,params[:end_time])
       respond_to do |format|
-        format.json { render json: @complete_event}
+        format.json { render json: @result_complete_event}
       end
     end
   end
