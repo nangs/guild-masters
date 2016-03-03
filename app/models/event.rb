@@ -11,8 +11,6 @@ class Event < ActiveRecord::Base
   def self.complete(gm,end_time)
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
-    puts qes.inspect
-    puts fes.inspect
     for qe in qes
       qe.complete
     end
