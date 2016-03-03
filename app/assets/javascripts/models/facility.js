@@ -21,7 +21,13 @@ GM.FacilityModel.assign = function(id, assigned) {
 	    },
 	    success: function(data) {
 	    	console.log(data);
-	    	showView('Adventueres successfully assigned');
+	    	if (data.message == "error") {
+	    		showView(data.detail);
+	    	} else {
+	    		showView('Adventueres successfully assigned');
+	    	}
+	    	
+	    	setupTimeBar();
 	    }
 	});
 }

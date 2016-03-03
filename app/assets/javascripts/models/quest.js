@@ -66,6 +66,7 @@ GM.QuestModel.assign = function(id, assigned) {
 	    success: function(data) {
 	    	console.log(data);
 	    	showView('Quest successfully assigned!');
+	    	setupTimeBar();
 	    }
 	});
 }
