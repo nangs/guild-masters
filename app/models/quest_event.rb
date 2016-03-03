@@ -15,10 +15,8 @@ class QuestEvent < ActiveRecord::Base
     
     #Relief adventurers and calculate quest factor
     result = self.quest.battle(self.adventurers)
-
-    guild = self.quest.guild
-    gm=guild.guildmaster
-    
+    guild = self.guild
+    gm=self.guildmaster
     #Success/Fail judgement
     if(result)
       self.quest.state="successful"

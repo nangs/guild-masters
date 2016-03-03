@@ -13,7 +13,7 @@ class EventTest < ActiveSupport::TestCase
     FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
     gm = guildmasters(:TestMaster02)
     Event.complete_next(gm)
-    puts gm.inspect
+    Event.complete_next(gm)
     
   end
   
@@ -26,6 +26,5 @@ class EventTest < ActiveSupport::TestCase
     gm = guildmasters(:TestMaster02)
     
     Event.complete(gm,10800)
-    puts gm.inspect
   end
 end

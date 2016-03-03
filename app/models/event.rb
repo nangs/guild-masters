@@ -9,16 +9,16 @@ class Event < ActiveRecord::Base
   end
   
   def self.complete(gm,end_time)
-    qes=gm.quest_events.where(end_time: gm.game_time..end_time)
-    fes=gm.facility_events.where(end_time: gm.game_time..end_time)
+    qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
+    fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
+    puts qes.inspect
+    puts fes.inspect
     for qe in qes
       qe.complete
     end
     for fe in fes
       fe.complete
     end
-    gm.game_time=end_time
-    gm.save
     return {msg: "successful"}
   end
 end
