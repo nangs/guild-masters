@@ -12,6 +12,11 @@ function showHomePage(data) {
     showView(data);
 }
 
+function showFacilityPage(data) {
+    var view = facilitiesTemplate(data);
+    showView(view);
+}
+
 function showSection(section){
 	var view;
 	switch(section){
@@ -40,6 +45,9 @@ function showSection(section){
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster(showHomePage);
+            break;
+        case 'facilities':
+            GM.FacilityModel.getFacilities(showFacilityPage);
             break;
 	};
 }

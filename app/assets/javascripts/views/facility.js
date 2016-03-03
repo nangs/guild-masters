@@ -1,0 +1,1 @@
+var facilitiesTemplate = HandlebarsTemplates['facility/facilities'];
