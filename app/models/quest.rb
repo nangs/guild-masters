@@ -67,7 +67,7 @@ class Quest < ActiveRecord::Base
     for adv_id in survivers
       adventurers[adv_id].attack = adventurers[adv_id].attack + attacks[adv_id]*self.difficulty
       adventurers[adv_id].defense = adventurers[adv_id].defense + defenses[adv_id]*self.difficulty
-      adventurers[adv_id].max_hp = adventurers[adv_id].defense + defenses[adv_id]*self.difficulty*5
+      adventurers[adv_id].max_hp = adventurers[adv_id].max_hp + defenses[adv_id]*self.difficulty*5
       adventurers[adv_id].max_energy = adventurers[adv_id].max_energy + self.difficulty
     end
     
