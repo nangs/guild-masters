@@ -1,5 +1,5 @@
 var timeBar_start_point = 20;
-var timeBar_top_padding = 20;
+var timeBar_top_padding = 16;
 function renderTimeBar(events, currentGameTime){
 	var canvas = new fabric.Canvas('timeBar');
 
@@ -75,13 +75,16 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 	circle.isInfoShown = false;
 
 	circle.showInfo = function () {
-		var text = new fabric.Text("Info box", {
-			left: endTime + timeBar_start_point + 20,
-			top: timeBar_top_padding + 16,
-			fontSize: 10
+		var quest = eve.quest;
+		var infoText = quest.description + "\nDifficulty: " + quest.difficulty + "\nReward :" + quest.reward;
+		var text = new fabric.Text(infoText, {
+			left: endTime + timeBar_start_point + 160,
+			top: timeBar_top_padding + 25,
+			fontSize: 12,
+			stroke: 'rgb(200,100,50)'
 		});
-		text.set('backgroundColor', 'rgb(200,200,0)');
-		text.setOpacity(0.5);
+		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.setOpacity(0.8);
 		canvas.add(text);
 		text.selectable = false;
 		circle.isInfoShown = true;
