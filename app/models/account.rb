@@ -4,11 +4,11 @@ class Account < ActiveRecord::Base
   has_secure_password
 
   options = {
-      :address              => 'smtp.gmail.com',
+      :address              => "smtp.gmail.com",
       :port                 => 587,
-      :user_name            => 'contact.guildmasters@gmail.com',
-      :password             => 'guildmasters12345',
-      :authentication       => 'plain',
+      :user_name            => "contact.guildmasters@gmail.com",
+      :password             => "guildmasters12345",
+      :authentication       => "plain",
       :enable_starttls_auto => true
   }
   Mail.defaults do
@@ -107,21 +107,21 @@ class Account < ActiveRecord::Base
 
   def self.send_email(email,type)
     account = Account.find_by(email: email)
-    if type == 'signup'
-      subject = 'Subject - Thank You for signing up'
+    if type == "signup"
+      subject = "Subject - Thank You for signing up"
       body = "Please activate your account with the code provided:\nActivation Code: #{ account.confirm_token }"
-    elsif type == 'reset_password'
+    elsif type == "reset_password"
       if !account.email_confirmed
-        subject = 'Subject - Password Change and Account Activation'
+        subject = "Subject - Password Change and Account Activation"
         body = "Please change your account password and activate your account with the code provided:\nCode: #{ account.confirm_token }"
       elsif account.email_confirmed
-        subject = 'Subject - Password Change'
+        subject = "Subject - Password Change"
         body = "Please change your account password with the code provided:\nCode: #{ account.confirm_token }"
       end
     end
     Mail.deliver do
       to email
-      from 'contact.guildmasters@gmail.com'
+      from "contact.guildmasters@gmail.com"
       subject subject
       body body
     end
@@ -131,7 +131,7 @@ class Account < ActiveRecord::Base
     gm = Guildmaster.new
     gm.gold = 1000
     gm.game_time = 0
-    gm.state = 'available'
+    gm.state = "available"
     gm.account = self
     gm.save
     gm.build_guild

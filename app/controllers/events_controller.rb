@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  respond_to :json
+
 # GET /events.json
   def index
     acc = Account.find(session[:account_id])
@@ -41,12 +44,12 @@ class EventsController < ApplicationController
   def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
-    if params[:cmd] == 'complete_next'
+    if params[:cmd] == "complete_next"
       @result_complete_next_event = Event.complete_next(guildmaster)
       respond_to do |format|
         format.json { render json: @result_complete_next_event}
       end
-    elsif params[:cmd] == 'complete'
+    elsif params[:cmd] == "complete"
       @result_complete_event = Event.complete(guildmaster,params[:end_time])
       respond_to do |format|
         format.json { render json: @result_complete_event}
