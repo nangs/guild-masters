@@ -49,10 +49,10 @@ GM.EventModel.completeNextQuest = function (id) {
 	    	cmd: 'complete_next',
 	    },
 	    success: function(data) {
-	    	showView(data);
-			GM.QuestModel.getAllQuests();
-			GM.AdventurerModel.getAllAdventurers();
-			GM.EventModel.getAllEvents();
+	    	if (data.msg == "successful") {
+	    		showView("The quest is completed.");
+				GM.EventModel.getAllEvents(setupTimeBar);    		
+	    	}
 	    },
 	});
 }
