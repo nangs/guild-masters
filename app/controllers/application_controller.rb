@@ -3,13 +3,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authorize
   protected
+  respond_to :json
+
   def authorize
     unless Account.find_by(id: session[:account_id])
-      # rendering to json is not needed.
-      # respond_to do |format|
-      #   format.json { render json: 'unauthorized'.to_json}
-      # end
-      return 'unauthorized'
+      #redirect to index
+      render action: "index"
     end
   end
+
 end
