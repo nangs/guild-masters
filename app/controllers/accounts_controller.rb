@@ -3,18 +3,17 @@ class AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
-########
+#############################################################################
 ########for testing not for release
 ########
 # GET /accounts.json
   def index
     accounts = Account.all
-    render json: accounts
-    # render json: accounts.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
+    render json: accounts.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
   end
 ########
 ########for testing not for release
-########
+#############################################################################
 
 
 # POST /accounts.json
@@ -27,39 +26,30 @@ class AccountsController < ApplicationController
       password = params[:password]
       result = Account.create_account(email,password)
       render json: result
-      # render json: result.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
-      thr = Thread.new { Account.send_email(email,"signup") }
+      thr = Thread.new { Account.send_email(email,:"signup") }
       thr.join(0)
     elsif params[:cmd] == "activate_account"
       email = params[:email]
       confirm_token = params[:confirm_token]
       result = Account.activate_account(email,confirm_token)
-      respond_to do |format|
-        format.json { render json: result.to_json}
-      end
+      render json: result
     elsif params[:cmd] == "update_account"
       email = params[:email]
       password = params[:password]
       confirm_token = params[:confirm_token]
       result = Account.update_account(email,password,confirm_token)
-      respond_to do |format|
-        format.json { render json: result.to_json}
-      end
+      render json: result
     elsif params[:cmd] == "resend_email"
       email = params[:email]
       result = Account.resend_email(email)
-      respond_to do |format|
-        format.json { render json: result.to_json}
-      end
-      thr = Thread.new { Account.send_email(email,"signup") }
+      render json: result
+      thr = Thread.new { Account.send_email(email,:"signup") }
       thr.join(0)
     elsif params[:cmd] == "send_password_token"
       email = params[:email]
       result = Account.send_password_token(email)
-      respond_to do |format|
-        format.json { render json: result.to_json}
-      end
-      thr = Thread.new { Account.send_email(email,"reset_password") }
+      render json: result
+      thr = Thread.new { Account.send_email(email,:"reset_password") }
       thr.join(0)
     end
   end

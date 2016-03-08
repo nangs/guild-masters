@@ -23,19 +23,19 @@ class Account < ActiveRecord::Base
   #To call this function: Account.create_account(params[:email],params[:password])
   def self.create_account(email,password)
     if email.nil?
-      return {msg: "error", detail: "email_nil"}
+      return {msg: :"error", detail: :"email_nil"}
     end
     if password.nil?
-      return {msg: "error", detail: "password_nil"}
+      return {msg: :"error", detail: :"password_nil"}
     end
     account = Account.find_by(email: email)
     if !account.nil?
       if account.email_confirmed
-        return {msg: "error", detail: "account_taken"}
+        return {msg: :"error", detail: :"account_taken"}
       elsif !account.email_confirmed
-        return {msg: "error", detail: "not_activated"}
+        return {msg: :"error", detail: :"not_activated"}
       else
-        return {msg: "error", detail: "unknown"}
+        return {msg: :"error", detail: :"unknown"}
       end
     elsif account.nil?
       account = Account.new(password:password,email:email)
@@ -43,9 +43,9 @@ class Account < ActiveRecord::Base
         account.confirm_token = account.id * rand(999)
         account.save
         account.initialize_guildmaster
-        return {msg: "success"}
+        return {msg: :"success"}
       else
-        return {msg: "error", detail: "creating_account"}
+        return {msg: :"error", detail: :"creating_account"}
       end
     end
   end
@@ -55,13 +55,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && !account.email_confirmed
       account.confirm_token = account.id * rand(999)
       account.save
-      return {msg: "success"}
+      return {msg: :"success"}
     elsif account.nil
-      return {msg: "error", detail: "invalid_account"}
+      return {msg: :"error", detail: :"invalid_account"}
     elsif account.email_confirmed
-      return {msg: "error", detail: "already_activated"}
+      return {msg: :"error", detail: :"already_activated"}
     else
-      return {msg: "error", detail: "unknown"}
+      return {msg: :"error", detail: :"unknown"}
     end
   end
 
@@ -70,7 +70,7 @@ class Account < ActiveRecord::Base
     if !account.nil?
       account.confirm_token = account.id * rand(999)
       account.save
-      return {msg: "success"}
+      return {msg: :"success"}
     end
   end
 
@@ -79,13 +79,13 @@ class Account < ActiveRecord::Base
     if !account.nil? && account.confirm_token == confirm_token
       account.email_confirmed = true
       account.save
-      return {msg: "success"}
+      return {msg: :"success"}
     elsif account.nil?
-      return {msg: "error", detail: "invalid_account"}
+      return {msg: :"error", detail: :"invalid_account"}
     elsif account.email_confirmed
-      return {msg: "error", detail: "already_activated"}
+      return {msg: :"error", detail: :"already_activated"}
     elsif account.confirm_token != confirm_token
-      return {msg: "error", detail: "wrong_token"}
+      return {msg: :"error", detail: :"wrong_token"}
     end
   end
 
@@ -95,22 +95,22 @@ class Account < ActiveRecord::Base
       account.password = password
       account.email_confirmed = true
       account.save
-      return {msg: "success"}
+      return {msg: :"success"}
     elsif account.confirm_token != confirm_token
-      return {msg: "error", detail: "wrong_token"}
+      return {msg: :"error", detail: :"wrong_token"}
     elsif account.nil
-      return {msg: "error", detail: "invalid_account"}
+      return {msg: :"error", detail: :"invalid_account"}
     else
-      return {msg: "error", detail: "unknown"}
+      return {msg: :"error", detail: :"unknown"}
     end
   end
 
-  def self.send_email(email,type)
+  def self.send_email(email, email_type)
     account = Account.find_by(email: email)
-    if type == "signup"
+    if email_type == :"signup"
       subject = "Subject - Thank You for signing up"
       body = "Please activate your account with the code provided:\nActivation Code: #{ account.confirm_token }"
-    elsif type == "reset_password"
+    elsif email_type == :"reset_password"
       if !account.email_confirmed
         subject = "Subject - Password Change and Account Activation"
         body = "Please change your account password and activate your account with the code provided:\nCode: #{ account.confirm_token }"
@@ -121,7 +121,7 @@ class Account < ActiveRecord::Base
     end
     Mail.deliver do
       to email
-      from "contact.guildmasters@gmail.com"
+      from :user_name
       subject subject
       body body
     end
@@ -131,7 +131,7 @@ class Account < ActiveRecord::Base
     gm = Guildmaster.new
     gm.gold = 1000
     gm.game_time = 0
-    gm.state = "available"
+    gm.state = :"available"
     gm.account = self
     gm.save
     gm.build_guild
