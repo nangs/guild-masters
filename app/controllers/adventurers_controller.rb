@@ -1,5 +1,6 @@
 class AdventurersController < ApplicationController
   skip_before_action :verify_authenticity_token
+  respond_to :json
 
   ########
   ########for testing not for release
@@ -10,9 +11,7 @@ class AdventurersController < ApplicationController
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
     adventurers = guild.adventurers
-    respond_to do |format|
-      format.json { render json: adventurers }
-    end
+    render json: adventurers.as_json(:except => [:created_at, :updated_at])
   end
   ########
   ########for testing not for release
@@ -25,8 +24,6 @@ class AdventurersController < ApplicationController
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
     new_adventurer = guild.create_adventurer
-    respond_to do |format|
-      format.json { render json: new_adventurer }
-    end
+    render json: new_adventurer.as_json(:except => [:created_at, :updated_at])
   end
 end
