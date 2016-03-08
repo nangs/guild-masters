@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  skip_before_action :authorize, only: [:new, :create, :index]
+  skip_before_action :authorize
   skip_before_action :verify_authenticity_token
   respond_to :json
 
