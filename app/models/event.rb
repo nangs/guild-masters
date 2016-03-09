@@ -47,7 +47,7 @@ class Event < ActiveRecord::Base
       }
       event_id += 1
     end
-    @facilityEvents = guildmaster.facility_events
+    @facilityEvents = gm.facility_events
     for @facilityEvent in @facilityEvents
       arrayOfAllEventsDetails << {
           event_id: event_id,
