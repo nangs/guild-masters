@@ -56,3 +56,20 @@ GM.EventModel.completeNextQuest = function (id) {
 	    },
 	});
 }
+
+GM.EventModel.completeNextFacilityEvent = function () {
+	$.ajax({
+		type: 'POST',
+	    url: 'events.json',
+	    data :{
+	    	cmd: 'complete_next',
+	    },
+	    success: function(data) {
+	    	console.log(data);
+	    	if (data.msg == "successful") {
+	    		showView("The event is completed.");
+				GM.EventModel.getAllEvents(setupTimeBar);    		
+	    	}
+	    },
+	});
+}
