@@ -8,22 +8,22 @@ class FacilityEvent < ActiveRecord::Base
 	def self.assign(facility,adventurers)
 	  
 	  if(adventurers.size>facility.capacity)
-	    return msg = {msg: "error", detail: "not enough space in facility"}
+	    return msg = {msg: :"error", detail: :"This facility doesn`t have enough space."}
 	  end
 	  total_gold_cost=0
 	  for adv in adventurers
 	    if(adv.state!="available")
-	      return msg = {msg: "error", detail: "adventurer not available"}
+	      return msg = {msg: :"error", detail: :"An adventurer is currently not available."}
 	    elsif(adv.hp==adv.max_hp&&facility.name=="clinic")
-	      return msg = {msg: "error", detail: "adventurer is already at full hp"}
+	      return msg = {msg: :"error", detail: :"An adventurer is already fully healed."}
 	    elsif(adv.energy==adv.max_energy&&facility.name=="canteen")
-	      return msg = {msg: "error", detail: "adventurer is already at full energy"}
+	      return msg = {msg: :"error", detail: :"An adventurer is already at full energy."}
 	    end
 	    total_gold_cost=total_gold_cost+facility.gold_cost(adv)
 	  end
     gm=facility.guild.guildmaster
 	  if(total_gold_cost>gm.gold)
-	    return msg = {msg: "error", detail: "not enough gold"}
+	    return msg = {msg: :"error", detail: :"You don`t have enough gold.Sad."}
 	  end
 	  
 	  for adv in adventurers
@@ -44,17 +44,20 @@ class FacilityEvent < ActiveRecord::Base
 	    gm.gold= gm.gold-total_gold_cost
 	    gm.save
 	  end
-	  return msg = {msg:"success"}
+	  return msg = {msg: :"success"}
 	end
 	
 	def complete
 	  gm=self.guildmaster
 	  fac=self.facility
 	  adv=self.adventurer
-	  msg = {msg:"success"}
+	  
 	  if(fac.name=="canteen")
+	    msg = {msg: :"success", adventurer: self.adventurer, energy_gain: adv.max_energy - adv.energy}
 	    adv.energy=adv.max_energy
+	    
 	  else
+	    msg = {msg: :"success", adventurer: self.adventurer, hp_gain: adv.max_hp - adv.hp}
 	    adv.hp = adv.max_hp
 	  end
 	  adv.state="available"
