@@ -21,7 +21,8 @@ function renderTimeBar(events, currentGameTime){
 	var nextDayPoint = nextDay - currentGameTime + timeBar_start_point;
 	var endOfDay = new fabric.Line([nextDayPoint , timeBar_top_padding - 10, nextDayPoint, timeBar_top_padding + 10], {
 		strokeWidth: 10,
-		stroke: 'red'
+		stroke: 'red',
+		selectable: false
 	});
 
 	canvas.add(timeBar, start, endOfDay);
@@ -89,6 +90,43 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 		text.selectable = false;
 		circle.isInfoShown = true;
 		circle.infoText = text;
+	};
+
+	circle.removeInfo = function () {
+		canvas.remove(this.infoText);
+	};
+
+	circle.selectable = false;
+	canvas.add(circle);
+}
+
+function renderFacilityMark(eve, currentGameTime, canvas) {
+	var endTime = eve.end_time - currentGameTime;
+	var circle = new fabric.Circle({
+		top : timeBar_top_padding,
+		left : endTime + timeBar_start_point,
+		strokeWidth: 8,
+		radius: 8,
+		fill: '#fff',
+		stroke: 'purple'
+	});
+	circle.isInfoShown = false;
+
+	circle.showInfo = function () {
+		// var quest = eve.quest;
+		// var infoText = quest.description + "\nDifficulty: " + quest.difficulty + "\nReward :" + quest.reward;
+		// var text = new fabric.Text(infoText, {
+		// 	left: endTime + timeBar_start_point + 160,
+		// 	top: timeBar_top_padding + 25,
+		// 	fontSize: 12,
+		// 	stroke: 'rgb(200,100,50)'
+		// });
+		// text.set('backgroundColor', 'rgb(0,200,200)');
+		// text.setOpacity(0.8);
+		// canvas.add(text);
+		// text.selectable = false;
+		// circle.isInfoShown = true;
+		// circle.infoText = text;
 	};
 
 	circle.removeInfo = function () {
