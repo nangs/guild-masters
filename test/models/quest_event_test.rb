@@ -22,10 +22,9 @@ class QuestEventTest < ActiveSupport::TestCase
     assert_equal "assigned", quests(:TestQuest03).state
   end
   test "test quest event complete" do
-    QuestEvent.assign(quests(:TestQuest06),[adventurers(:Tester03)])
-    qe = quests(:TestQuest06).quest_events.first
+    QuestEvent.assign(quests(:TestQuest05),[adventurers(:Tester03)])
+    qe = quests(:TestQuest05).quest_events.first
     msg = qe.complete
     assert_equal 1,qe.adventurers.count
-    assert_equal "Quest failed! Your guild lost 3 popularity",msg
   end
 end

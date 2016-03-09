@@ -20,19 +20,11 @@ class QuesteventsController < ApplicationController
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
-    if params[:cmd] == 'assign'
-      quest = guild.quests.find(params[:quest_id])
-      adventurers = Adventurer.find(params[:adventurers_ids])
-      assign_quest = QuestEvent.assign(quest,adventurers)
-      respond_to do |format|
-        format.json { render json: assign_quest }
-      end
-    elsif params[:cmd] == 'complete'
-      @questEvent = guildmaster.quest_events.find_by(id: params[:quest_event_id])
-      complete_quest = @questEvent.complete
-      respond_to do |format|
-        format.json { render json: complete_quest }
-      end
+    quest = guild.quests.find(params[:quest_id])
+    adventurers = Adventurer.find(params[:adventurers_ids])
+    assign_quest = QuestEvent.assign(quest,adventurers)
+    respond_to do |format|
+      format.json { render json: assign_quest }
     end
   end
 end

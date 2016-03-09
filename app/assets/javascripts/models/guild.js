@@ -16,7 +16,6 @@ GM.GuildModel.getAllGuilds = function (func) {
 	    success: function(feedback) {
 	    	var guild = feedback.guildsessions[0];
             GM.GuildmasterModel.guildmaster.guild = guild;
-            console.log(feedback);
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	GM.GuildController.postGuildID(guild.id);
 	    	func(GM.GuildmasterView);

@@ -34,25 +34,25 @@ GM.EventModel.getAllEvents = function (func) {
 		type: 'GET',
 	    url: 'events.json',
 	    success: function(data) {
-	    	GM.EventModel.event_list = GM.EventModel.filter(data.events);
+	    	GM.EventModel.event_list = GM.EventModel.filter(data);
 	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];
 	    	func(GM.EventModel.event_list);
 	    }
 	});
 }
 
-GM.EventModel.complete = function (id) {
+GM.EventModel.completeNextQuest = function (id) {
 	$.ajax({
 		type: 'POST',
-	    url: 'questevents.json',
+	    url: 'events.json',
 	    data :{
-	    	cmd: 'complete',
+	    	cmd: 'complete_next',
 	    },
 	    success: function(data) {
-	    	showView(data);
-			GM.QuestModel.getAllQuests();
-			GM.AdventurerModel.getAllAdventurers();
-			GM.EventModel.getAllEvents();
+	    	if (data.msg == "successful") {
+	    		showView("The quest is completed.");
+				GM.EventModel.getAllEvents(setupTimeBar);    		
+	    	}
 	    },
 	});
 }

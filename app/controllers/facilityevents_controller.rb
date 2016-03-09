@@ -20,19 +20,11 @@ class FacilityeventsController < ApplicationController
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
-    if params[:cmd] == 'assign'
-      @facility = guild.facilities.find_by(name: params[:facility_name])
-      adventurers = Adventurer.find(params[:adventurers_ids])
-      assign_facility = FacilityEvent.assign(@facility,adventurers)
-      respond_to do |format|
-        format.json { render json: assign_facility }
-      end
-    elsif params[:cmd] == 'complete'
-      @facilityEvent = guildmaster.facility_events.find_by(id: params[:facility_event_id])
-      # complete_facility = FacilityEvent.complete
-      # respond_to do |format|
-      #   format.json { render json: complete_facility }
-      # end
+    @facility = guild.facilities.find_by(id: params[:facility_id])
+    adventurers = Adventurer.find(params[:adventurers_ids])
+    assign_facility = FacilityEvent.assign(@facility,adventurers)
+    respond_to do |format|
+      format.json { render json: assign_facility }
     end
   end
 end
