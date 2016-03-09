@@ -31,7 +31,7 @@ class EventsController < ApplicationController
           start_time: @facilityEvent.start_time,
           end_time: @facilityEvent.end_time,
           facility: @facilityEvent.facility,
-          adventurers: @facilityEvent.adventurers
+          adventurer: @facilityEvent.adventurer
       }
       event_id += 1
     end
