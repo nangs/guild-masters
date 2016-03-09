@@ -27,7 +27,7 @@ function showSection(section){
                     if (GM.EventModel.nextEvent.type == "QuestEvent") {
                         view = nextQuestEventTemplate(GM.EventModel.nextEvent);
                     } else {
-                        view = nextFacilityTemplate(GM.EventModel.nextEvent);
+                        view = nextFacilityEventTemplate(GM.EventModel.nextEvent);
                     }
                     
                 } else {
