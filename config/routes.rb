@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   delete 'sessions' => 'sessions#destroy'
   resources :sessions
 
+  namespace :admin do
+    resources :adventurer_names
+  end
+
 end
 
 #constraints subdomain: 'api' do
