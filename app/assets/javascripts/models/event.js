@@ -34,7 +34,7 @@ GM.EventModel.getAllEvents = function (func) {
 		type: 'GET',
 	    url: 'events.json',
 	    success: function(data) {
-	    	GM.EventModel.event_list = GM.EventModel.filter(data);
+	    	GM.EventModel.event_list = GM.EventModel.filter(data.events);
 	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];
 	    	func(GM.EventModel.event_list);
 	    }
