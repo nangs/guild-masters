@@ -20,10 +20,10 @@ class FacilityeventsController < ApplicationController
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
     @facility = guild.facilities.find_by(id: params[:facility_id])
-    adventurers = Adventurer.find(params[:adventurers_ids])
-    if adventurers.nil?
+    if params[:adventurers_ids].nil?
       @result_assign_facility = {msg: :"error", detail: :"no_adventurers_selected"}
-    elsif !adventurers.nil?
+    elsif !params[:adventurers_ids].nil?
+      adventurers = Adventurer.find(params[:adventurers_ids])
       @result_assign_facility = FacilityEvent.assign(@facility,adventurers)
     end
     render json: @result_assign_facility.as_json(except: [:updated_at, :created_at])

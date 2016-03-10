@@ -20,10 +20,10 @@ class QuesteventsController < ApplicationController
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
     quest = guild.quests.find(params[:quest_id])
-    adventurers = Adventurer.find(params[:adventurers_ids])
-    if adventurers.nil?
+    if params[:adventurers_ids].nil?
       @result_assign_quest = {msg: :"error", detail: :"no_adventurers_selected"}
-    elsif !adventurers.nil?
+    elsif !params[:adventurers_ids].nil?
+      adventurers = Adventurer.find(params[:adventurers_ids])
       @result_assign_quest = QuestEvent.assign(quest,adventurers)
     end
     render json: @result_assign_quest.as_json(except: [:updated_at, :created_at])
