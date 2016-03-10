@@ -22,11 +22,11 @@ class QuestEvent < ActiveRecord::Base
       self.quest.state="successful"
       guild.popularity=guild.popularity+self.quest.difficulty
       gm.gold = gm.gold+self.quest.reward
-      msg= {msg: "success", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty}
+      msg= {msg: :"success", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
     else
       self.quest.state="failed"
       guild.popularity=guild.popularity-self.quest.difficulty
-      msg = {msg: "failed", popularity_lost: self.quest.difficulty}
+      msg = {msg: :"failed", popularity_lost: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
     end
     
     guild.save
@@ -38,7 +38,7 @@ class QuestEvent < ActiveRecord::Base
   
   #This function will create the relationship between adventurer and quest_event and quest
   def self.assign(quest,adventurers)
-    msg = {msg: "error", detail: "not available"}
+    msg = {msg: :"error", detail: :"not available"}
     
     #Check Quest Status. Done by front end too
     if(quest.state == "assigned"||quest.state=="successful")
@@ -67,7 +67,7 @@ class QuestEvent < ActiveRecord::Base
     qe.save
     quest.quest_events << qe
     quest.save
-    msg = {msg: "success"}
+    msg = {msg: :"success"}
     return msg
   end
   
