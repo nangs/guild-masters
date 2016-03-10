@@ -1,4 +1,4 @@
-class Admin::AdventurerNamesController < AdminController
+class Admin::AdventurerTemplatesController < AdminController
   before_action :set_adventurer_name, only: [:show, :edit, :update, :destroy]
 
   # GET admin/adventurer_names
