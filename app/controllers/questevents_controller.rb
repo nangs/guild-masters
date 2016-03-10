@@ -1,5 +1,6 @@
 class QuesteventsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  respond_to :json
 
   # GET /questevents.json
   def index
@@ -7,9 +8,7 @@ class QuesteventsController < ApplicationController
     @guildmaster = acc.guildmaster
     @guild = Guild.find(@guildmaster.current_guild_id)
     @questevents = @guild.quest_events
-    respond_to do |format|
-      format.json { render json: @questevents }
-    end
+    render json: @questevents.as_json(except: [:updated_at, :created_at])
   end
   ########
   ########for testing not for release
@@ -22,9 +21,11 @@ class QuesteventsController < ApplicationController
     guild = Guild.find(guildmaster.current_guild_id)
     quest = guild.quests.find(params[:quest_id])
     adventurers = Adventurer.find(params[:adventurers_ids])
-    assign_quest = QuestEvent.assign(quest,adventurers)
-    respond_to do |format|
-      format.json { render json: assign_quest }
+    if adventurers.nil?
+      @result_assign_quest = {msg: :"error", detail: :"no_adventurers_selected"}
+    elsif !adventurers.nil?
+      @result_assign_quest = QuestEvent.assign(quest,adventurers)
     end
+    render json: @result_assign_quest.as_json(except: [:updated_at, :created_at])
   end
 end
