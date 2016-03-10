@@ -32,11 +32,11 @@ AdventurerTemplate.create(max_hp: 1000,
 
 5.times do |i|
   MonsterTemplate.create(name: "monster#{i}",
-                         max_hp: 120+i,
-                         max_energy: 60+i,
+                         max_hp: 1000,
+                         max_energy: 100,
                          attack: 100,
-                         defense: 50+i,
-                         invisibility: 100+i)
+                         defense: 100,
+                         invisibility: 100)
 end
 
 # Insert a list of possible adventurer names
