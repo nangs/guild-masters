@@ -19,8 +19,8 @@ GM.FacilityController.showAssign = function(id) {
 				adventurers = GM.AdventurerController.filterForCanteen(adventurers);
 				break;
 		}
-		var adventurersView = adventurerAssignTemplate({"adventurers" : adventurers});
-		showView(facilityView + adventurersView);
+			var adventurersView = adventurerAssignTemplate({"adventurers" : adventurers});
+			showView(facilityView + adventurersView);			
 	});
 }
 
@@ -29,5 +29,14 @@ GM.FacilityController.assign = function(id) {
 	$.each($("input:checked"), function (){
 		assigned.push($(this).val());
 	});
-	GM.FacilityModel.assign(id, assigned);
+	if (assigned.length == 0) {
+		GM.FacilityController.showMessage('Please select at least one adventure.')
+	} else {
+		GM.FacilityModel.assign(id, assigned);
+	}	
+}
+
+GM.FacilityController.showMessage = function (message) {
+	var alertMessage = alertMessageTemplate({'message' : message});
+    $('#alert').html(alertMessage);
 }
