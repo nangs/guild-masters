@@ -19,8 +19,13 @@ GM.FacilityController.showAssign = function(id) {
 				adventurers = GM.AdventurerController.filterForCanteen(adventurers);
 				break;
 		}
+		console.log(adventurers);
+		if (adventurers.length == 0) {
+			showView('There are no adventurers available to be sent to the ' + facility.name);
+		} else {
 			var adventurersView = adventurerAssignTemplate({"adventurers" : adventurers});
 			showView(facilityView + adventurersView);			
+		}
 	});
 }
 
