@@ -10,7 +10,8 @@ class Guild < ActiveRecord::Base
 
 	#This function creates a quest based on current level of guild
 	def create_quest
-	  quest=Quest.create(difficulty: self.level, state: "pending", reward: self.level*100)
+	  r=Random.new
+	  quest=Quest.create(difficulty: self.level+r.rand(0..1), state: "pending", reward: self.level*100)
 	  quest.monster_template = MonsterTemplate.order("RANDOM()").first
 	  quest.guild = self
 	  quest.description = "There is a %s near the village! Find someone to help us kill it!" % [quest.monster_template.name]
