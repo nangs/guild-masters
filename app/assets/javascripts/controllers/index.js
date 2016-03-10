@@ -414,6 +414,7 @@ function logout() {
         }
     });
 }
+
 function showWrongPasswordError() {
     showAlertMessage('The password you entered is wrong.');
 }
@@ -427,13 +428,17 @@ function showEmailTaken() {
 }
 
 function showEmailNotValid() {
-    showAlertMessage('The email you entered is not valid');
+    showAlertMessage('The email you entered is not valid.');
 }
     
 function showEmailNotActivated(email) {
     $('#indexPage').html(emailNotActivatedTemplate);
     setupActivateAccountButton(email);
     setupResendEmailButton(email);
+}
+
+function showEmailAlreadyActivated() {
+    showAlertMessage('The email you entered is already activated.');
 }
 
 function showSignupError() {
