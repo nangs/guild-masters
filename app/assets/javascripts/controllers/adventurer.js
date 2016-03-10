@@ -1,5 +1,12 @@
 GM.AdventurerController = Ember.Controller.extend();
 
+GM.AdventurerController.filterAlive = function (adventurers) {
+	return adventurers.filter(function(adventurer) {
+		var isAlive = (adventurer.state != 'dead');
+		return isAlive;
+	});	
+}
+
 GM.AdventurerController.filterForClinic = function (adventurers) {
 	return adventurers.filter(function(adventurer) {
 		var isHPLow = (adventurer.hp < adventurer.max_hp);

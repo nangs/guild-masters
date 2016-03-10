@@ -1,5 +1,6 @@
 function showAdventurePage(data) {
-    var view = adventurerNewButton + adventurersTableTemplate(data);
+    var adventurers = {'adventurers' : GM.AdventurerController.filterAlive(data.adventurers)};
+    var view = adventurerNewButton + adventurersTableTemplate(adventurers);
     showView(view);
 }
 
