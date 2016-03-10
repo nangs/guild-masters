@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
       end_time = qe.end_time
     elsif(fe!=nil&&qe==nil)
       end_time=fe.end_time
-    elseif(qe!=nil&&fe!=nil)
+    elsif(qe!=nil&&fe!=nil)
       if(qe.end_time<fe.end_time)
         end_time = qe.end_time
       else
