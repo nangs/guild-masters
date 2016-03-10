@@ -15,3 +15,11 @@ GM.AdventurerController.filterForCanteen = function (adventurers) {
 		return isHPLow && isAvailable;
 	});
 };
+
+GM.AdventurerController.filterForQuest = function (adventurers) {
+	return adventurers.filter(function(adventurer) {
+		var isReady = (adventurer.energy > 0 && adventurer.hp > 0);
+		var isAvailable = (adventurer.state == 'available');
+		return isReady && isAvailable;
+	});
+};

@@ -12,8 +12,9 @@ GM.QuestController.showAssign = function(id) {
 	}
 	var questView = questAssignTemplate(quest);
 	GM.AdventurerModel.getAllAdventurers(function () {
-		var adventurersView = adventurerAssignTemplate(GM.AdventurerModel.adventurers_list);
-		showView(questView + adventurersView);	
+		var adventurers = GM.AdventurerController.filterForQuest(GM.AdventurerModel.adventurers_list.adventurers);
+		var adventurersView = adventurerAssignTemplate({'adventurers' : adventurers});
+		showView(questView + adventurersView);
 	});
 }
 
