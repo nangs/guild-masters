@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226112334) do
+ActiveRecord::Schema.define(version: 20160310014121) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -163,6 +163,17 @@ ActiveRecord::Schema.define(version: 20160226112334) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "scout_events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "guildmaster_id"
+  end
+
+  add_index "scout_events", ["guildmaster_id"], name: "index_scout_events_on_guildmaster_id"
 
   create_table "scouts", force: :cascade do |t|
     t.string   "scout_type"
