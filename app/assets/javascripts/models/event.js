@@ -70,10 +70,10 @@ GM.EventModel.completeNextFacilityEvent = function () {
 	    },
 	    success: function(data) {
 	    	console.log(data);
-	    	if (data.msg == "successful") {
+	    	if (data.events[0].msg == "success") {
 	    		showView("The event is completed.");
-				GM.EventModel.getAllEvents(setupTimeBar);    		
 	    	}
+	    	GM.EventModel.getAllEvents(setupTimeBar);
 	    },
 	});
 }
