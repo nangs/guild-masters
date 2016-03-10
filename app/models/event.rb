@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
       end_time = qe.end_time
     elsif(fe!=nil&&qe==nil)
       end_time=fe.end_time
-    else
+    elseif(qe!=nil&&fe!=nil)
       if(qe.end_time<fe.end_time)
         end_time = qe.end_time
       else
@@ -59,7 +59,7 @@ class Event < ActiveRecord::Base
           adventurer: @facilityEvent.adventurer
       }
       event_id += 1
-      return arrayOfAllEventsDetails
     end
+    return arrayOfAllEventsDetails
   end
 end
