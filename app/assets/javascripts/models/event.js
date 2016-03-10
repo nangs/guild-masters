@@ -49,7 +49,9 @@ GM.EventModel.completeNextQuest = function (id) {
 	    	cmd: 'complete_next',
 	    },
 	    success: function(data) {
-	    	if (data.msg == "successful") {
+	    	console.log(data);
+	    	var questEvent = data.events[0];
+	    	if (questEvent.msg == "success") {
 	    		showView("The quest is completed.");
 				GM.EventModel.getAllEvents(setupTimeBar);    		
 	    	}

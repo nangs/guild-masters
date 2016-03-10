@@ -10,7 +10,16 @@ GM.FacilityController.showAssign = function(id) {
 	}
 	var facilityView = facilityAssignTemplate(facility);
 	GM.AdventurerModel.getAllAdventurers(function () {
-		var adventurersView = adventurerAssignTemplate(GM.AdventurerModel.adventurers_list);
+		var adventurers = GM.AdventurerModel.adventurers_list.adventurers;
+		switch (facility.name) {
+			case 'clinic' :
+				adventurers = GM.AdventurerController.filterForClinic(adventurers);
+				break;
+			case 'canteen' :
+				adventurers = GM.AdventurerController.filterForCanteen(adventurers);
+				break;
+		}
+		var adventurersView = adventurerAssignTemplate({"adventurers" : adventurers});
 		showView(facilityView + adventurersView);
 	});
 }
