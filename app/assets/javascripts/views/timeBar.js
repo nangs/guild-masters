@@ -1,8 +1,13 @@
 var timeBar_start_point = 20;
 var timeBar_top_padding = 16;
 function renderTimeBar(events, currentGameTime){
-	var canvas = new fabric.Canvas('timeBar');
-
+	var canvas;
+	if (GM.timebar) {
+		canvas = GM.timebar;
+	} else {
+		canvas = new fabric.Canvas('timeBar');
+	}
+	canvas.clear();
 	var timeBar = new fabric.Line([timeBar_start_point, timeBar_top_padding, 1100, timeBar_top_padding], {
 		strokeWidth: 10,
 		stroke: 'green'
@@ -60,6 +65,7 @@ function renderTimeBar(events, currentGameTime){
 	canvas.forEachObject(function(o) {
 		o.selectable = false;
 	});
+	GM.timebar = canvas;
 	return canvas;
 }
 
