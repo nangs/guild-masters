@@ -29,13 +29,15 @@ GM.FacilityController.showAssign = function(id) {
 	});
 }
 
-GM.FacilityController.assign = function(id) {
+GM.FacilityController.assign = function(id, capacity) {
 	var assigned = [];
 	$.each($("input:checked"), function (){
 		assigned.push($(this).val());
 	});
 	if (assigned.length == 0) {
 		GM.FacilityController.showMessage('Please select at least one adventure.')
+	} else if (assigned.length > capacity) {
+		GM.FacilityController.showMessage('Please select at most ' + capacity + ' adventure.')
 	} else {
 		GM.FacilityModel.assign(id, assigned);
 	}	
