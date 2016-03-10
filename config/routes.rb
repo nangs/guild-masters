@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   #root 'adventurers#index'
   root to: 'application#index'
   resources :adventurers
@@ -14,6 +15,12 @@ Rails.application.routes.draw do
   resources :guildsessions
   delete 'sessions' => 'sessions#destroy'
   resources :sessions
+
+  namespace :admin do
+    root to: 'dashboard#index'
+    resources :adventurer_names
+    resources :adventurer_templates
+  end
 
 end
 
