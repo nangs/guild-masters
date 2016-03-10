@@ -1,5 +1,6 @@
 class Guildmaster < ActiveRecord::Base
   has_many :guilds, dependent: :destroy
+  has_many :scout_events
   belongs_to :account
 
   # shortcuts to quest_events and facility_events
