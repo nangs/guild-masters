@@ -26,8 +26,6 @@ class AccountsController < ApplicationController
       password = params[:password]
       result = Account.create_account(email,password)
       render json: result.as_json
-      thr = Thread.new { Account.send_email(email,:"signup") }
-      thr.join(0)
     elsif params[:cmd] == "activate_account"
       email = params[:email]
       confirm_token = params[:confirm_token]
@@ -43,14 +41,10 @@ class AccountsController < ApplicationController
       email = params[:email]
       result = Account.resend_email(email)
       render json: result.as_json
-      thr = Thread.new { Account.send_email(email,:"signup") }
-      thr.join(0)
     elsif params[:cmd] == "send_password_token"
       email = params[:email]
       result = Account.send_password_token(email)
       render json: result.as_json
-      thr = Thread.new { Account.send_email(email,:"reset_password") }
-      thr.join(0)
     end
   end
 end

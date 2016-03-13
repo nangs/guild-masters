@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  require 'thread'
+  semaphore = Mutex.new
   has_one :guildmaster, dependent: :destroy
   has_secure_password
 
@@ -28,7 +30,11 @@ class Account < ActiveRecord::Base
       new_account.confirm_token = new_account.id * rand(999)
       new_account.save
       new_account.initialize_guildmaster
-      thr = Thread.new { EmailSender.send_email(email,:"signup") }
+      thr = Thread.new {
+        semaphore.synchronize {
+          EmailSender.send_email(email,:"signup")
+        }
+      }
       thr.join(0)
       return {msg: :"success"}
     end
@@ -39,7 +45,11 @@ class Account < ActiveRecord::Base
     if !account.nil? && !account.email_confirmed
       account.confirm_token = account.id * rand(999)
       account.save
-      thr = Thread.new { EmailSender.send_email(email,:"signup") }
+      thr = Thread.new {
+        semaphore.synchronize {
+            EmailSender.send_email(email,:"signup")
+          }
+        }
       thr.join(0)
       return {msg: :"success"}
     elsif account.nil?
@@ -54,7 +64,11 @@ class Account < ActiveRecord::Base
     if !account.nil?
       account.confirm_token = account.id * rand(999)
       account.save
-      thr = Thread.new { EmailSender.send_email(email,:"reset_password") }
+      thr = Thread.new {
+        semaphore.synchronize {
+          EmailSender.send_email(email,:"reset_password")
+        }
+      }
       thr.join(0)
       return {msg: :"success"}
     elsif account.nil?

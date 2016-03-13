@@ -15,14 +15,14 @@ class EmailSender
 
   def self.send_email(email, email_type)
     account = Account.find_by(email: email)
-    if email_type == :"signup"
+    if email_type == :"signup" && !account.nil?
       subject = "Subject - Thank You for signing up"
       body = "Please activate your account with the code provided:\nActivation Code: #{ account.confirm_token }"
     elsif email_type == :"reset_password"
-      if !account.email_confirmed
+      if !account.email_confirmed && !account.nil?
         subject = "Subject - Password Change and Account Activation"
         body = "Please change your account password and activate your account with the code provided:\nCode: #{ account.confirm_token }"
-      elsif account.email_confirmed
+      elsif account.email_confirmed && !account.nil?
         subject = "Subject - Password Change"
         body = "Please change your account password with the code provided:\nCode: #{ account.confirm_token }"
       end
