@@ -5,7 +5,7 @@ class EmailSender
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :user_name            => "contact.guildmasters@gmail.com",
-      :password             => "guildmasters12345",
+      :password             => "cs3283and4",
       :authentication       => "plain",
       :enable_starttls_auto => true
   }
