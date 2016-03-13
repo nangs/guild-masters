@@ -34,19 +34,14 @@ class Account < ActiveRecord::Base
         return {msg: :"error", detail: :"account_taken"}
       elsif !account.email_confirmed
         return {msg: :"error", detail: :"not_activated"}
-      else
-        return {msg: :"error", detail: :"unknown"}
       end
     elsif account.nil?
-      account = Account.new(password:password,email:email)
-      if account.save
-        account.confirm_token = account.id * rand(999)
-        account.save
-        account.initialize_guildmaster
-        return {msg: :"success"}
-      else
-        return {msg: :"error", detail: :"creating_account"}
-      end
+      new_account = Account.new(password:password,email:email)
+      new_account.save
+      new_account.confirm_token = new_account.id * rand(999)
+      new_account.save
+      new_account.initialize_guildmaster
+      return {msg: :"success"}
     end
   end
 
@@ -56,12 +51,10 @@ class Account < ActiveRecord::Base
       account.confirm_token = account.id * rand(999)
       account.save
       return {msg: :"success"}
-    elsif account.nil
+    elsif account.nil?
       return {msg: :"error", detail: :"invalid_account"}
     elsif account.email_confirmed
       return {msg: :"error", detail: :"already_activated"}
-    else
-      return {msg: :"error", detail: :"unknown"}
     end
   end
 
@@ -71,12 +64,14 @@ class Account < ActiveRecord::Base
       account.confirm_token = account.id * rand(999)
       account.save
       return {msg: :"success"}
+    elsif account.nil?
+      return {msg: :"error", detail: :"invalid_account"}
     end
   end
 
   def self.activate_account(email,confirm_token)
     account = Account.find_by(email: email)
-    if !account.nil? && account.confirm_token == confirm_token
+    if !account.nil? && account.confirm_token == confirm_token && !account.email_confirmed
       account.email_confirmed = true
       account.save
       return {msg: :"success"}
@@ -96,12 +91,10 @@ class Account < ActiveRecord::Base
       account.email_confirmed = true
       account.save
       return {msg: :"success"}
-    elsif account.confirm_token != confirm_token
+    elsif !account.nil? && account.confirm_token != confirm_token
       return {msg: :"error", detail: :"wrong_token"}
-    elsif account.nil
+    elsif account.nil?
       return {msg: :"error", detail: :"invalid_account"}
-    else
-      return {msg: :"error", detail: :"unknown"}
     end
   end
 
