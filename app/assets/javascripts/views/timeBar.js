@@ -29,6 +29,15 @@ function renderTimeBar(events, currentGameTime){
 		stroke: 'red',
 		selectable: false
 	});
+	var endOfDayText = new fabric.Text(
+		'End of the\ncurrent day',
+		{
+			left: nextDayPoint,
+			top: timeBar_top_padding + 25,
+			fontSize: 14,
+			stroke: 'rgb(200,100,200)'
+		}
+	);
 
 	canvas.add(timeBar, start, endOfDay);
 	if (events.length > 0) {
