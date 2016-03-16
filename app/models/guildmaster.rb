@@ -31,5 +31,25 @@ class Guildmaster < ActiveRecord::Base
     return guild
   end
   
+  def refresh
+    guilds = self.guilds
+    msgArray = Array.new
+    for guild in guilds
+      advs = Array.new
+      qsts = Array.new
+      nqst = guild.popularity/20+1
+      nqst.times do
+       qsts<<guild.create_quest
+      end
+      nadv = guild.popularity/40 + 1
+      nadv.times do
+        advs<<guild.create_adventurer
+      end
+      msg = {guild: guild, new_quests: qsts, new_adventures: advs}
+      msgArray<<msg
+    end
+    puts msgArray.inspect
+    return msgArray
+  end
   
 end
