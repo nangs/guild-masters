@@ -5,6 +5,12 @@ Handlebars.registerHelper('isAssigned', function(state, options){
 	}
 	return options.inverse(this);
 });
+Handlebars.registerHelper('isDead', function(state, options){
+	if(state == 'dead') {
+		return options.fn(this);
+	}
+	return options.inverse(this);
+});
 var adventurerTemplate = HandlebarsTemplates['adventurer/adventurer'];
 var adventurersListTemplate = HandlebarsTemplates['adventurer/adventurer_list'];
 var adventurerNewTemplate = HandlebarsTemplates['adventurer/adventurer_new'];

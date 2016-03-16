@@ -1,0 +1,13 @@
+<div class='quest_fail'>
+	<p>
+		Quest: {{quest.description}}
+		<br>
+		The quest is failed. Your popularity is decreased by {{popularity_lost}}.
+		<br>
+		{{#each adventurers}}
+			{{#isDead state}}
+				Adventurer {{name}} is dead during the Quest.<br>
+		    {{/isDead}}
+		{{/each}}
+	</p>
+</div>
