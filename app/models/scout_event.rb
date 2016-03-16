@@ -1,5 +1,6 @@
 class ScoutEvent < ActiveRecord::Base
-	belongs_to :guildmaster
+	belongs_to :guild
+  delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
 	  gm = guild.guildmaster
 	  if(gm.state!="available"||gm.gold<gold)

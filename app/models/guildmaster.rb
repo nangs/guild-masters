@@ -3,7 +3,8 @@ class Guildmaster < ActiveRecord::Base
   has_many :scout_events
   belongs_to :account
 
-  # shortcuts to quest_events and facility_events
+  # shortcuts to events
+  has_many :scout_events, through: :guilds
   has_many :quests, through: :guilds
   has_many :quest_events, through: :quests
   has_many :facilities, through: :guilds

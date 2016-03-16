@@ -58,7 +58,7 @@ GM.QuestModel.getAllQuests = function (func) {
 GM.QuestModel.assign = function(id, assigned) {
 	$.ajax({
 		type: 'POST',
-	    url: 'questevents.json',
+	    url: 'quest_events.json',
 	    data: {
 	    	quest_id: id,
 	    	adventurers_ids: assigned

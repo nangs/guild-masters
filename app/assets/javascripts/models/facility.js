@@ -14,7 +14,7 @@ GM.FacilityModel.getFacilities = function (func) {
 GM.FacilityModel.assign = function(id, assigned) {
 	$.ajax({
 		type: 'POST',
-	    url: 'facilityevents.json',
+	    url: 'facility_events.json',
 	    data: {
 	    	facility_id: id,
 	    	adventurers_ids: assigned
