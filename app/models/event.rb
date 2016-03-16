@@ -2,8 +2,8 @@ require 'facility_event.rb'
 require 'quest_event.rb'
 class Event < ActiveRecord::Base
   def self.complete_next(gm)
-    qe=gm.quest_events.where("end_time > ?", gm.game_time).first
-    fe= gm.facility_events.where("end_time > ?",gm.game_time).first
+    qe=gm.quest_events.where("end_time > ?", gm.game_time).order("end_time").first
+    fe= gm.facility_events.where("end_time > ?",gm.game_time).order("end_time").first
     if(qe!=nil&&fe==nil)
       end_time = qe.end_time
     elsif(fe!=nil&&qe==nil)
@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
   end
   
   def self.complete(gm,end_time)
+    start_day = gm.game_time/1000
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     msgArray = Array.new
@@ -27,6 +28,12 @@ class Event < ActiveRecord::Base
     end
     for fe in fes
       msgArray<<fe.complete
+    end
+    day_dif = end_time/1000-start_day
+    if(day_dif>0)
+      day_dif.times do
+        msgArray<<gm.refresh
+      end
     end
     return msgArray
   end
