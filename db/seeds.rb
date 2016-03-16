@@ -1,9 +1,12 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
+acc = Account.create(email: "test@example.com",
+                     password: "123456",
+                     email_confirmed: true)
 
-gm = Guildmaster.create(gold: 20,
-	                    game_time: 10000)
+gm = acc.create_guildmaster(gold: 20,
+	                          game_time: 10000)
 
 guild = gm.guilds.create(level: 3, popularity: 30)
 
