@@ -6,17 +6,17 @@ class Facility < ActiveRecord::Base
 	
 	def time_cost(adv)
     if(self.name=="clinic")
-      return 10+(adv.max_hp-adv.hp)/(1+self.level*0.25)
+      return 10+(adv.max_hp-adv.hp)/(2+self.level)
     else
-      return 25+(adv.max_energy-adv.energy)/(1+self.level*0.25)   
+      return 25+(adv.max_energy-adv.energy)/(1+self.level/2)   
     end    
   end
   
   def gold_cost(adv)
     if(self.name=="clinic")
-      return 10+adv.max_hp-adv.hp
+      return 10+(adv.max_hp-adv.hp)/5
     else
-      return 5+(adv.max_energy-adv.energy)*0.5   
+      return 5+(adv.max_energy-adv.energy)/2   
     end    
   end
 end
