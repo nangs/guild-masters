@@ -73,7 +73,7 @@ class Quest < ActiveRecord::Base
     
     #Energy cost calculation
     for adventurer in advs
-      adventurer.energy = adventurer.energy - 5 - self.difficulty*5
+      adventurer.energy = adventurer.energy - 25 - self.difficulty*5
       adventurer.state = "available" if adventurer.state == "assigned"
       adventurer.energy = 0 if adventurer.energy<0
       adventurer.save
