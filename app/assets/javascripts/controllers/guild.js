@@ -2,7 +2,7 @@ GM.GuildController = Ember.Controller.extend();
 GM.GuildController.postGuildID = function (guildID) {
     $.ajax({
 	    type: 'POST',
-	    url: 'guildsessions.json',
+	    url: 'guild_sessions.json',
 	    data: {
 	    	guild_id : guildID
 	    },

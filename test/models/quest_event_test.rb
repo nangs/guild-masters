@@ -5,8 +5,8 @@ class QuestEventTest < ActiveSupport::TestCase
   #   assert true
   # end
   test "test assign" do
-    error= {msg: "error", detail: "not available"}
-    success = {msg: "success"}
+    error= {msg: :"error", detail: :"not available"}
+    success = {msg: :"success"}
     assert_equal error, QuestEvent.assign(quests(:TestQuest01),[adventurers(:Tester03)]), "Quest Already assigned"
     assert_equal error, QuestEvent.assign(quests(:TestQuest04),[adventurers(:Tester03)]), "Quest Already successful"
     assert_equal error, QuestEvent.assign(quests(:TestQuest03),[adventurers(:Tester01)]), "Adventurer Already assigned"

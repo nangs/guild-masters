@@ -6,21 +6,20 @@ class ScoutEvent < ActiveRecord::Base
 	  if(gm.state!="available"||gm.gold<gold)
 	    return {msg: :"error"}
 	  end
-	  se = ScoutEvent.new
-    se.guildmaster = gm
-    se.guild = guild
-	  se.start_time = gm.game_time
-	  se.end_time = gm.game_time + time
-	  se.gold_spent = gold
+	  guild.scout_events.create(start_time:gm.game_time,
+	                            end_time:gm.game_time+time,
+	                            gold_spent:gold)
 	  gm.gold = gm.gold - gold
 	  gm.state = "scouting"
-	  se.save
+	  guild.save
 	  gm.save
 	  return {msg: :"success"}
 	end
 	
 	def complete
 	  time = self.end_time - self.start_time
+	  gold = self.gold_spent
+	  gm = self.guildmaster
 	  nadv = time/300
 	  if(nadv>=3)
 	    nadv = 3
@@ -49,18 +48,18 @@ class ScoutEvent < ActiveRecord::Base
                                      
       adventurer.hp=adventurer.max_hp
       adventurer.energy = adventurer.max_energy
-      adventurer.guild = self.guild
       adventurer.save
+      self.guild.adventurers<<adventurer
       advs<<adventurer
     end
     nque.times do 
       r=Random.new
-      quest=Quest.create(difficulty: self.level+r.rand(0..1), state: "pending")
+      quest=Quest.create(difficulty: self.guild.level+r.rand(0..1), state: "pending")
       quest.reward = quest.difficulty*(100+gold/10)
       quest.monster_template = MonsterTemplate.order("RANDOM()").first
-      quest.guild = self.guild
       quest.description = "There is a %s near the village! Find someone to help us kill it!" % [quest.monster_template.name]
       quest.save
+      self.guild.quests<<quest
       qsts<<quest
     end
     gm.game_time = self.end_time
