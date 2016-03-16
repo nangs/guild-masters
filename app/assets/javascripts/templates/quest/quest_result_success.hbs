@@ -1,0 +1,15 @@
+<div class='quest_success'>
+	<p>
+		Quest: {{quest.description}}
+		<br>
+		The quest is successful. Your popularity is increased by {{popularity_gain}}.
+		<br>
+		{{gold_gain}} gold is gained by completion of the quest.
+		<br>
+		{{#each adventurers}}
+			{{#isDead state}}
+				Adventurer {{name}} is dead during the Quest.<br>
+		    {{/isDead}}
+		{{/each}}
+	</p>
+</div>
