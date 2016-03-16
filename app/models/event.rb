@@ -4,17 +4,18 @@ class Event < ActiveRecord::Base
   def self.complete_next(gm)
     qe=gm.quest_events.where("end_time > ?", gm.game_time).order("end_time").first
     fe= gm.facility_events.where("end_time > ?",gm.game_time).order("end_time").first
-    if(qe!=nil&&fe==nil)
-      end_time = qe.end_time
-    elsif(fe!=nil&&qe==nil)
-      end_time=fe.end_time
-    elsif(qe!=nil&&fe!=nil)
-      if(qe.end_time<fe.end_time)
-        end_time = qe.end_time
-      else
-        end_time = fe.end_time
-      end
-    end 
+    se = gm.scout_events.where("end_time > ?", gm.game_time).order("end_time").first
+    events =Array.new
+    if(qe!=nil)
+      events<<qe.end_time
+    end
+    if(fe!=nil)
+      events<<fe.end_time
+    end
+    if(se!=nil)
+      events<<se.end_time
+    end
+    end_time = events.min
     return Event.complete(gm,end_time)
   end
   
@@ -22,12 +23,16 @@ class Event < ActiveRecord::Base
     start_day = gm.game_time/1000
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
+    ses=gm.scout_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     msgArray = Array.new
     for qe in qes
       msgArray<<qe.complete
     end
     for fe in fes
       msgArray<<fe.complete
+    end
+    for se in ses
+      msgArray<<se.complete
     end
     day_dif = end_time/1000-start_day
     if(day_dif>0)
