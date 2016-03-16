@@ -24,7 +24,7 @@ function renderTimeBar(events, currentGameTime){
 
 	var nextDay = Math.floor(currentGameTime / 1000 + 1) * 1000;
 	var nextDayPoint = nextDay - currentGameTime + timeBar_start_point;
-	var endOfDay = new fabric.Line([nextDayPoint , timeBar_top_padding - 10, nextDayPoint, timeBar_top_padding + 10], {
+	var endOfDay = new fabric.Line([nextDayPoint , timeBar_top_padding - 15, nextDayPoint, timeBar_top_padding + 15], {
 		strokeWidth: 10,
 		stroke: 'red',
 		selectable: false
@@ -33,13 +33,13 @@ function renderTimeBar(events, currentGameTime){
 		'End of the\ncurrent day',
 		{
 			left: nextDayPoint,
-			top: timeBar_top_padding + 25,
+			top: timeBar_top_padding + 30,
 			fontSize: 14,
 			stroke: 'rgb(200,100,200)'
 		}
 	);
 
-	canvas.add(timeBar, start, endOfDay);
+	canvas.add(timeBar, start, endOfDay, endOfDayText);
 	if (events.length > 0) {
 		for (var e in events) {
 			var eve = events[e];
