@@ -27,8 +27,8 @@ class FacilityEventTest < ActiveSupport::TestCase
   test "test complete" do
     success = {msg: :"success"}
     FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
-    qe=adventurers(:Tester09).facility_events.first
-    assert_equal success,qe.complete
+    fe=adventurers(:Tester09).facility_events.first
+    assert_equal success,fe.complete
     assert_equal adventurers(:Tester09).max_hp, adventurers(:Tester09).hp
 
   end

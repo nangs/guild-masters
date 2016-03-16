@@ -14,4 +14,14 @@ two:
 TestGuild01:
   level: 3
   popularity: 50
+  guildmaster: TestMaster01
+  
+TestGuild02:
+  level: 3
+  popularity: 50
   guildmaster: TestMaster02
+  
+TestGuild03:
+  level: 3
+  popularity: 50
+  guildmaster: TestMaster03
