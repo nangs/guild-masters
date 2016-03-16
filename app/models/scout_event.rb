@@ -1,5 +1,6 @@
 class ScoutEvent < ActiveRecord::Base
-	belongs_to :guildmaster
+	belongs_to :guild
+  delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
 	  gm = guild.guildmaster
 	  if(gm.state!="available"||gm.gold<gold)
@@ -7,6 +8,7 @@ class ScoutEvent < ActiveRecord::Base
 	  end
 	  se = ScoutEvent.new
     se.guildmaster = gm
+    se.guild = guild
 	  se.start_time = gm.game_time
 	  se.end_time = gm.game_time + time
 	  se.gold_spent = gold
@@ -23,9 +25,6 @@ class ScoutEvent < ActiveRecord::Base
 	  if(nadv>=3)
 	    nadv = 3
 	  end
-	  if(nadv==0)
-	    nadv = 1
-	  end
 	  nque = time/200
 	  if(nque>=5)
       nque = 5
@@ -37,7 +36,7 @@ class ScoutEvent < ActiveRecord::Base
     qsts = Array.new
     nadv.times do
 	    template = AdventurerTemplate.order("RANDOM()").first
-      level = self.level
+      level = self.guild.level
       adventurer = Adventurer.create(
                                      name: Adventurer.random_adventurer_name,
                                      max_hp: template.max_hp*level + gold/50,
@@ -50,7 +49,7 @@ class ScoutEvent < ActiveRecord::Base
                                      
       adventurer.hp=adventurer.max_hp
       adventurer.energy = adventurer.max_energy
-      adventurer.guild = self
+      adventurer.guild = self.guild
       adventurer.save
       advs<<adventurer
     end
@@ -59,7 +58,7 @@ class ScoutEvent < ActiveRecord::Base
       quest=Quest.create(difficulty: self.level+r.rand(0..1), state: "pending")
       quest.reward = quest.difficulty*(100+gold/10)
       quest.monster_template = MonsterTemplate.order("RANDOM()").first
-      quest.guild = self
+      quest.guild = self.guild
       quest.description = "There is a %s near the village! Find someone to help us kill it!" % [quest.monster_template.name]
       quest.save
       qsts<<quest

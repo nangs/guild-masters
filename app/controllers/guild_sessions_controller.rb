@@ -1,7 +1,8 @@
 #This class controller handles the login and sign up values with appropriate references to the database
-class GuildsessionsController < ApplicationController
+class GuildSessionsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :verify_authenticity_token
+  respond_to :json
 
   def index
     acc = Account.find(session[:account_id])

@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   resources :guildmaster
   resources :quests
   resources :accounts
-  resources :questevents
-  resources :facilityevents
-  resources :guildsessions
+  resources :quest_events
+  resources :scout_events
+  resources :facility_events
+  resources :guild_sessions
   delete 'sessions' => 'sessions#destroy'
   resources :sessions
 
