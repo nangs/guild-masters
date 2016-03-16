@@ -35,12 +35,13 @@ class Event < ActiveRecord::Base
       msgArray<<se.complete
     end
     day_dif = end_time/1000-start_day
+    refreshArray = Array.new
     if(day_dif>0)
       day_dif.times do
-        msgArray<<gm.refresh
+        refreshArray<<gm.refresh
       end
     end
-    return msgArray
+    return {events: msgArray, refresh: refreshArray}
   end
   
   def self.get_events(gm)
