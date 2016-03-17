@@ -1,0 +1,1 @@
+var scoutResultTemplate = HandlebarsTemplates['scout/scout_result'];

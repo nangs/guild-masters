@@ -15,6 +15,8 @@ GM.EventController.showEventResults = function (events) {
 			case 'FacilityEvent':
 				message += facilityResultTemplate(eventReuslt);
 				break;
+			case "ScoutEvent":
+				message += scoutResultTemplate(eventReuslt);
 		}
 	}
 	showView(message);
