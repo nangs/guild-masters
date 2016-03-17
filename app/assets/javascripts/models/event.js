@@ -55,3 +55,19 @@ GM.EventModel.completeNextEvent = function () {
 	    },
 	});
 }
+
+GM.EventModel.completeEventsUntil = function (time) {
+	$.ajax({
+		type: 'POST',
+	    url: 'events.json',
+	    data :{
+	    	cmd: 'complete',
+	    	end_time: time
+	    },
+	    success: function(data) {
+	    	console.log(data);
+	    	GM.EventController.showEventResults(data.events);
+	    	GM.EventModel.getAllEvents(setupTimeBar);
+	    },
+	});
+}
