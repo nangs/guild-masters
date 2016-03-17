@@ -25,12 +25,17 @@ function showSection(section){
 			GM.EventModel.getAllEvents(function () {
                 if (GM.EventModel.nextEvent) {
                     console.log(GM.EventModel.nextEvent);
-                    if (GM.EventModel.nextEvent.type == "QuestEvent") {
-                        view = nextQuestEventTemplate(GM.EventModel.nextEvent);
-                    } else {
-                        view = nextFacilityEventTemplate(GM.EventModel.nextEvent);
+                    switch (GM.EventModel.nextEvent.type) {
+                        case "QuestEvent":
+                            view = nextQuestEventTemplate(GM.EventModel.nextEvent);
+                            break;
+                        case "FacilityEvent":
+                            view = nextFacilityEventTemplate(GM.EventModel.nextEvent);
+                            break;
+                        case "ScoutEvent":
+                            view = nextScoutEventTemplate(GM.EventModel.nextEvent);
+                            break;
                     }
-                    
                 } else {
                     view = "There is no event that is in progress";
                 }
