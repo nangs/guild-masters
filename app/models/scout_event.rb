@@ -3,6 +3,8 @@ class ScoutEvent < ActiveRecord::Base
   delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
 	  gm = guild.guildmaster
+	  gold = gold.chomp.to_i
+	  time = time.chomp.to_i
 	  if(gm.state!="available"||gm.gold<gold)
 	    return {msg: :"error"}
 	  end
