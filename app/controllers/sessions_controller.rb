@@ -2,9 +2,7 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :verify_authenticity_token
-  #
-  # def new
-  # end
+  respond_to :json
 
   def create
     password = params[:password]
@@ -30,11 +28,13 @@ class SessionsController < ApplicationController
       # account.save
       acc = Account.find(session[:account_id])
       guildmaster = acc.guildmaster
-      guilds = guildmaster.guilds
-      msg = {msg: "success", guilds: guilds}
-      respond_to do |format|
-        format.json { render json: msg}
+      if !guildmaster.nil?
+        guilds = guildmaster.guilds
+        msg = {msg: "success", guilds: guilds}
+      elsif guildmaster.nil?
+        msg = {msg: "error", detail: "guildmaster_not_created"}
       end
+      render json: msg
     end
   end
 
