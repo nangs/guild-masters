@@ -8,10 +8,10 @@ class Adventurer < ActiveRecord::Base
     adventurers = Adventurer.all
     return adventurers
   end
-  #This function will generate adventurer name according to text file
+  #This function will generate an adventurer name from entries in adventurer_names
   #Return a randomly chosen name
 	def self.random_adventurer_name
-		return File.readlines(Rails.root.join "app", "models", "adventurerNames.txt").sample
+		return AdventurerName.order("RANDOM()").first.name
 	end
 
 end
