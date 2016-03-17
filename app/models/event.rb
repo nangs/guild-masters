@@ -51,7 +51,7 @@ class Event < ActiveRecord::Base
     for @questEvent in @questEvents
       arrayOfAllEventsDetails << {
           event_id: event_id,
-          type: "QuestEvent",
+          type: :"QuestEvent",
           quest_event_id: @questEvent.id,
           start_time: @questEvent.start_time,
           end_time: @questEvent.end_time,
@@ -64,12 +64,25 @@ class Event < ActiveRecord::Base
     for @facilityEvent in @facilityEvents
       arrayOfAllEventsDetails << {
           event_id: event_id,
-          type: "FacilityEvent",
+          type: :"FacilityEvent",
           facility_event_id: @facilityEvent.id,
           start_time: @facilityEvent.start_time,
           end_time: @facilityEvent.end_time,
           facility: @facilityEvent.facility,
-          adventurer: @facilityEvent.adventurer
+          adventurer: @facilityEvent.adventurer,
+          gold_spent: @facilityEvent.gold_spent
+      }
+      event_id += 1
+    end
+    @scoutEvents = gm.scout_events
+    for @scoutEvent in @scoutEvents
+      arrayOfAllEventsDetails << {
+          event_id: event_id,
+          type: :"ScoutEvent",
+          scout_event_id: @scoutEvent.id,
+          start_time: @scoutEvent.start_time,
+          end_time: @scoutEvent.end_time,
+          gold_spent: @scoutEvent.gold_spent
       }
       event_id += 1
     end

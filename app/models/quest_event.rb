@@ -22,11 +22,11 @@ class QuestEvent < ActiveRecord::Base
       self.quest.state="successful"
       guild.popularity=guild.popularity+self.quest.difficulty
       gm.gold = gm.gold+self.quest.reward
-      msg= {msg: :"success", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
+      msg= {msg: :"success",type: :"QuestEvent", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
     else
       self.quest.state="failed"
       guild.popularity=guild.popularity-self.quest.difficulty
-      msg = {msg: :"failed", popularity_lost: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
+      msg = {msg: :"failed", type: :"QuestEvent", popularity_lost: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
     end
     for adv in self.adventurers
       if(adv.state == "dead")

@@ -1,13 +1,20 @@
 GM.EventController = Ember.Controller.extend();
 
-GM.EventController.showQuestResults = function (questEvents) {
+GM.EventController.showEventResults = function (events) {
 	var message = '';
-	for (var qe = 0; qe < questEvents.length; qe++) {
-		var questEvent = questEvents[qe];
-		if (questEvent.msg == "success") {
-			message += questSuccessTemplate(questEvent);
-		} else {
-			message += questFailTemplate(questEvent);
+	for (var e = 0; e < events.length; e++) {
+		var eventReuslt = events[e];
+		switch (eventReuslt.type) {
+			case 'QuestEvent':
+				if (eventReuslt.msg == "success") {
+					message += questSuccessTemplate(eventReuslt);
+				} else {
+					message += questFailTemplate(eventReuslt);
+				}
+				break;
+			case 'FacilityEvent':
+				message += facilityResultTemplate(eventReuslt);
+				break;
 		}
 	}
 	showView(message);

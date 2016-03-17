@@ -3,6 +3,8 @@ class ScoutEvent < ActiveRecord::Base
   delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
 	  gm = guild.guildmaster
+	  gold = gold.chomp.to_i
+	  time = time.chomp.to_i
 	  if(gm.state!="available"||gm.gold<gold)
 	    return {msg: :"error"}
 	  end
@@ -27,9 +29,6 @@ class ScoutEvent < ActiveRecord::Base
 	  nque = time/200
 	  if(nque>=5)
       nque = 5
-    end
-    if(nque==0)
-      nadv = 1
     end
     advs = Array.new
     qsts = Array.new
@@ -65,6 +64,6 @@ class ScoutEvent < ActiveRecord::Base
     gm.game_time = self.end_time
     gm.state = "available"
     gm.save
-    return {msg: :"success", adv_gain: nadv, qst_gain: nque, adventurers: advs, quests: qsts}
+    return {msg: :"success", type: :"ScoutEvent", adv_gain: nadv, qst_gain: nque, adventurers: advs, quests: qsts}
 	end
 end
