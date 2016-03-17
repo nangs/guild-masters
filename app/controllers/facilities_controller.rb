@@ -1,4 +1,6 @@
 class FacilitiesController < ApplicationController
+  respond_to :json
+
   # GET /facilities.json
   def index
     acc = Account.find(session[:account_id])

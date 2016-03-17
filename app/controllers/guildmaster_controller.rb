@@ -1,4 +1,6 @@
 class GuildmasterController < ApplicationController
+  respond_to :json
+
   # GET /guildmaster.json
 
   ########
@@ -7,18 +9,11 @@ class GuildmasterController < ApplicationController
   def index
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
-    respond_to do |format|
-      format.json { render json: guildmaster }
-    end
+    render json: guildmaster.as_json(except: [:created_at,:updated_at])
   end
   ########
   ########for testing not for release
   ########
 
-  def create
-  end
-
-  def show
-  end
 end
 

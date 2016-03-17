@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'thread'
 $semaphore = Mutex.new
-#rspec spec/controllers/accounts_controller_spec.rb --format documentation
+#rspec spec/controllers/accounts_controller_spec.rb
 
 describe AccountsController do
   before :each do
