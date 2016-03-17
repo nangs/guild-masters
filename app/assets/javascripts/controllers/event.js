@@ -6,14 +6,14 @@ GM.EventController.showEventResults = function (events) {
 		var eventReuslt = events[e];
 		switch (eventReuslt.type) {
 			case 'QuestEvent':
-				if (questEvent.msg == "success") {
-					message += questSuccessTemplate(questEvent);
+				if (eventReuslt.msg == "success") {
+					message += questSuccessTemplate(eventReuslt);
 				} else {
-					message += questFailTemplate(questEvent);
+					message += questFailTemplate(eventReuslt);
 				}
 				break;
 			case 'FacilityEvent':
-				message += facilityResultTemplate(questEvent);
+				message += facilityResultTemplate(eventReuslt);
 				break;
 		}
 	}
