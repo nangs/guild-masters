@@ -30,9 +30,6 @@ class ScoutEvent < ActiveRecord::Base
 	  if(nque>=5)
       nque = 5
     end
-    if(nque==0)
-      nadv = 1
-    end
     advs = Array.new
     qsts = Array.new
     nadv.times do
