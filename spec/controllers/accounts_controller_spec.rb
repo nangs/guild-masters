@@ -16,8 +16,8 @@ describe AccountsController do
       expect(Account.count).to eq(2)
       expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
       @expected = [
-          @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
-          @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
+          @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
+          @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
       ]
       parsed_body = JSON.parse(response.body)
       expect(parsed_body["accounts"]).to eq(@expected)
