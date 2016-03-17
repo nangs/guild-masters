@@ -41,7 +41,7 @@ GM.EventModel.getAllEvents = function (func) {
 	});
 }
 
-GM.EventModel.completeNextQuest = function (id) {
+GM.EventModel.completeNextEvent = function () {
 	$.ajax({
 		type: 'POST',
 	    url: 'events.json',
@@ -50,24 +50,7 @@ GM.EventModel.completeNextQuest = function (id) {
 	    },
 	    success: function(data) {
 	    	console.log(data);
-	    	GM.EventController.showQuestResults(data.events);
-	    	GM.EventModel.getAllEvents(setupTimeBar);
-	    },
-	});
-}
-
-GM.EventModel.completeNextFacilityEvent = function () {
-	$.ajax({
-		type: 'POST',
-	    url: 'events.json',
-	    data :{
-	    	cmd: 'complete_next',
-	    },
-	    success: function(data) {
-	    	console.log(data);
-	    	if (data.events[0].msg == "success") {
-	    		showView("The event is completed.");
-	    	}
+	    	GM.EventController.showEventResults(data.events);
 	    	GM.EventModel.getAllEvents(setupTimeBar);
 	    },
 	});
