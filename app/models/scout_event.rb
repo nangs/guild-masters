@@ -5,8 +5,11 @@ class ScoutEvent < ActiveRecord::Base
 	  gm = guild.guildmaster
 	  gold = gold.chomp.to_i
 	  time = time.chomp.to_i
-	  if(gm.state!="available"||gm.gold<gold)
-	    return {msg: :"error"}
+	  if(gm.state!="available")
+	    return {msg: :"error", detail: :"Guildmaster is busy now"}
+	  end
+	  if(gm.gold<gold)
+	    return {msg: :"error", detail: :"Not enough gold."}
 	  end
 	  guild.scout_events.create(start_time:gm.game_time,
 	                            end_time:gm.game_time+time,
