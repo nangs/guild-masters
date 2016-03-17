@@ -65,6 +65,6 @@ class ScoutEvent < ActiveRecord::Base
     gm.game_time = self.end_time
     gm.state = "available"
     gm.save
-    return {msg: :"success", adv_gain: nadv, qst_gain: nque, adventurers: advs, quests: qsts}
+    return {msg: :"success", type: :"ScoutEvent", adv_gain: nadv, qst_gain: nque, adventurers: advs, quests: qsts}
 	end
 end

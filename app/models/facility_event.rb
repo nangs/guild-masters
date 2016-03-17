@@ -53,11 +53,11 @@ class FacilityEvent < ActiveRecord::Base
 	  adv=self.adventurer
 	  
 	  if(fac.name=="canteen")
-	    msg = {msg: :"success", adventurer: self.adventurer, energy_gain: adv.max_energy - adv.energy}
+	    msg = {msg: :"success", type: :"FacilityEvent", facility: :"canteen",adventurer: self.adventurer, energy_gain: adv.max_energy - adv.energy}
 	    adv.energy=adv.max_energy
 	    
 	  else
-	    msg = {msg: :"success", adventurer: self.adventurer, hp_gain: adv.max_hp - adv.hp}
+	    msg = {msg: :"success",type: :"FacilityEvent", facility: :"clinic", adventurer: self.adventurer, hp_gain: adv.max_hp - adv.hp}
 	    adv.hp = adv.max_hp
 	  end
 	  adv.state="available"
