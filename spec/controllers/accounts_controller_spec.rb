@@ -5,8 +5,8 @@ $semaphore = Mutex.new
 
 describe AccountsController do
   before :each do
-    @account = create(:account)
-    @activated_account = create(:account, email_confirmed: true)
+    @account = FactoryGirl.create(:account)
+    @activated_account = FactoryGirl.create(:account, email_confirmed: true)
   end
 
   describe "GET #index" do
