@@ -19,7 +19,6 @@ class SessionsController < ApplicationController
       render json: msg.as_json
     elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
-      # account.save
       acc = Account.find(session[:account_id])
       guildmaster = acc.guildmaster
       if !guildmaster.nil?
