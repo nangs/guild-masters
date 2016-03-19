@@ -16,6 +16,7 @@ gem 'handlebars_assets', '~> 0.21.0'
 
 # add bootstrap for sytling the prototype
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.5.1'
+gem 'bootstrap-slider-rails'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
