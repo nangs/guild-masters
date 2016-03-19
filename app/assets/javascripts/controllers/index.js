@@ -55,6 +55,8 @@ function showSection(section){
         case 'facilities':
             GM.FacilityModel.getFacilities(showFacilityPage);
             break;
+        case 'scout':
+            GM.ScoutController.setupScout();
 	};
 }
 

@@ -9,7 +9,12 @@ GM.ScoutModel.scout = function (time, gold) {
 	    	gold_spent: gold
 	    },
 	    success: function(data) {
-	    	console.log(data)
+	    	if (data.msg == 'success') {
+	    		showView('You will spend ' + gold + ' gold for this scouting.');
+	    		setupTimeBar();
+	    	} else {
+	    		console.log(data);
+	    	}
 	    }
 	});
 }
