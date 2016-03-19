@@ -2,12 +2,14 @@ require 'faker'
 
 FactoryGirl.define do
   factory :account do
+    id { Faker::Number.number(4) }
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     confirm_token { Faker::Number.number(4) }
     email_confirmed { false }
-    id { Faker::Number.number(4) }
-    guildmaster
+    trait :activated do
+      email_confirmed true
+    end
   end
 
   factory :guildmaster do
@@ -15,14 +17,16 @@ FactoryGirl.define do
     gold 1000
     game_time 0
     state "available"
-    account_id :account.object_id
     current_guild_id 0
+    account_id :account.__id__
+    association :account, factory: :account, email_confirmed: true
   end
 
-  factory :guilds do
+  factory :guild do
     id { Faker::Number.number(4) }
     level { Faker::Number.between(1, 3) }
     popularity { Faker::Number.number(2) }
-    guildmaster_id :guildmaster.object_id
+    guildmaster_id :guildmaster.__id__
+    guildmaster
   end
 end
