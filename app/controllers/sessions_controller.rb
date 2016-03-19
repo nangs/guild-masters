@@ -10,31 +10,25 @@ class SessionsController < ApplicationController
     account = Account.find_by(email: email)
     if account.nil?
       msg = {msg: "error", detail: "invalid_account"}
-      respond_to do |format|
-        format.json { render json: msg}
-      end
-    elsif !account.authenticate(password)
+      render json: msg.as_json
+    elsif !account.authenticate(password) && !account.nil?
       msg = {msg: "error", detail: "wrong_password"}
-      respond_to do |format|
-        format.json { render json: msg}
-      end
-    elsif !account.email_confirmed
+      render json: msg.as_json
+    elsif !account.email_confirmed && !account.nil?
       msg = {msg: "error", detail: "not_activated"}
-      respond_to do |format|
-        format.json { render json: msg}
-      end
+      render json: msg.as_json
     elsif !account.nil? && account.authenticate(password) && account.email_confirmed
       session[:account_id] = account.id
       # account.save
       acc = Account.find(session[:account_id])
       guildmaster = acc.guildmaster
       if !guildmaster.nil?
-        guilds = guildmaster.guilds
+        guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
         msg = {msg: "success", guilds: guilds}
       elsif guildmaster.nil?
         msg = {msg: "error", detail: "guildmaster_not_created"}
       end
-      render json: msg
+      render json: msg.as_json
     end
   end
 
@@ -42,9 +36,7 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     msg = {msg: "success"}
-    respond_to do |format|
-      format.json { render json: msg}
-    end
+    render json: msg
   end
 
 end
