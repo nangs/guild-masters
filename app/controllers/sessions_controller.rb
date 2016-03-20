@@ -35,7 +35,6 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     msg = {msg: "success"}
-    render json: msg
+    render json: msg.as_json
   end
-
 end

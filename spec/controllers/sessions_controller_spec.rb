@@ -1,5 +1,6 @@
 require 'rails_helper'
-# rspec spec/controllers/sessions_controller_spec.rb
+#rspec spec/controllers/sessions_controller_spec.rb
+#zeus test spec/controllers/sessions_controller_spec.rb
 
 describe SessionsController do
   before :each do
@@ -19,6 +20,7 @@ describe SessionsController do
           expect(response.status).to eq(200)
           expect(Account.count).to eq(3)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          expect(session[:@activated_account]).to_not be nil
           @msg_expected = "success"
           @guilds_expected = @activated_account.guildmaster.guilds.as_json(except: [:created_at, :updated_at])
           parsed_body = JSON.parse(response.body)
@@ -59,6 +61,7 @@ describe SessionsController do
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
+
         end
       end
       context "error" do
@@ -73,6 +76,18 @@ describe SessionsController do
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
         end
+      end
+    end
+    describe 'POST #destroy' do
+      it "destroy session" do
+        post :destroy
+        expect(session[:@activated_account]).to be nil
+        expect(response.status).to eq(200)
+        expect(Account.count).to eq(3)
+        expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+        @msg_expected = "success"
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body["msg"]).to eq(@msg_expected)
       end
     end
   end
