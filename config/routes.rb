@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :facility_events
   resources :guild_sessions
   delete 'sessions' => 'sessions#destroy'
-  resources :sessions, only: [:create, :destroy]
+  resources :sessions
 
   namespace :admin do
     root to: 'dashboard#index'
