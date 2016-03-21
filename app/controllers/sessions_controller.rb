@@ -1,6 +1,6 @@
 #This class controller handles the login and sign up values with appropriate references to the database
 class SessionsController < ApplicationController
-  skip_before_action :authorize
+  skip_before_action :authorize, :only => [:create, :destroy]
   skip_before_action :verify_authenticity_token
   respond_to :json
 
@@ -35,7 +35,6 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     msg = {msg: "success"}
-    render json: msg
+    render json: msg.as_json
   end
-
 end
