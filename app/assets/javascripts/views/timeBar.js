@@ -130,20 +130,21 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 	circle.isInfoShown = false;
 
 	circle.showInfo = function () {
-		// var quest = eve.quest;
-		// var infoText = quest.description + "\nDifficulty: " + quest.difficulty + "\nReward :" + quest.reward;
-		// var text = new fabric.Text(infoText, {
-		// 	left: endTime + timeBar_start_point + 160,
-		// 	top: timeBar_top_padding + 25,
-		// 	fontSize: 12,
-		// 	stroke: 'rgb(200,100,50)'
-		// });
-		// text.set('backgroundColor', 'rgb(0,200,200)');
-		// text.setOpacity(0.8);
-		// canvas.add(text);
-		// text.selectable = false;
-		// circle.isInfoShown = true;
-		// circle.infoText = text;
+		var facility = eve.facility.name;
+		var adventurer = eve.adventurer.name;
+		var infoText = "Your adventurer " + adventurer +"\nis in the " + facility;
+		var text = new fabric.Text(infoText, {
+			left: endTime + timeBar_start_point + 100,
+			top: timeBar_top_padding + 18,
+			fontSize: 12,
+			stroke: 'rgb(200,100,50)'
+		});
+		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.setOpacity(0.8);
+		canvas.add(text);
+		text.selectable = false;
+		circle.isInfoShown = true;
+		circle.infoText = text;
 	};
 
 	circle.removeInfo = function () {
