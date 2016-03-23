@@ -2,9 +2,9 @@ class ScoutEvent < ActiveRecord::Base
 	belongs_to :guild
   delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
-	  gm = guild.guildmaster
-	  gold = gold.chomp.to_i
 	  time = time.chomp.to_i
+	  gold = gold.chomp.to_i
+	  gm = guild.guildmaster
 	  if(gm.state!="available")
 	    return {msg: :"error", detail: :"Guildmaster is busy now"}
 	  end
@@ -22,6 +22,7 @@ class ScoutEvent < ActiveRecord::Base
 	end
 	
 	def complete
+	  r = Random.new
 	  time = self.end_time - self.start_time
 	  gold = self.gold_spent
 	  gm = self.guildmaster
@@ -40,11 +41,11 @@ class ScoutEvent < ActiveRecord::Base
       level = self.guild.level
       adventurer = Adventurer.create(
                                      name: Adventurer.random_adventurer_name,
-                                     max_hp: template.max_hp*level + gold/50,
-                                     max_energy: 100+level*10+gold/200,
-                                     attack: template.attack*level+gold/100,
-                                     defense: template.defense*level+gold/100,
-                                     vision: template.vision*level+gold/200,
+                                     max_hp: template.max_hp*level + gold/50+r.rand(50..200),
+                                     max_energy: 100+level*10+gold/200+r.rand(0..10),
+                                     attack: template.attack*level+gold/100+r.rand(0..10),
+                                     defense: template.defense*level+gold/100+r.rand(0..10),
+                                     vision: template.vision*level+gold/200+r.rand(0..10),
                                      state: "available"
                                      )
                                      
@@ -57,7 +58,7 @@ class ScoutEvent < ActiveRecord::Base
     nque.times do 
       r=Random.new
       quest=Quest.create(difficulty: self.guild.level+r.rand(0..1), state: "pending")
-      quest.reward = quest.difficulty*(100+gold/10)
+      quest.reward = quest.difficulty*(100+gold/10)+r.rand(0..100)
       quest.monster_template = MonsterTemplate.order("RANDOM()").first
       quest.description = "There is a %s near the village! Find someone to help us kill it!" % [quest.monster_template.name]
       quest.save
