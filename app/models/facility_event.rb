@@ -14,14 +14,16 @@ class FacilityEvent < ActiveRecord::Base
 	  for adv in adventurers
 	    if(adv.state!="available")
 	      return msg = {msg: :"error", detail: :"An adventurer is currently not available."}
-	    elsif(adv.hp==adv.max_hp&&facility.name=="clinic")
+	    end
+	    if(adv.hp==adv.max_hp&&facility.name=="clinic")
 	      return msg = {msg: :"error", detail: :"An adventurer is already fully healed."}
-	    elsif(adv.energy==adv.max_energy&&facility.name=="canteen")
+	    end
+	    if(adv.energy==adv.max_energy&&facility.name=="canteen")
 	      return msg = {msg: :"error", detail: :"An adventurer is already at full energy."}
 	    end
 	    total_gold_cost=total_gold_cost+facility.gold_cost(adv)
 	  end
-    gm=facility.guild.guildmaster
+    gm=facility.guildmaster
 	  if(total_gold_cost>gm.gold)
 	    return msg = {msg: :"error", detail: :"You don`t have enough gold.Sad."}
 	  end
