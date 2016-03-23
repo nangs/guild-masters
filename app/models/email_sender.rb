@@ -4,8 +4,8 @@ class EmailSender
   options = {
       :address              => "smtp.gmail.com",
       :port                 => 587,
-      :user_name            => "contact.guildmasters@gmail.com",
-      :password             => "cs3283and4",
+      :user_name            => Rails.application.secrets.email_sender_user_name,
+      :password             => Rails.application.secrets.email_sender_password,
       :authentication       => "plain",
       :enable_starttls_auto => true
   }
