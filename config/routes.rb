@@ -15,14 +15,15 @@ Rails.application.routes.draw do
   resources :facility_events
   resources :guild_sessions
   delete 'sessions' => 'sessions#destroy'
-  resources :sessions
+  resources :sessions, :only => [:create, :delete]
 
   namespace :admin do
     root to: 'dashboard#index'
     resources :adventurer_names
     resources :adventurer_templates
-  end
-
+    end
+  get "*any", via: :all, to: "errors#not_found"
+  # get "*path", to: redirect('/')
 end
 
 #constraints subdomain: 'api' do

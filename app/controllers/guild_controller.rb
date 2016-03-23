@@ -1,4 +1,6 @@
 class GuildController < ApplicationController
+  respond_to :json
+
   ########
   ########for testing not for release
   ########

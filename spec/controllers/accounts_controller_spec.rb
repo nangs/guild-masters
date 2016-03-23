@@ -1,12 +1,12 @@
 require 'rails_helper'
 require 'thread'
 $semaphore = Mutex.new
-#rspec spec/controllers/accounts_controller_spec.rb --format documentation
+#rspec spec/controllers/accounts_controller_spec.rb
 
 describe AccountsController do
   before :each do
-    @account = FactoryGirl.create(:account)
-    @activated_account = FactoryGirl.create(:account, email_confirmed: true)
+    @account = create(:account)
+    @activated_account = create(:account, email_confirmed: true)
   end
 
   describe "GET #index" do
@@ -16,11 +16,11 @@ describe AccountsController do
       expect(Account.count).to eq(2)
       expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
       @expected = [
-          @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
-          @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
+          @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
+          @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
       ]
       parsed_body = JSON.parse(response.body)
-      expect(parsed_body["accounts"]).to eq(@expected)
+      expect(parsed_body["accounts"]).to match_array(@expected)
     end
   end
 
