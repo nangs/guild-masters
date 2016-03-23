@@ -20,6 +20,10 @@ class Event < ActiveRecord::Base
   end
   
   def self.complete(gm,end_time)
+    end_time = end_time.chomp.to_i
+    if(end_time<=gm.game_time)
+      return {msg: :"error", detail: "Invalid end time"}
+    end
     start_day = gm.game_time/1000
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
