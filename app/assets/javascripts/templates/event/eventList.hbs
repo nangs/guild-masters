@@ -1,0 +1,20 @@
+<table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Adventurers</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+	{{#each events as |event|}}
+		<tr>
+			<td>{{description}}</td>
+			<td>{{adventurer_names}}</td>
+			<td>
+				<button type='button' class='btn btn-primary' onclick='GM.EventModel.completeEventsUntil({{end_time}})'>
+					Proceed to the end point of this event
+				</button>
+			</td>
+		</tr>
+	{{/each}}
+</table>
