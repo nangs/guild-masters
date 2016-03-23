@@ -13,8 +13,12 @@ GM.QuestController.showAssign = function(id) {
 	var questView = questAssignTemplate(quest);
 	GM.AdventurerModel.getAllAdventurers(function () {
 		var adventurers = GM.AdventurerController.filterForQuest(GM.AdventurerModel.adventurers_list.adventurers);
-		var adventurersView = adventurerAssignTemplate({'adventurers' : adventurers});
-		showView(questView + adventurersView);
+		if (adventurers.length == 0) {
+			showView(questView + "<p>You do not have any adventurers to be assigned to the quest.</p>");
+		} else {
+			var adventurersView = adventurerAssignTemplate({'adventurers' : adventurers});
+			showView(questView + adventurersView);
+		}
 	});
 }
 
@@ -23,5 +27,14 @@ GM.QuestController.assign = function(id) {
 	$.each($("input:checked"), function (){
 		assigned.push($(this).val());
 	});
-	GM.QuestModel.assign(id, assigned);
+	if (assigned.length == 0) {
+		GM.QuestController.showMessage("Please select at least one adventurer.");
+	} else {
+		GM.QuestModel.assign(id, assigned);
+	}
+}
+
+GM.QuestController.showMessage = function (message) {
+	var alertMessage = alertMessageTemplate({'message' : message});
+    $('#alert').html(alertMessage);
 }
