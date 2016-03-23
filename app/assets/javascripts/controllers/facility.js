@@ -35,9 +35,9 @@ GM.FacilityController.assign = function(id, capacity) {
 		assigned.push($(this).val());
 	});
 	if (assigned.length == 0) {
-		GM.FacilityController.showMessage('Please select at least one adventure.')
+		GM.FacilityController.showMessage('Please select at least one adventurer.')
 	} else if (assigned.length > capacity) {
-		GM.FacilityController.showMessage('Please select at most ' + capacity + ' adventure.')
+		GM.FacilityController.showMessage('Please select at most ' + capacity + ' adventurer.')
 	} else {
 		GM.FacilityModel.assign(id, assigned);
 	}	
