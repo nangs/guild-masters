@@ -170,7 +170,7 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var infoText = "The GuildMaster is scouting\nfor Adventurers and Quests";
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 20,
+			left: endTime + timeBar_start_point + 70,
 			top: timeBar_top_padding + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
