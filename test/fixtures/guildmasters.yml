@@ -20,3 +20,8 @@ TestMaster02:
   game_time: 10000
   state: available
   
+TestMaster03:
+  gold: 0
+  game_time: 10000
+  state: available
+  

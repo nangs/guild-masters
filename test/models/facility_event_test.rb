@@ -17,7 +17,7 @@ class FacilityEventTest < ActiveSupport::TestCase
     assert_equal fullhp, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester09)])
 
     assert_equal fullenergy, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester10)])
-    assert_equal nogold, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester07)])
+    assert_equal nogold, FacilityEvent.assign(facilities(:TestFac03),[adventurers(:Tester07)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester08)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester10)])
     assert_equal success, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
@@ -25,10 +25,10 @@ class FacilityEventTest < ActiveSupport::TestCase
   end
   
   test "test complete" do
-    success = {msg: :"success"}
     FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
     fe=adventurers(:Tester09).facility_events.first
-    assert_equal success,fe.complete
+    msg = fe.complete[:msg]
+    assert_equal :"success",msg
     assert_equal adventurers(:Tester09).max_hp, adventurers(:Tester09).hp
 
   end
