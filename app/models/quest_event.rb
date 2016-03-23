@@ -18,15 +18,15 @@ class QuestEvent < ActiveRecord::Base
     guild = self.guild
     gm=self.guildmaster
     #Success/Fail judgement
-    if(result)
+    if(result[:result])
       self.quest.state="successful"
       guild.popularity=guild.popularity+self.quest.difficulty
       gm.gold = gm.gold+self.quest.reward
-      msg= {msg: :"success",type: :"QuestEvent", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
+      msg= {msg: :"success",type: :"QuestEvent", gold_gain: self.quest.reward, popularity_gain: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers, battle_log: result[:log]}
     else
       self.quest.state="failed"
       guild.popularity=guild.popularity-self.quest.difficulty
-      msg = {msg: :"failed", type: :"QuestEvent", popularity_lost: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers}
+      msg = {msg: :"failed", type: :"QuestEvent", popularity_lost: self.quest.difficulty,quest: self.quest,adventurers: self.adventurers, battle_log: result[:log]}
     end
     for adv in self.adventurers
       if(adv.state == "dead")
