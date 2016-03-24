@@ -364,6 +364,19 @@ describe AccountsController do
         end
       end
       context "invalid params" do
+        it "empty email" do
+          post :create, {cmd: "send_password_token", email: nil} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "email_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+      end
+      context "error" do
         it "invalid account" do
           post :create, {cmd: "send_password_token", email: !@account.email} , format: :json
           expect(response.status).to eq 200
@@ -371,6 +384,34 @@ describe AccountsController do
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "invalid_account"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+      end
+    end
+    context "when params[:cmd] == nil or not valid" do
+      context "invalid params" do
+        it "empty cmd" do
+          post :create, {cmd: nil} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "cmd_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+      end
+      context "error" do
+        it "invalid cmd" do
+          post :create, {cmd: "not_valid_cmd"}, format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "no_such_cmd"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
