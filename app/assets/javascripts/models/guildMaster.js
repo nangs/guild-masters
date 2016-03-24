@@ -15,7 +15,11 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	    url: 'guildmaster.json',
 	    success: function(data) {
 	    	GM.GuildmasterModel.guildmaster = data;
-	    	GM.GuildModel.getAllGuilds(func);
+	    	if (func) {
+	    		GM.GuildModel.getAllGuilds(func);
+	    	} else {
+	    		GM.GuildModel.getAllGuilds();
+	    	}
 	    }
 	});
 }

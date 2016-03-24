@@ -18,7 +18,9 @@ GM.GuildModel.getAllGuilds = function (func) {
             GM.GuildmasterModel.guildmaster.guild = guild;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	GM.GuildController.postGuildID(guild.id);
-	    	func(GM.GuildmasterView);
+	    	if (func) {
+	    		func(GM.GuildmasterView);
+	    	}
 	    }
 	});
 }
