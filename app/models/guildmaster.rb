@@ -5,6 +5,7 @@ class Guildmaster < ActiveRecord::Base
 
   # shortcuts to events
   has_many :scout_events, through: :guilds
+  has_many :guild_upgrade_events, through: :guilds
   has_many :quests, through: :guilds
   has_many :quest_events, through: :quests
   has_many :facilities, through: :guilds

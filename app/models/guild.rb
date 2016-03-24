@@ -5,6 +5,7 @@ class Guild < ActiveRecord::Base
 	has_many :adventurers, dependent: :destroy
 
 	has_many :scout_events, dependent: :destroy
+	has_many :guild_upgrade_events, dependent: :destroy
 	has_many :quest_events, through: :quests
 	has_many :facility_events, through: :facilities
 
