@@ -38,3 +38,17 @@ GM.QuestController.showMessage = function (message) {
 	var alertMessage = alertMessageTemplate({'message' : message});
     $('#alert').html(alertMessage);
 }
+GM.QuestController.filterPending = function(quests) {
+	return quests.filter(function(quest) {
+		var isPending = (quest.state != 'assigned');
+		return isPending;
+	});	
+}
+
+GM.QuestController.showQuestPage = function() {
+	GM.QuestModel.getAllQuests(function(data) {
+		var quests = GM.QuestController.filterPending(data.quests);
+		var view = questsTableTemplate({"quests" : quests});
+    	showView(view);
+	})
+}

@@ -4,11 +4,6 @@ function showAdventurePage(data) {
     showView(view);
 }
 
-function showQuestPage(data) {
-    var view = questsTableTemplate(GM.QuestModel.quest_list);
-    showView(view);
-}
-
 function showHomePage(data) {
     showView(data);
 }
@@ -31,7 +26,7 @@ function showSection(section){
             GM.AdventurerModel.getAllAdventurers(showAdventurePage);
 			break;
 		case 'quests':
-            GM.QuestModel.getAllQuests(showQuestPage);
+            GM.QuestController.showQuestPage();
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster(showHomePage);
