@@ -24,12 +24,26 @@ class AccountsController < ApplicationController
     if params[:cmd] == "signup"
       email = params[:email]
       password = params[:password]
-      result = Account.create_account(email,password)
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif password.nil?
+        result = {msg: :"error", detail: :"password_nil"}
+      elsif password.size < 6
+        result = {msg: :"error", detail: :"password_too_short"}
+      elsif !email.nil? && !password.nil?
+        result = Account.create_account(email,password)
+      end
       render json: result.as_json
     elsif params[:cmd] == "activate_account"
       email = params[:email]
       confirm_token = params[:confirm_token]
-      result = Account.activate_account(email,confirm_token)
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif confirm_token.nil?
+        result = {msg: :"error", detail: :"confirm_token_nil"}
+      elsif !email.nil? && !confirm_token.nil?
+        result = Account.activate_account(email,confirm_token)
+      end
       render json: result.as_json
     elsif params[:cmd] == "update_account"
       email = params[:email]

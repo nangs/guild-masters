@@ -48,6 +48,17 @@ describe AccountsController do
         end
       end
       context "invalid" do
+        it "password less than 6 characters" do
+          post :create, {cmd: "signup", email: "testing@gmail.com", password: "12345"} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "password_too_short"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
         it "empty email" do
           post :create, {cmd: "signup", email: nil, password: "123456"} , format: :json
           expect(response.status).to eq 200
@@ -109,24 +120,24 @@ describe AccountsController do
         end
       end
       context "invalid params" do
-        it "invalid account" do
-          post :create, {cmd: "activate_account", email: !@account.email, confirm_token: @account.confirm_token} , format: :json
+        it "empty email" do
+          post :create, {cmd: "activate_account", email: nil, confirm_token: @account.confirm_token} , format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
-          @detail_expected = "invalid_account"
+          @detail_expected = "email_nil"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
         end
-        it "invalid confirm_token" do
-          post :create, {cmd: "activate_account", email: @account.email, confirm_token: !@account.confirm_token} , format: :json
+        it "empty confirm_token" do
+          post :create, {cmd: "activate_account", email: @account.email, confirm_token: nil} , format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
-          @detail_expected = "wrong_token"
+          @detail_expected = "confirm_token_nil"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
@@ -140,6 +151,28 @@ describe AccountsController do
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "already_activated"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "invalid account" do
+          post :create, {cmd: "activate_account", email: !@account.email, confirm_token: @account.confirm_token} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "invalid_account"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "wrong confirm_token" do
+          post :create, {cmd: "activate_account", email: @account.email, confirm_token: !@account.confirm_token} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "wrong_token"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
