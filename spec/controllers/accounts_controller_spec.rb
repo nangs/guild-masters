@@ -192,7 +192,53 @@ describe AccountsController do
         end
       end
       context "invalid params" do
-        it "invalid confirm_token" do
+        it "empty confirm_token" do
+          post :create, {cmd: "update_account", email: @account.email, password: nil, confirm_token: @account.confirm_token} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "password_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "empty email" do
+          post :create, {cmd: "update_account", email: nil, password: "123456", confirm_token: @account.confirm_token} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "email_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "empty confirm_token" do
+          post :create, {cmd: "update_account", email: @account.email, password: "123456", confirm_token: nil} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "confirm_token_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "password less than 6 characters" do
+          post :create, {cmd: "update_account", email: @account.email, password: "12345", confirm_token: @account.confirm_token} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "password_too_short"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+      end
+      context "error" do
+        it "wrong confirm_token" do
           post :create, {cmd: "update_account", email: @account.email, password: "123456", confirm_token: !@account.confirm_token} , format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
@@ -239,13 +285,13 @@ describe AccountsController do
         end
       end
       context "invalid params" do
-        it "invalid account" do
-          post :create, {cmd: "resend_email", email: !@account.email} , format: :json
+        it "empty email" do
+          post :create, {cmd: "resend_email", email: nil} , format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
-          @detail_expected = "invalid_account"
+          @detail_expected = "email_nil"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
@@ -259,6 +305,17 @@ describe AccountsController do
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "already_activated"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "invalid account" do
+          post :create, {cmd: "resend_email", email: !@account.email} , format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "invalid_account"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)

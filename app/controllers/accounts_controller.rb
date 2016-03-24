@@ -49,11 +49,25 @@ class AccountsController < ApplicationController
       email = params[:email]
       password = params[:password]
       confirm_token = params[:confirm_token]
-      result = Account.update_account(email,password,confirm_token)
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif password.nil?
+        result = {msg: :"error", detail: :"password_nil"}
+      elsif password.size < 6
+        result = {msg: :"error", detail: :"password_too_short"}
+      elsif confirm_token.nil?
+        result = {msg: :"error", detail: :"confirm_token_nil"}
+      elsif !email.nil? && !confirm_token.nil? && !password.nil?
+        result = Account.update_account(email,password,confirm_token)
+      end
       render json: result.as_json
     elsif params[:cmd] == "resend_email"
       email = params[:email]
-      result = Account.resend_email(email)
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif !email.nil?
+        result = Account.resend_email(email)
+      end
       render json: result.as_json
     elsif params[:cmd] == "send_password_token"
       email = params[:email]
