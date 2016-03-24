@@ -1,11 +1,11 @@
 function showAdventurePage(data) {
     var adventurers = {'adventurers' : GM.AdventurerController.filterAlive(data.adventurers)};
-    var view = adventurerNewButton + adventurersTableTemplate(adventurers);
+    var view = adventurersTableTemplate(adventurers);
     showView(view);
 }
 
 function showQuestPage(data) {
-    var view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
+    var view = questsTableTemplate(GM.QuestModel.quest_list);
     showView(view);
 }
 
