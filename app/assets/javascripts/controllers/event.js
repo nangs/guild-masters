@@ -36,7 +36,7 @@ GM.EventController.showEventResults = function (eventResults) {
 
 GM.EventController.showEvents = function (events) {
 	if (events.length == 0) {
-		return "There is no event that is in progress";
+		return showView("There is no event that is in progress");
 	} else {
 		for (var e = 0; e < events.length; e++) {
 			var eve = events[e];
