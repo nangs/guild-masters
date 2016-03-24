@@ -33,7 +33,6 @@ class AccountsController < ApplicationController
       elsif !email.nil? && !password.nil?
         result = Account.create_account(email,password)
       end
-      render json: result.as_json
     elsif params[:cmd] == "activate_account"
       email = params[:email]
       confirm_token = params[:confirm_token]
@@ -44,7 +43,6 @@ class AccountsController < ApplicationController
       elsif !email.nil? && !confirm_token.nil?
         result = Account.activate_account(email,confirm_token)
       end
-      render json: result.as_json
     elsif params[:cmd] == "update_account"
       email = params[:email]
       password = params[:password]
@@ -60,7 +58,6 @@ class AccountsController < ApplicationController
       elsif !email.nil? && !confirm_token.nil? && !password.nil?
         result = Account.update_account(email,password,confirm_token)
       end
-      render json: result.as_json
     elsif params[:cmd] == "resend_email"
       email = params[:email]
       if email.nil?
@@ -68,11 +65,18 @@ class AccountsController < ApplicationController
       elsif !email.nil?
         result = Account.resend_email(email)
       end
-      render json: result.as_json
     elsif params[:cmd] == "send_password_token"
       email = params[:email]
-      result = Account.send_password_token(email)
-      render json: result.as_json
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif !email.nil?
+        result = Account.send_password_token(email)
+      end
+    elsif params[:cmd].nil?
+      result = {msg: :"error", detail: :"cmd_nil"}
+    else
+      result = {msg: :"error", detail: :"no_such_cmd"}
     end
+    render json: result.as_json
   end
 end
