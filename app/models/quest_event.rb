@@ -83,11 +83,12 @@ class QuestEvent < ActiveRecord::Base
       adv_vision = adv_vision + adventurer.vision
     end
     mon_invis = self.quest.difficulty*self.quest.monster_template.invisibility
-    turns = mon_invis/adv_vision+1
+    turns = mon_invis.to_f/adv_vision.to_f
     for adventurer in adventurers
-      adventurer.vision = adventurer.vision + turns*self.quest.difficulty
+      adventurer.vision = adventurer.vision + turns.round*self.quest.difficulty
       adventurer.save
     end
-    return 100*self.quest.difficulty+50*turns
+    time = turns*50.0
+    return 100*self.quest.difficulty+time.round
   end
 end
