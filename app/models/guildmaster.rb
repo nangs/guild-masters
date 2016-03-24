@@ -46,7 +46,7 @@ class Guildmaster < ActiveRecord::Base
       nadv.times do
         advs<<guild.create_adventurer
       end
-      msg = {guild: guild, new_quests: qsts, new_adventures: advs}
+      msg = {guild: guild, new_quests: qsts, new_adventurers: advs}
       msgArray<<msg
     end
     puts msgArray.inspect
