@@ -43,7 +43,7 @@ class Guildmaster < ActiveRecord::Base
       nqst.times do
        qsts<<guild.create_quest
       end
-      nadv = guild.popularity/40 + 1
+      nadv = guild.popularity/50
       nadv.times do
         advs<<guild.create_adventurer
       end

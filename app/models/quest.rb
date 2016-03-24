@@ -36,35 +36,47 @@ class Quest < ActiveRecord::Base
       for adv_id in survivers
         adventurer = adventurers[adv_id]
         if(monster.hp>0)
-          dmg = adventurer.attack*adventurer.attack/monster.defense+r.rand(-20..20)
-          dmg = dmg.round
-          monster.hp=monster.hp-dmg
-          attacks[adv_id]=attacks[adv_id]+1
-          if(monster.hp<0)
-            monster.hp=0
+          if(adventurer.energy>0)
+            dmg = r.rand(0.75..1.25)*adventurer.attack*adventurer.attack/monster.defense
+            dmg = dmg.round
+            monster.hp=monster.hp-dmg
+            attacks[adv_id]=attacks[adv_id]+1
+            adventurer.energy = adventurer.energy - 2
+            if(monster.hp<0)
+              monster.hp=0
+            end
+          else
+            adventurer.energy = 0
+            dmg=0
+            survivers.delete(adv_id)
+            if(survivers.empty?)
+              end_of_battle = true
+            end
           end
         end
-        advMsg = {adventurer_name: adventurer.name, adventurer_hp: adventurer.hp, dmg_deal: dmg}
+        advMsg = {adventurer_name: adventurer.name, adventurer_hp: adventurer.hp, dmg_deal: dmg, adventurer_energy: adventurer.energy}
         advsPhase<<advMsg
       end
       #Monster`s phase
       if(monster.hp>0)
-        target_id = survivers.sample
-        target=advs[target_id]
-        dmg = monster.attack*monster.attack/target.defense+r.rand(-20..20)
-        dmg = dmg.round
-        target.hp = target.hp - dmg
-        defenses[target_id]=defenses[target_id]+1
-        mstMsg = {monster_name: monster_template.name, monster_hp: monster.hp, target: target.name, dmg_deal: dmg}
-        #Adventurer was killed
-        if(target.hp<=0)
-          target.hp=0
-          target.energy=0
-          target.state = "dead"
-          dead = {dead: target.name}
-          survivers.delete(target_id)
-          if(survivers.empty?)
-            end_of_battle = true
+        if(!survivers.empty?)
+          target_id = survivers.sample
+          target=advs[target_id]
+          dmg = r.rand(0.75..1.25)*monster.attack*monster.attack/target.defense
+          dmg = dmg.round
+          target.hp = target.hp - dmg
+          defenses[target_id]=defenses[target_id]+1
+          mstMsg = {monster_name: monster_template.name, monster_hp: monster.hp, target: target.name, dmg_deal: dmg}
+          #Adventurer was killed
+          if(target.hp<=0)
+            target.hp=0
+            target.energy=0
+            target.state = "dead"
+            dead = {dead: target.name}
+            survivers.delete(target_id)
+            if(survivers.empty?)
+              end_of_battle = true
+            end
           end
         end
       elsif(monster.hp==0)
@@ -85,7 +97,7 @@ class Quest < ActiveRecord::Base
     
     #Energy cost calculation
     for adventurer in advs
-      adventurer.energy = adventurer.energy - 25 - self.difficulty*5 -r.rand(0..5)
+      adventurer.energy = adventurer.energy - 15 -r.rand(0..5)
       adventurer.state = "available" if adventurer.state == "assigned"
       adventurer.energy = 0 if adventurer.energy<0
       adventurer.save
