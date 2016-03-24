@@ -7,34 +7,37 @@ class SessionsController < ApplicationController
   def create
     password = params[:password]
     email = params[:email]
-    account = Account.find_by(email: email)
-    if account.nil?
-      msg = {msg: "error", detail: "invalid_account"}
-      render json: msg.as_json
-    elsif !account.authenticate(password) && !account.nil?
-      msg = {msg: "error", detail: "wrong_password"}
-      render json: msg.as_json
-    elsif !account.email_confirmed && !account.nil?
-      msg = {msg: "error", detail: "not_activated"}
-      render json: msg.as_json
-    elsif !account.nil? && account.authenticate(password) && account.email_confirmed
-      session[:account_id] = account.id
-      acc = Account.find(session[:account_id])
-      guildmaster = acc.guildmaster
-      if !guildmaster.nil?
-        guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
-        msg = {msg: "success", guilds: guilds}
-      elsif guildmaster.nil?
-        msg = {msg: "error", detail: "guildmaster_not_created"}
+    if email.nil?
+      result = {msg: :"error", detail: :"email_nil"}
+    elsif password.nil?
+      result = {msg: :"error", detail: :"password_nil"}
+    elsif !email.nil? && !password.nil?
+      account = Account.find_by(email: email)
+      if account.nil?
+        result = {msg: :"error", detail: :"invalid_account"}
+      elsif !account.authenticate(password) && !account.nil?
+        result = {msg: :"error", detail: :"wrong_password"}
+      elsif !account.email_confirmed && !account.nil?
+        result = {msg: :"error", detail: :"not_activated"}
+      elsif !account.nil? && account.authenticate(password) && account.email_confirmed
+        session[:account_id] = account.id
+        acc = Account.find(session[:account_id])
+        guildmaster = acc.guildmaster
+        if !guildmaster.nil?
+          guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
+          result = {msg: :"success", guilds: guilds}
+        elsif guildmaster.nil?
+          result = {msg: :"error", detail: :"guildmaster_not_created"}
+        end
       end
-      render json: msg.as_json
     end
+    render json: result.as_json
   end
 
   # DELETE /sessions.json
   def destroy
     reset_session
-    msg = {msg: "success"}
-    render json: msg.as_json
+    result = {msg: :"success"}
+    render json: result.as_json
   end
 end
