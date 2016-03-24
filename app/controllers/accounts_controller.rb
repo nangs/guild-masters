@@ -63,7 +63,11 @@ class AccountsController < ApplicationController
       render json: result.as_json
     elsif params[:cmd] == "resend_email"
       email = params[:email]
-      result = Account.resend_email(email)
+      if email.nil?
+        result = {msg: :"error", detail: :"email_nil"}
+      elsif !email.nil?
+        result = Account.resend_email(email)
+      end
       render json: result.as_json
     elsif params[:cmd] == "send_password_token"
       email = params[:email]
