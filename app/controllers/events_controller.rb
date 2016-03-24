@@ -20,7 +20,7 @@ class EventsController < ApplicationController
     elsif params[:cmd] == "complete"
       @end_time = params[:end_time].chomp.to_i
       if !@end_time.nil?
-        @result_complete_event = Event.complete(guildmaster,params[:end_time])
+        @result_complete_event = Event.complete(guildmaster,@end_time)
         render json: @result_complete_event.as_json(except: [:updated_at, :created_at])
       elsif @end_time.nil?
         render json: {msg: :"error", detail: :"end_time_nil"}
