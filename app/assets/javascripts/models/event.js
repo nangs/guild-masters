@@ -66,7 +66,7 @@ GM.EventModel.completeEventsUntil = function (time) {
 	    },
 	    success: function(data) {
 	    	console.log(data);
-	    	GM.EventController.showEventResults(data.events);
+	    	GM.EventController.showEventResults(data);
 	    	GM.EventModel.getAllEvents(setupTimeBar);
 	    	GM.GuildmasterModel.getGuildmaster();
 	    },

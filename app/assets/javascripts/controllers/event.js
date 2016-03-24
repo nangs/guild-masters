@@ -1,7 +1,9 @@
 GM.EventController = Ember.Controller.extend();
 
-GM.EventController.showEventResults = function (events) {
+GM.EventController.showEventResults = function (eventResults) {
 	var message = '';
+	var events = eventResults.events;
+	var refresh = eventResults.refresh;
 	for (var e = 0; e < events.length; e++) {
 		var eventReuslt = events[e];
 		switch (eventReuslt.type) {
@@ -17,6 +19,16 @@ GM.EventController.showEventResults = function (events) {
 				break;
 			case "ScoutEvent":
 				message += scoutResultTemplate(eventReuslt);
+		}
+		message += "<hr>";
+	}
+	if (refresh.length == 1) {
+		var refreshes = refresh[0];
+		for (var r=0; r<refreshes.length; r++) {
+			var new_gain = refreshes[r];
+			new_gain.num_adv = new_gain.new_adventurers.length;
+			new_gain.num_quest = new_gain.new_quests.length;
+			message += refreshTemplate(new_gain);
 		}
 	}
 	showView(message);
