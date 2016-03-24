@@ -1,9 +1,3 @@
-function showAdventurePage(data) {
-    var adventurers = {'adventurers' : GM.AdventurerController.filterAlive(data.adventurers)};
-    var view = adventurersTableTemplate(adventurers);
-    showView(view);
-}
-
 function showHomePage(data) {
     showView(data);
 }
@@ -21,9 +15,8 @@ function showSection(section){
                 GM.EventController.showEvents(events);          
             });
             break;
-            
 		case 'adventurers':
-            GM.AdventurerModel.getAllAdventurers(showAdventurePage);
+            GM.AdventurerController.showAdventurerPage();
 			break;
 		case 'quests':
             GM.QuestController.showQuestPage();
