@@ -38,6 +38,7 @@ GM.QuestController.showMessage = function (message) {
 	var alertMessage = alertMessageTemplate({'message' : message});
     $('#alert').html(alertMessage);
 }
+
 GM.QuestController.filterPending = function(quests) {
 	return quests.filter(function(quest) {
 		var isPending = (quest.state != 'assigned');
@@ -48,7 +49,11 @@ GM.QuestController.filterPending = function(quests) {
 GM.QuestController.showQuestPage = function() {
 	GM.QuestModel.getAllQuests(function(data) {
 		var quests = GM.QuestController.filterPending(data.quests);
-		var view = questsTableTemplate({"quests" : quests});
-    	showView(view);
+		if (quests.length == 0) {
+			showView("There is no Quest, please try scouting for some Adventurers and Quests")
+		} else {
+			var view = questsTableTemplate({"quests" : quests});
+			showView(view);	
+		}
 	})
 }

@@ -34,7 +34,12 @@ GM.AdventurerController.filterForQuest = function (adventurers) {
 GM.AdventurerController.showAdventurerPage = function() {
 	GM.AdventurerModel.getAllAdventurers(function (data) {
 	    var adventurers = GM.AdventurerController.filterAlive(data.adventurers);
+	    if (adventurers.length == 0) {
+	    	showView("There is no Adventurer in your Guild, please try scouting for some Adventurers and Quests");
+	    }
+	    else {
 	    	var view = adventurersTableTemplate({'adventurers' : adventurers});
 	    	showView(view);	
+	    }
 	});
 };
