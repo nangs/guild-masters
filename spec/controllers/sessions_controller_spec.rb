@@ -28,7 +28,42 @@ describe SessionsController do
           expect(parsed_body["guilds"]).to match_array(@guilds_expected)
         end
       end
-      context "invalid" do
+      context "invalid params" do
+        it "empty email" do
+          post :create, {email: nil, password: @account_without_gm_not_activated.password} , format: :json
+          expect(response.status).to eq(200)
+          expect(Account.count).to eq(3)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "email_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+        it "empty password" do
+          post :create, {email: @account_without_gm_not_activated.email, password: nil} , format: :json
+          expect(response.status).to eq(200)
+          expect(Account.count).to eq(3)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "password_nil"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
+      end
+      context "error" do
+        it "guildmaster nil" do
+          post :create, {email: @account_without_gm.email, password: @account_without_gm.password} , format: :json
+          expect(response.status).to eq(200)
+          expect(Account.count).to eq(3)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = "error"
+          @detail_expected = "guildmaster_not_created"
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["detail"]).to eq(@detail_expected)
+        end
         it "not_activated" do
           post :create, {email: @account_without_gm_not_activated.email, password: @account_without_gm_not_activated.password} , format: :json
           expect(response.status).to eq(200)
@@ -58,20 +93,6 @@ describe SessionsController do
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "invalid_account"
-          parsed_body = JSON.parse(response.body)
-          expect(parsed_body["msg"]).to eq(@msg_expected)
-          expect(parsed_body["detail"]).to eq(@detail_expected)
-
-        end
-      end
-      context "error" do
-        it "guildmaster nil" do
-          post :create, {email: @account_without_gm.email, password: @account_without_gm.password} , format: :json
-          expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
-          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
-          @msg_expected = "error"
-          @detail_expected = "guildmaster_not_created"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
