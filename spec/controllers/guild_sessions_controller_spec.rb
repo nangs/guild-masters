@@ -7,14 +7,13 @@ describe GuildSessionsController do
     @guild = create(:guild)
     @activated_account = @guild.guildmaster.account
     @activated_account.email_confirmed = true
-    request.session[:account_id] = @activated_account.id
   end
 
   describe 'POST #create' do
-    context "set current guild" do
+    context "valid session" do
       context "valid params" do
         it "updates guildmaster.current_guild_id" do
-          # post :create, {guild_id: @guild.id}, {:@activated_account_id => @activated_account.id}, format: :json
+          request.session[:account_id] = @activated_account.id
           post :create, {guild_id: @guild.id}, format: :json
           expect(response.status).to eq(200)
           expect(Account.count).to eq(1)
@@ -30,6 +29,7 @@ describe GuildSessionsController do
       end
       context "invalid params" do
         it "empty guild_id" do
+          request.session[:account_id] = @activated_account.id
           post :create, {guild_id: nil} , format: :json
           expect(response.status).to eq(200)
           expect(Account.count).to eq(1)
@@ -45,6 +45,7 @@ describe GuildSessionsController do
       end
       context "error" do
         it "wrong guild_id" do
+          request.session[:account_id] = @activated_account.id
           post :create, {guild_id: !@guild_id} , format: :json
           expect(response.status).to eq(200)
           expect(Account.count).to eq(1)
@@ -57,6 +58,12 @@ describe GuildSessionsController do
           expect(parsed_body["msg"]).to eq(@msg_expected)
           expect(parsed_body["detail"]).to eq(@detail_expected)
         end
+      end
+    end
+    context "invalid session" do
+      it "renders 401" do
+        post :create, {guild_id: @guild_id} , format: :json
+        expect(response.status).to eq(401)
       end
     end
   end
