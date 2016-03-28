@@ -3,17 +3,17 @@ class AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
-#############################################################################
-########for testing not for release
-########
-# GET /accounts.json
-  def index
-    accounts = Account.all
-    render json: accounts.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
-  end
-########
-########for testing not for release
-#############################################################################
+# #############################################################################
+# ########for testing not for release
+# ########
+# # GET /accounts.json
+#   def index
+#     accounts = Account.all
+#     render json: accounts.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
+#   end
+# ########
+# ########for testing not for release
+# #############################################################################
 
 
 # POST /accounts.json

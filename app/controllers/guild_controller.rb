@@ -1,5 +1,6 @@
 class GuildController < ApplicationController
   respond_to :json
+  before_action :authorize
 
   ########
   ########for testing not for release

@@ -9,7 +9,7 @@ describe SessionsController do
     @guild = create(:guild)
     @activated_account = @guild.guildmaster.account
     @activated_account.email_confirmed = true
-    session[:@activated_account]=@activated_account.id
+    request.session[:account_id] = @activated_account.id
   end
 
   describe 'POST #create' do
@@ -20,7 +20,7 @@ describe SessionsController do
           expect(response.status).to eq(200)
           expect(Account.count).to eq(3)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
-          expect(session[:@activated_account]).to_not be nil
+          expect(session[:account_id]).to_not be nil
           @msg_expected = "success"
           @guilds_expected = @activated_account.guildmaster.guilds.as_json(except: [:created_at, :updated_at])
           parsed_body = JSON.parse(response.body)
@@ -99,17 +99,17 @@ describe SessionsController do
         end
       end
     end
-    describe 'POST #destroy' do
-      it "destroy session" do
-        post :destroy
-        expect(session[:@activated_account]).to be nil
-        expect(response.status).to eq(200)
-        expect(Account.count).to eq(3)
-        expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
-        @msg_expected = "success"
-        parsed_body = JSON.parse(response.body)
-        expect(parsed_body["msg"]).to eq(@msg_expected)
-      end
+  end
+  describe 'POST #destroy' do
+    it "destroy session" do
+      post :destroy
+      expect(session[:account_id]).to be nil
+      expect(response.status).to eq(200)
+      expect(Account.count).to eq(3)
+      expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+      @msg_expected = "success"
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["msg"]).to eq(@msg_expected)
     end
   end
 end

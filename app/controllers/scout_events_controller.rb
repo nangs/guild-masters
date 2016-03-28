@@ -1,6 +1,7 @@
 class ScoutEventsController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
+  before_action :authorize
 
   # GET /scout_events.json
   def index

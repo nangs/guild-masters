@@ -9,20 +9,20 @@ describe AccountsController do
     @activated_account = create(:account, email_confirmed: true)
   end
 
-  describe "GET #index" do
-    it "populates an array of accounts" do
-      get :index, format: :json
-      expect(response.status).to eq 200
-      expect(Account.count).to eq(2)
-      expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
-      @expected = [
-          @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
-          @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
-      ]
-      parsed_body = JSON.parse(response.body)
-      expect(parsed_body["accounts"]).to match_array(@expected)
-    end
-  end
+  # describe "GET #index" do
+  #   it "populates an array of accounts" do
+  #     get :index, format: :json
+  #     expect(response.status).to eq 200
+  #     expect(Account.count).to eq(2)
+  #     expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+  #     @expected = [
+  #         @activated_account.as_json(only: [:id, :email, :email_confirmed, :confirm_token]),
+  #         @account.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
+  #     ]
+  #     parsed_body = JSON.parse(response.body)
+  #     expect(parsed_body["accounts"]).to match_array(@expected)
+  #   end
+  # end
 
   describe "POST #create" do
     context "when params[:cmd] == signup" do

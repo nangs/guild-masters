@@ -1,5 +1,6 @@
 class FacilitiesController < ApplicationController
   respond_to :json
+  before_action :authorize
 
   # GET /facilities.json
   def index

@@ -1,5 +1,6 @@
 class GuildmasterController < ApplicationController
   respond_to :json
+  before_action :authorize
 
   # GET /guildmaster.json
 
