@@ -27,6 +27,7 @@ class Event < ActiveRecord::Base
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     fes=gm.facility_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     ses=gm.scout_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
+    ges=gm.guild_upgrade_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)
     msgArray = Array.new
     for qe in qes
       msgArray<<qe.complete
@@ -36,6 +37,9 @@ class Event < ActiveRecord::Base
     end
     for se in ses
       msgArray<<se.complete
+    end
+    for ge in ges
+      msgArray<<ge.complete
     end
     day_dif = end_time/1000-start_day
     refreshArray = Array.new
@@ -86,6 +90,19 @@ class Event < ActiveRecord::Base
           start_time: @scoutEvent.start_time,
           end_time: @scoutEvent.end_time,
           gold_spent: @scoutEvent.gold_spent
+      }
+      event_id += 1
+    end
+    @upgradeEvents = gm.guild_upgrade_events
+    for @upgradeEvent in @upgradeEvents
+      arrayOfAllEventsDetails << {
+          event_id: event_id,
+          type: :"UpgradeEvent",
+          upgrade_event_id: @upgradeEvent.id,
+          start_time: @upgradeEvent.start_time,
+          end_time: @upgradeEvent.end_time,
+          gold_spent: @upgradeEvent.gold_spent,
+          guild: @upgradeEvent.guild
       }
       event_id += 1
     end
