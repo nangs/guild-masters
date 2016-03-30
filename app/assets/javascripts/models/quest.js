@@ -27,8 +27,11 @@ GM.QuestModel.getNewQuests = function(){
 
 GM.QuestModel.getAllQuests = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'quests.json',
+	    data: {
+	    	cmd: 'get'
+	    },
 	    success: function(data) {
 	    	GM.QuestModel.quest_list = data;
 	    	func(GM.QuestModel.quest_list);
