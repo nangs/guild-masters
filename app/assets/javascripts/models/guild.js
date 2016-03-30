@@ -11,8 +11,11 @@ GM.GuildModel = DS.Model.extend();
 
 GM.GuildModel.getAllGuilds = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'guild_sessions.json',
+	    data: {
+	    	cmd: 'get'
+	    },
 	    success: function(feedback) {
 	    	var guild = feedback.guild_sessions[0];
             GM.GuildmasterModel.guildmaster.guild = guild;
