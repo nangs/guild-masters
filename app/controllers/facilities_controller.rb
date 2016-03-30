@@ -2,17 +2,14 @@ class FacilitiesController < ApplicationController
   respond_to :json
   before_action :authorize
 
-  # GET /facilities.json
-  def index
+  # POST /facilities.json
+  def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
-    facilities = guild.facilities
-    respond_to do |format|
-      format.json { render json: facilities }
+    if params[:cmd] == "get"
+      facilities = guild.facilities
+      render json: facilities.as_json(:except => [:created_at, :updated_at])
     end
   end
-  ########
-  ########for testing not for release
-  ########
 end
