@@ -17,10 +17,22 @@ GM.GuildModel.getAllGuilds = function (func) {
 	    	var guild = feedback.guild_sessions[0];
             GM.GuildmasterModel.guildmaster.guild = guild;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
-	    	GM.GuildController.postGuildID(guild.id);
+	    	GM.GuildModel.postGuildID(guild.id);
 	    	if (func) {
 	    		func(GM.GuildmasterView);
 	    	}
+	    }
+	});
+}
+
+GM.GuildModel.postGuildID = function (guildID) {
+    $.ajax({
+	    type: 'POST',
+	    url: 'guild_sessions.json',
+	    data: {
+	    	guild_id : guildID
+	    },
+	    success: function(feedback) {
 	    }
 	});
 }

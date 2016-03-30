@@ -1,14 +1,3 @@
-function showAdventurePage(data) {
-    var adventurers = {'adventurers' : GM.AdventurerController.filterAlive(data.adventurers)};
-    var view = adventurerNewButton + adventurersTableTemplate(adventurers);
-    showView(view);
-}
-
-function showQuestPage(data) {
-    var view = questNewButton + questsTableTemplate(GM.QuestModel.quest_list);
-    showView(view);
-}
-
 function showHomePage(data) {
     showView(data);
 }
@@ -23,32 +12,14 @@ function showSection(section){
 	switch(section){
 		case 'events':
             GM.EventModel.getAllEvents(function (events) {
-                GM.EventController.showEvents(events);
-                // if (GM.EventModel.nextEvent) {
-                //     console.log(GM.EventModel.nextEvent);
-                //     switch (GM.EventModel.nextEvent.type) {
-                //         case "QuestEvent":
-                //             view = nextQuestEventTemplate(GM.EventModel.nextEvent);
-                //             break;
-                //         case "FacilityEvent":
-                //             view = nextFacilityEventTemplate(GM.EventModel.nextEvent);
-                //             break;
-                //         case "ScoutEvent":
-                //             view = nextScoutEventTemplate(GM.EventModel.nextEvent);
-                //             break;
-                //     }
-                // } else {
-                //     view = "There is no event that is in progress";
-                // }
-                // showView(view);            
+                GM.EventController.showEvents(events);          
             });
             break;
-            
 		case 'adventurers':
-            GM.AdventurerModel.getAllAdventurers(showAdventurePage);
+            GM.AdventurerController.showAdventurerPage();
 			break;
 		case 'quests':
-            GM.QuestModel.getAllQuests(showQuestPage);
+            GM.QuestController.showQuestPage();
 			break;
 		case 'home':
 			GM.GuildmasterModel.getGuildmaster(showHomePage);

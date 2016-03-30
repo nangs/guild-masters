@@ -20,7 +20,6 @@ class Event < ActiveRecord::Base
   end
   
   def self.complete(gm,end_time)
-    end_time = end_time.chomp.to_i
     if(end_time<=gm.game_time)
       return {msg: :"error", detail: "Invalid end time"}
     end
