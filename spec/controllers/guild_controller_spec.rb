@@ -2,7 +2,7 @@ require 'rails_helper'
 #rspec spec/controllers/guild_controller_spec.rb
 #zeus test spec/controllers/guild_controller_spec.rb
 
-describe GuildController do
+RSpec.describe GuildController do
   before :each do
     @guild = create(:guild)
     @activated_account = @guild.guildmaster.account
