@@ -48,6 +48,8 @@ class Event < ActiveRecord::Base
         refreshArray<<gm.refresh
       end
     end
+    gm.game_time = end_time
+    gm.save
     return {events: msgArray, refresh: refreshArray}
   end
   
