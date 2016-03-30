@@ -1,3 +1,7 @@
 section {
 	margin: 10px;
 }
+
+.checkbox {
+	margin: 0px !important;
+}
