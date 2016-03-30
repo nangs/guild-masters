@@ -23,3 +23,15 @@ TestFac03:
   name: "canteen"
   capacity: 2
   guild: TestGuild03
+
+TestFac04:
+  level: 1
+  name: "canteen"
+  capacity: 1
+  guild: TestGuild07
+
+TestFac05:
+  level: 1
+  name: "canteen"
+  capacity: 1
+  guild: TestGuild07
