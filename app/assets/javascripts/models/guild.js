@@ -33,6 +33,7 @@ GM.GuildModel.postGuildID = function (guildID) {
 	    type: 'POST',
 	    url: 'guild_sessions.json',
 	    data: {
+	    	cmd: 'create',
 	    	guild_id : guildID
 	    },
 	    success: function(feedback) {
