@@ -2,7 +2,7 @@ require 'rails_helper'
 #rspec spec/controllers/sessions_controller_spec.rb
 #zeus test spec/controllers/sessions_controller_spec.rb
 
-describe SessionsController do
+RSpec.describe SessionsController do
   before :each do
     @account_without_gm = create(:account, :activated)
     @account_without_gm_not_activated = create(:account)
