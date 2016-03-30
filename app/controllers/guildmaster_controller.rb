@@ -2,11 +2,13 @@ class GuildmasterController < ApplicationController
   respond_to :json
   before_action :authorize
 
-  # # GET /guildmaster.json
-  def index
+  # # POST /guildmaster.json
+  def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
-    render json: guildmaster.as_json(except: [:created_at,:updated_at])
+    if params[:cmd] == "get"
+      render json: guildmaster.as_json(except: [:created_at,:updated_at])
+    end
   end
 end
 
