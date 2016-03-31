@@ -10,18 +10,21 @@ class FacilityEvent < ActiveRecord::Base
 	  if(adventurers.size>facility.capacity)
 	    return msg = {msg: :"error", detail: :"This facility doesn`t have enough space."}
 	  end
+	  if(facility.guild.guildmaster.state=="upgrading")
+	    return msg = {msg: :"error", detail: :"The guild is under construction, this facility is temporarily closed"}
+	  end
 	  total_gold_cost=0
 	  for adv in adventurers
 	    if(adv.state!="available")
 	      return msg = {msg: :"error", detail: :"An adventurer is currently not available."}
-	    end
-	    if(adv.hp==adv.max_hp&&facility.name=="clinic")
+	   
+	    elsif(adv.hp==adv.max_hp&&facility.name=="clinic")
 	      return msg = {msg: :"error", detail: :"An adventurer is already fully healed."}
-	    end
-	    if(adv.energy==adv.max_energy&&facility.name=="canteen")
+	    elsif(adv.energy==adv.max_energy&&facility.name=="canteen")
 	      return msg = {msg: :"error", detail: :"An adventurer is already at full energy."}
+	    else
+	      total_gold_cost=total_gold_cost+facility.gold_cost(adv)
 	    end
-	    total_gold_cost=total_gold_cost+facility.gold_cost(adv)
 	  end
     gm=facility.guildmaster
 	  if(total_gold_cost>gm.gold)
