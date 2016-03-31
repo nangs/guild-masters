@@ -8,8 +8,8 @@ class ScoutEventsController < ApplicationController
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     guild = Guild.find(guildmaster.current_guild_id)
-    @time_spent = params[:time_spent]
-    @gold_spent = params[:gold_spent]
+    @time_spent = params[:time_spent].chomp.to_i
+    @gold_spent = params[:gold_spent].chomp.to_i
     if !@time_spent.nil? && !@gold_spent.nil?
       @result_assign_scout = ScoutEvent.assign(guild,@time_spent,@gold_spent)
       render json: @result_assign_scout.as_json(except: [:updated_at, :created_at])
