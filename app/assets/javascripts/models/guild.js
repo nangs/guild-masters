@@ -41,16 +41,20 @@ GM.GuildModel.postGuildID = function (guildID) {
 	});
 }
 
-GM.GuildModel.getGuildInfo = function (guildID) {
+GM.GuildModel.getGuildInfo = function (func) {
     $.ajax({
 	    type: 'POST',
 	    url: 'guild.json',
 	    data: {
 	    	cmd: 'get',
-	    	guild_id : guildID
 	    },
 	    success: function(feedback) {
 	    	console.log(feedback);
+	    	GM.GuildmasterModel.guildmaster.guild = feedback;
+	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
+	    	if (func) {
+	    		func(GM.GuildmasterView);
+	    	}
 	    }
 	});
 }

@@ -1,6 +1,9 @@
 <section class='guild'>
 	The level of the Guild is level {{level}}<br>
 	The popularity of the Guild is {{popularity}}<br>
+	Your guild can hold at most {{adventurer_capacity}} Adventurers and {{quest_capacity}} Quests.<br>
+	You need a total of {{gold_requirement}} gold, and {{pop_requirement}} popularity in order to upgrade the guild to the next level.<br>
+
 	{{#if is_upgradable}}
 		<button type="button" class="btn btn-primary" onclick='GM.GuildModel.upgrade()'>Upgrade your guild</button>
 	{{/if}}

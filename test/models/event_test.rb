@@ -13,6 +13,5 @@ class EventTest < ActiveSupport::TestCase
     FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
     gm = guildmasters(:TestMaster02)
     
-    puts Event.complete(gm,20000).to_yaml.inspect
   end
 end
