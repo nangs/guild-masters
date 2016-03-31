@@ -12,12 +12,15 @@ class GuildController < ApplicationController
       else
         result = {msg: :"error", detail: :"cannot_build_guild"}
       end
+    elsif params[:cmd] == "get"
+      guild = guildmaster.guild
+      result = guild.get_info
     elsif params[:cmd].nil?
       result = {msg: :"error", detail: :"cmd_nil"}
     else
       result = {msg: :"error", detail: :"no_such_cmd"}
     end
-    render json: result.as_json
+    render json: result.as_json(except: [:updated_at, :created_at])
   end
 end
 
