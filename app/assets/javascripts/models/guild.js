@@ -59,13 +59,12 @@ GM.GuildModel.getGuildInfo = function (func) {
 	});
 }
 
-GM.GuildModel.upgrade = function (guildID) {
+GM.GuildModel.upgrade = function () {
     $.ajax({
 	    type: 'POST',
-	    url: 'guild.json',
+	    url: 'events.json',
 	    data: {
-	    	cmd: 'upgrade',
-	    	guild_id : guildID
+	    	cmd: 'create_guild_upgrade_event',
 	    },
 	    success: function(feedback) {
 	    	console.log(feedback);
