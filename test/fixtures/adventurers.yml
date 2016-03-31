@@ -43,8 +43,8 @@ Tester02:
 Tester03:
   hp: 1000
   max_hp: 1000
-  energy: 1000
-  max_energy: 1000
+  energy: 100
+  max_energy: 100
   attack: 100
   defense: 100
   vision: 100

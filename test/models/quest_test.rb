@@ -23,4 +23,8 @@ class QuestTest < ActiveSupport::TestCase
   test "test battle 3 adventurers level 3" do
     quests(:TestQuest06).battle([adventurers(:Tester03),adventurers(:Tester05),adventurers(:Tester06)])
   end
+  
+  test "test battle energy cost" do
+    puts quests(:TestQuest08).battle([adventurers(:Tester03)]).inspect
+  end
 end

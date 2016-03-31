@@ -22,3 +22,10 @@ TestMonster01:
   attack: 100
   defense: 100
   invisibility: 100
+  
+TestMonster02:
+  name: Fei
+  max_hp: 1000
+  attack: 0
+  defense: 100000
+  invisibility: 100
