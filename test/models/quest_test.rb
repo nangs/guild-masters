@@ -25,6 +25,6 @@ class QuestTest < ActiveSupport::TestCase
   end
   
   test "test battle energy cost" do
-    puts quests(:TestQuest08).battle([adventurers(:Tester03)]).inspect
+    quests(:TestQuest08).battle([adventurers(:Tester03)]).inspect
   end
 end

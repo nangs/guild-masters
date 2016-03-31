@@ -17,6 +17,5 @@ class ScoutEventTest < ActiveSupport::TestCase
     gm = guild.guildmaster
     ScoutEvent.assign(guild,500,500)
     msg = Event.complete_next(gm)
-    puts msg.inspect
   end
 end

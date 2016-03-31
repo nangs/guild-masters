@@ -21,6 +21,9 @@ class EventsController < ApplicationController
     elsif params[:cmd] == "get"
       @result = Event.get_events(guildmaster)
       render json: @result.as_json(except: [:updated_at, :created_at])
+    elsif params[:cmd] == "create_guild_upgrade_event"
+      @result_guild_upgrade_event = Guild.upgrade
+      render json: @result_guild_upgrade_event.as_json(except: [:updated_at, :created_at])
     end
   end
 end

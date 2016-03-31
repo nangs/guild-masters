@@ -10,7 +10,7 @@ class FacilityEventTest < ActiveSupport::TestCase
     fullhp = {msg: :"error", detail: :"An adventurer is already fully healed."}
     fullenergy= {msg: :"error", detail: :"An adventurer is already at full energy."}
     nogold = {msg: :"error", detail: :"You don`t have enough gold.Sad."}
-    success = {msg: :"success"}
+    success = :"success"
     
     assert_equal nospace, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester07),adventurers(:Tester08),adventurers(:Tester09)])
     assert_equal noavai, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester02)])
@@ -18,9 +18,12 @@ class FacilityEventTest < ActiveSupport::TestCase
 
     assert_equal fullenergy, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester10)])
     assert_equal nogold, FacilityEvent.assign(facilities(:TestFac03),[adventurers(:Tester07)])
-    assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester08)])
-    assert_equal success, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester10)])
-    assert_equal success, FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
+    msg = FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester08)])
+    assert_equal success, msg[:msg]
+    msg = FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester10)])
+    assert_equal success, msg[:msg]
+    msg = FacilityEvent.assign(facilities(:TestFac02),[adventurers(:Tester09)])
+    assert_equal success, msg[:msg]
 
   end
   
