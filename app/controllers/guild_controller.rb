@@ -1,5 +1,6 @@
 class GuildController < ApplicationController
   respond_to :json
+  skip_before_action :verify_authenticity_token
   before_action :authorize
 
   # POST /guilds.json
@@ -13,7 +14,7 @@ class GuildController < ApplicationController
         result = {msg: :"error", detail: :"cannot_build_guild"}
       end
     elsif params[:cmd] == "get"
-      guild = guildmaster.guild
+      guild = Guild.find_by(id: guildmaster.current_guild_id)
       result = guild.get_info
     elsif params[:cmd].nil?
       result = {msg: :"error", detail: :"cmd_nil"}
