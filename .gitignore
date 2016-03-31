@@ -42,4 +42,4 @@ tmp/
 
 *.sublime-workspace
 .idea/
-config/secrets.yml
+#config/secrets.yml
