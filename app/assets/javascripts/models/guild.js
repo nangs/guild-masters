@@ -67,7 +67,11 @@ GM.GuildModel.upgrade = function () {
 	    	cmd: 'create_guild_upgrade_event',
 	    },
 	    success: function(feedback) {
-	    	console.log(feedback);
+	    	if (feedback.msg == 'success') {
+	    		showView(guildUpgradingTemplate({'guild' : feedback}));
+	    	} else {
+	    		console.log(feedback);
+	    	}
 	    }
 	});
 }
