@@ -3,7 +3,7 @@ require 'thread'
 $semaphore = Mutex.new
 #rspec spec/controllers/accounts_controller_spec.rb
 
-describe AccountsController do
+RSpec.describe AccountsController do
   before :each do
     @account = create(:account)
     @activated_account = create(:account, email_confirmed: true)

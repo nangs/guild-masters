@@ -54,3 +54,10 @@ TestQuest07:
   reward: 1000
   guild: TestGuild01
   monster_template: TestMonster01
+  
+TestQuest08:
+  difficulty: 1
+  state: pending
+  reward: 1000
+  guild: TestGuild01
+  monster_template: TestMonster02

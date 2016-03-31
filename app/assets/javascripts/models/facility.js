@@ -2,8 +2,11 @@ GM.FacilityModel = DS.Model.extend();
 
 GM.FacilityModel.getFacilities = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'facilities.json',
+	    data: {
+	    	cmd: 'get'
+	    },
 	    success: function(data) {
 	    	GM.FacilityModel.facilities = data.facilities;
 	    	func(data);
@@ -16,6 +19,7 @@ GM.FacilityModel.assign = function(id, assigned) {
 		type: 'POST',
 	    url: 'facility_events.json',
 	    data: {
+	    	cmd: 'create',
 	    	facility_id: id,
 	    	adventurers_ids: assigned
 	    },

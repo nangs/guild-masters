@@ -25,3 +25,28 @@ TestGuild03:
   level: 3
   popularity: 50
   guildmaster: TestMaster03
+  
+TestGuild04:
+  level: 1
+  popularity: 100
+  guildmaster: TestMaster04
+ 
+TestGuild05:
+  level: 1
+  popularity: 100
+  guildmaster: TestMaster03
+  
+TestGuild06:
+  level: 1
+  popularity: 0
+  guildmaster: TestMaster05
+  
+TestGuild07:
+  level: 1
+  popularity: 100
+  guildmaster: TestMaster05
+  
+TestGuild08:
+  level: 1
+  popularity: 100
+  guildmaster: TestMaster05

@@ -7,22 +7,13 @@ GM.Event = DS.Model.extend({
 GM.EventModel = DS.Model.extend();
 
 
-GM.EventModel.getNextEvent = function (func) {
-	$.ajax({
-		type: 'GET',
-	    url: 'events.json',
-	    success: function(data) {
-	    	GM.EventModel.event_list = GM.EventController.filterFuture(data);
-	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];
-	    	func(GM.nextEvent);
-	    }
-	});
-}
-
 GM.EventModel.getAllEvents = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'events.json',
+	    data: {
+	    	cmd: 'get'
+	    },
 	    success: function(data) {
 	    	GM.EventModel.event_list = GM.EventController.filterFuture(data.events);
 	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];

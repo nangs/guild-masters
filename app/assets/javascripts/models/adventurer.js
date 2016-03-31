@@ -18,8 +18,11 @@ GM.AdventurerModel = DS.Model.extend();
 
 GM.AdventurerModel.getAllAdventurers = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'adventurers.json',
+	    data:{
+	    	cmd : 'get'
+	    },
 	    success: function(data) {
 	    	GM.AdventurerModel.adventurers_list = data;
 	    	console.log(data);

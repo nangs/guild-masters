@@ -3,14 +3,6 @@ class EventsController < ApplicationController
   before_action :authorize
   respond_to :json
 
-# GET /events.json
-  def index
-    acc = Account.find(session[:account_id])
-    guildmaster = acc.guildmaster
-    @result = Event.get_events(guildmaster)
-    render json: @result.as_json(except: [:updated_at, :created_at])
-  end
-
   # POST /events.json
   def create
     acc = Account.find(session[:account_id])
@@ -26,6 +18,9 @@ class EventsController < ApplicationController
       elsif @end_time.nil?
         render json: {msg: :"error", detail: :"end_time_nil"}
       end
+    elsif params[:cmd] == "get"
+      @result = Event.get_events(guildmaster)
+      render json: @result.as_json(except: [:updated_at, :created_at])
     end
   end
 end

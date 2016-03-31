@@ -9,7 +9,56 @@ class Guild < ActiveRecord::Base
 	has_many :quest_events, through: :quests
 	has_many :facility_events, through: :facilities
 
-
+  def upgrade
+    gm = self.guildmaster
+    if(self.is_upgradable)
+      
+      
+      gm.state = "upgrading"
+      self.guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time+self.level*1000, gold_spent: 2000*(self.level+1))
+      gm.gold = gm.gold - 2000*(self.level+1)
+      gm.save
+      self.save
+      
+      msg = {msg: :"success", gold_spend: 2000*(self.level+1), time_cost: self.level}
+      return msg
+    else
+      if(gm.state!="available")
+        return {msg: :"error", detail: :"Guildmaster is busy now."}
+      end
+      if(gm.gold<2000*(self.level+1))
+        return {msg: :"error", detail: :"Not enough gold.", require: 2000*(self.level+1)}
+      end
+      facilities = self.facilities
+      for fac in facilities
+        if(fac.capacity!=fac.level*2)
+          return {msg: :"error", detail: :"You have facility in use, complete the event before upgrading the guild.", facility: fac}
+        end
+      end
+      if(self.popularity<100*(2**(self.level-1)))
+        return {msg: :"error", detail: :"Your guild`s popularity is not enough for upgrading", require: 100*(2**(self.level-1))-self.popularity}
+      end
+    end
+  end
+  def is_upgradable
+    gm=self.guildmaster
+    if(gm.state!="available")
+      return false
+    end
+    if(gm.gold<2000*(self.level+1))
+      return false
+    end
+    facilities = self.facilities
+    for fac in facilities
+      if(fac.capacity!=fac.level*2)
+        return false
+      end
+    end
+    if(self.popularity<100*(2**(self.level-1)))
+      return false
+    end
+    return true
+  end
 	#This function creates a quest based on current level of guild
 	def create_quest
 	  r=Random.new

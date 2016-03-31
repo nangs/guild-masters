@@ -5,6 +5,7 @@ GM.ScoutModel.scout = function (time, gold) {
 		type: 'POST',
 	    url: 'scout_events.json',
 	    data : {
+	    	cmd: 'create',
 	    	time_spent: time,
 	    	gold_spent: gold
 	    },

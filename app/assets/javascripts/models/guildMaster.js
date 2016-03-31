@@ -11,8 +11,11 @@ GM.GuildmasterModel = DS.Model.extend();
 
 GM.GuildmasterModel.getGuildmaster = function (func) {
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 	    url: 'guildmaster.json',
+	    data: {
+	    	cmd: 'get'
+	    },
 	    success: function(data) {
 	    	GM.GuildmasterModel.guildmaster = data;
 	    	if (func) {
