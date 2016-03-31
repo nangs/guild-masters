@@ -19,9 +19,9 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	    success: function(data) {
 	    	GM.GuildmasterModel.guildmaster = data;
 	    	if (func) {
-	    		GM.GuildModel.getAllGuilds(func);
+	    		GM.GuildModel.getGuildInfo(func);
 	    	} else {
-	    		GM.GuildModel.getAllGuilds();
+	    		GM.GuildModel.getGuildInfo();
 	    	}
 	    }
 	});

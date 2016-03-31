@@ -2,7 +2,9 @@
 	{{#each facilities as |facility|}}
 	<section>
 		<p>This is a {{name}} of level {{level}}. The current capacity is {{capacity}}.</p>
-		<button type='button' class='btn btn-primary' onclick='GM.FacilityController.showAssign({{id}})'>Assign Adventurers to the {{name}}</button>
+		{{#if capacity}}
+			<button type='button' class='btn btn-primary' onclick='GM.FacilityController.showAssign({{id}})'>Assign Adventurers to the {{name}}</button>
+		{{/if}}	
 	</section>
 	{{/each}}
 </section>

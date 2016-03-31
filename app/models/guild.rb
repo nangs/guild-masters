@@ -8,7 +8,8 @@ class Guild < ActiveRecord::Base
 	has_many :guild_upgrade_events, dependent: :destroy
 	has_many :quest_events, through: :quests
 	has_many :facility_events, through: :facilities
-
+	
+	#Upgrade the guild, creates an guild upgrade event
   def upgrade
     gm = self.guildmaster
     if(self.is_upgradable)
@@ -40,6 +41,7 @@ class Guild < ActiveRecord::Base
       end
     end
   end
+  #Check whether the guild is upgradable, return true if it passes all the checks, else return false
   def is_upgradable
     gm=self.guildmaster
     if(gm.state!="available")
@@ -58,6 +60,16 @@ class Guild < ActiveRecord::Base
       return false
     end
     return true
+  end
+  #Return information of the guild, including the popularity requirement, gold requirement and whether it is upgradable
+  def get_info
+    return {level: self.level, 
+      popularity: self.popularity, 
+      pop_requirement: 100*(2**(self.level-1)), 
+      gold_requirement: 2000*(self.level+1), 
+      adventurer_capacity: self.level*5,
+      quest_capacity: self.level*10,
+      is_upgradable: self.is_upgradable}
   end
 	#This function creates a quest based on current level of guild
 	def create_quest

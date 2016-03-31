@@ -2,8 +2,6 @@ class ScoutEvent < ActiveRecord::Base
 	belongs_to :guild
   delegate :guildmaster, to: :guild
 	def self.assign(guild,time,gold)
-	  time = time.chomp.to_i
-	  gold = gold.chomp.to_i
 	  gm = guild.guildmaster
 	  if(gm.state!="available")
 	    return {msg: :"error", detail: :"Guildmaster is busy now"}

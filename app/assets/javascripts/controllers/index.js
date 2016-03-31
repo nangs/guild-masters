@@ -73,6 +73,8 @@ function setupLoginPage() {
                     var msg = feedback.msg;
                     if (msg == 'success') {
                         sessionStorage.setItem('loggedIn', 1);
+                        GM.GuildmasterModel.getGuildmaster();
+                        GM.GuildModel.getAllGuilds();
                         showGame();
                     } else {
                         switch(feedback.detail) {

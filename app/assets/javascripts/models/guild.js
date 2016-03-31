@@ -40,3 +40,38 @@ GM.GuildModel.postGuildID = function (guildID) {
 	    }
 	});
 }
+
+GM.GuildModel.getGuildInfo = function (func) {
+    $.ajax({
+	    type: 'POST',
+	    url: 'guild.json',
+	    data: {
+	    	cmd: 'get',
+	    },
+	    success: function(feedback) {
+	    	console.log(feedback);
+	    	GM.GuildmasterModel.guildmaster.guild = feedback;
+	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
+	    	if (func) {
+	    		func(GM.GuildmasterView);
+	    	}
+	    }
+	});
+}
+
+GM.GuildModel.upgrade = function () {
+    $.ajax({
+	    type: 'POST',
+	    url: 'events.json',
+	    data: {
+	    	cmd: 'create_guild_upgrade_event',
+	    },
+	    success: function(feedback) {
+	    	if (feedback.msg == 'success') {
+	    		showView(guildUpgradingTemplate({'guild' : feedback}));
+	    	} else {
+	    		console.log(feedback);
+	    	}
+	    }
+	});
+}
