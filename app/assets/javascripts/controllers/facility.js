@@ -1,5 +1,15 @@
 GM.FacilityController = Ember.Controller.extend();
 
+GM.FacilityController.showFacilityPage = function() {
+	GM.FacilityModel.getFacilities(function (data) {
+		if (GM.GuildmasterModel.guildmaster.state != "upgrading") {
+			showView(facilitiesTemplate(data));
+		} else {
+			showView("The Guild is being upgraded, the facilities cannot be used at the moment");
+		}
+	});
+}
+
 GM.FacilityController.showAssign = function(id) {
 	var facilities = GM.FacilityModel.facilities;
 	var facility;

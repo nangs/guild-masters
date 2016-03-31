@@ -25,6 +25,7 @@ function showSection(section){
 			GM.GuildmasterModel.getGuildmaster(showHomePage);
             break;
         case 'facilities':
+            GM.FacilityController.showFacilityPage();
             GM.FacilityModel.getFacilities(showFacilityPage);
             break;
         case 'scout':
