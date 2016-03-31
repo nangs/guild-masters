@@ -40,3 +40,31 @@ GM.GuildModel.postGuildID = function (guildID) {
 	    }
 	});
 }
+
+GM.GuildModel.getGuildInfo = function (guildID) {
+    $.ajax({
+	    type: 'POST',
+	    url: 'guild.json',
+	    data: {
+	    	cmd: 'get',
+	    	guild_id : guildID
+	    },
+	    success: function(feedback) {
+	    	console.log(feedback);
+	    }
+	});
+}
+
+GM.GuildModel.upgrade = function (guildID) {
+    $.ajax({
+	    type: 'POST',
+	    url: 'guild.json',
+	    data: {
+	    	cmd: 'upgrade',
+	    	guild_id : guildID
+	    },
+	    success: function(feedback) {
+	    	console.log(feedback);
+	    }
+	});
+}
