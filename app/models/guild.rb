@@ -60,7 +60,6 @@ class Guild < ActiveRecord::Base
     return true
   end
   def get_info
-    gm = self.guildmaster
     return {level: self.level, 
       popularity: self.popularity, 
       pop_requirement: 100*(2**(self.level-1)), 
