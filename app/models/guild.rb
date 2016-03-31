@@ -66,10 +66,13 @@ class Guild < ActiveRecord::Base
     return {level: self.level, 
       popularity: self.popularity, 
       pop_requirement: 100*(2**(self.level-1)), 
-      gold_requirement: 2000*(self.level+1), 
+      gold_requirement: 2000*(self.level+1),
+      number_adventurer:self.adv_count,
+      number_quest:self.qst_count, 
       adventurer_capacity: self.level*5,
       quest_capacity: self.level*10,
-      is_upgradable: self.is_upgradable}
+      is_upgradable: self.is_upgradable,
+      is_full: self.is_full}
   end
 	#This function creates a quest based on current level of guild
 	def create_quest
@@ -104,5 +107,22 @@ class Guild < ActiveRecord::Base
 	  adventurer.save
 	  return adventurer
 	end
-
+	#Get number of adventurer of the guild
+	def adv_count
+	  adventurers = self.adventurers.where(state: [:"available",:"resting",:"assigned"])
+	  return adventurers.size
+	end
+	#Get number of quests of the guild
+	def qst_count
+	  quests = self.quests.where(state: [:"pending",:"failed"])
+	  return quests.size
+	end
+	#Check whether the number of adventurer and number quest have reach the maxiumum capacity of guild
+	def is_full
+	  if(self.adv_count>=self.level*5&&self.qst_count>=self.level*10)
+	    return true
+	  else
+	    return false
+	  end
+	end
 end
