@@ -3,9 +3,9 @@ GM.ScoutModel = DS.Model.extend();
 GM.ScoutModel.scout = function (time, gold) {
 	$.ajax({
 		type: 'POST',
-	    url: 'scout_events.json',
+	    url: 'events.json',
 	    data : {
-	    	cmd: 'create',
+	    	cmd: 'create_scout_event',
 	    	time_spent: time,
 	    	gold_spent: gold
 	    },
