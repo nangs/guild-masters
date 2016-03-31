@@ -59,6 +59,16 @@ class Guild < ActiveRecord::Base
     end
     return true
   end
+  def get_info
+    gm = self.guildmaster
+    return {level: self.level, 
+      popularity: self.popularity, 
+      pop_requirement: 100*(2**(self.level-1)), 
+      gold_requirement: 2000*(self.level+1), 
+      adventurer_capacity: self.level*5,
+      quest_capacity: self.level*10,
+      is_upgradable: self.is_upgradable}
+  end
 	#This function creates a quest based on current level of guild
 	def create_quest
 	  r=Random.new
