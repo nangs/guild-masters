@@ -2,11 +2,6 @@ function showHomePage(data) {
     showView(data);
 }
 
-function showFacilityPage(data) {
-    var view = facilitiesTemplate(data);
-    showView(view);
-}
-
 function showSection(section){
 	var view;
 	switch(section){
@@ -26,7 +21,6 @@ function showSection(section){
             break;
         case 'facilities':
             GM.FacilityController.showFacilityPage();
-            GM.FacilityModel.getFacilities(showFacilityPage);
             break;
         case 'scout':
             GM.ScoutController.setupScout();
