@@ -3,17 +3,14 @@ Rails.application.routes.draw do
 
   #root 'adventurers#index'
   root to: 'application#index'
-  resources :adventurers
-  resources :events
-  resources :facilities
-  resources :guild
-  resources :guildmaster
-  resources :quests
-  resources :accounts
-  resources :quest_events
-  resources :scout_events
-  resources :facility_events
-  resources :guild_sessions
+  resources :adventurers, :only => [:create]
+  resources :events, :only => [:create]
+  resources :facilities, :only => [:create]
+  resources :guild, :only => [:create]
+  resources :guildmaster, :only => [:create]
+  resources :quests, :only => [:create]
+  resources :accounts, :only => [:create]
+  resources :guild_sessions, :only => [:create]
   delete 'sessions' => 'sessions#destroy'
   resources :sessions, :only => [:create, :delete]
 

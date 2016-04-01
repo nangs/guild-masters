@@ -9,8 +9,7 @@ class GuildSessionsController < ApplicationController
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
     if params[:cmd] == "get"
-      guilds = guildmaster.guilds
-      render json: guilds.as_json(except: [:updated_at, :created_at])
+      result = {guilds: guildmaster.guilds}
     elsif params[:cmd] == "create"
       @guild_id = params[:guild_id]
       if @guild_id.nil?
@@ -26,7 +25,11 @@ class GuildSessionsController < ApplicationController
           result = {msg: :"error", detail: :"no_such_guild_id"}
         end
       end
-      render json: result.as_json(except: [:updated_at, :created_at])
+    elsif params[:cmd].nil?
+      result = {msg: :"error", detail: :"cmd_nil"}
+    else
+      result = {msg: :"error", detail: :"no_such_cmd"}
     end
+    render json: result.as_json(except: [:updated_at, :created_at])
   end
 end

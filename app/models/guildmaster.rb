@@ -39,15 +39,23 @@ class Guildmaster < ActiveRecord::Base
     for guild in guilds
       advs = Array.new
       qsts = Array.new
-      nqst = guild.popularity/20+1
+      nqst = guild.popularity/(25*(2**(guild.level-1)))
+      qst_c =0
       nqst.times do
-       qsts<<guild.create_quest
+       if(guild.qst_count<guild.level*10)
+        qsts<<guild.create_quest
+        qst_c = qst_c+1
+       end
       end
-      nadv = guild.popularity/50
+      nadv = guild.popularity/(50*(2**(guild.level-1)))
+      adv_c = 0
       nadv.times do
-        advs<<guild.create_adventurer
+        if(guild.adv_count<guild.level*5)
+          adv_c = adv_c+1
+          advs<<guild.create_adventurer
+        end
       end
-      msg = {guild: guild, new_quests: qsts, new_adventurers: advs}
+      msg = {guild: guild, new_quests: qsts, new_adventurers: advs, dropped_quests: nqst-qst_c, dropped_adventurers: nadv-adv_c}
       msgArray<<msg
     end
     puts msgArray.inspect
