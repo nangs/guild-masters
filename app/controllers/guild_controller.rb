@@ -7,15 +7,16 @@ class GuildController < ApplicationController
   def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster
-    if params[:cmd] == "create"
-      if guildmaster.build_guild
-        result = {msg: :"success"}
-      else
-        result = {msg: :"error", detail: :"cannot_build_guild"}
-      end
-    elsif params[:cmd] == "get"
+    if params[:cmd] == "get"
       guild = Guild.find_by(id: guildmaster.current_guild_id)
-      result = guild.get_info
+      if guild.nil?
+        result = {msg: :"error", detail: :"guild_not_found"}
+      elsif !guild.nil?
+        result = {msg: :"success", guild: guild.get_info}
+      end
+    elsif params[:cmd] == "create"
+      guildmaster.build_guild
+      result = {msg: :"success"}
     elsif params[:cmd].nil?
       result = {msg: :"error", detail: :"cmd_nil"}
     else
