@@ -4,9 +4,7 @@ require 'rails_helper'
 
 RSpec.describe GuildSessionsController do
   before :each do
-    @guild = create(:guild)
-    @activated_account = @guild.guildmaster.account
-    @activated_account.email_confirmed = true
+    @activated_account = create(:account, :activated)
   end
 
   describe 'POST #create' do
@@ -29,7 +27,7 @@ RSpec.describe GuildSessionsController do
         context "valid params" do
           it "updates guildmaster.current_guild_id" do
             request.session[:account_id] = @activated_account.id
-            post :create, {cmd: "create", guild_id: @guild.id}, format: :json
+            post :create, {cmd: "create", guild_id: Guild.find_by(guildmaster_id: @activated_account.guildmaster.id).id}, format: :json
             expect(response.status).to eq(200)
             expect(Account.count).to eq(1)
             expect(Guild.count).to eq(1)

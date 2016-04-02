@@ -4,11 +4,8 @@ require 'rails_helper'
 
 RSpec.describe SessionsController do
   before :each do
-    @account_without_gm = create(:account, :activated)
-    @account_without_gm_not_activated = create(:account)
-    @guild = create(:guild)
-    @activated_account = @guild.guildmaster.account
-    @activated_account.email_confirmed = true
+    @activated_account = create(:account, :activated)
+    @not_activated_account = create(:account)
     request.session[:account_id] = @activated_account.id
   end
 
@@ -18,7 +15,7 @@ RSpec.describe SessionsController do
         it "create session" do
           post :create, {email: @activated_account.email, password: @activated_account.password} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           expect(session[:account_id]).to_not be nil
           @msg_expected = "success"
@@ -30,9 +27,9 @@ RSpec.describe SessionsController do
       end
       context "invalid params" do
         it "empty email" do
-          post :create, {email: nil, password: @account_without_gm_not_activated.password} , format: :json
+          post :create, {email: nil, password: @activated_account.password} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "email_nil"
@@ -41,9 +38,9 @@ RSpec.describe SessionsController do
           expect(parsed_body["detail"]).to eq(@detail_expected)
         end
         it "empty password" do
-          post :create, {email: @account_without_gm_not_activated.email, password: nil} , format: :json
+          post :create, {email: @activated_account.email, password: nil} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "password_nil"
@@ -53,21 +50,10 @@ RSpec.describe SessionsController do
         end
       end
       context "error" do
-        it "guildmaster nil" do
-          post :create, {email: @account_without_gm.email, password: @account_without_gm.password} , format: :json
-          expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
-          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
-          @msg_expected = "error"
-          @detail_expected = "guildmaster_not_created"
-          parsed_body = JSON.parse(response.body)
-          expect(parsed_body["msg"]).to eq(@msg_expected)
-          expect(parsed_body["detail"]).to eq(@detail_expected)
-        end
         it "not_activated" do
-          post :create, {email: @account_without_gm_not_activated.email, password: @account_without_gm_not_activated.password} , format: :json
+          post :create, {email: @not_activated_account.email, password: @not_activated_account.password} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "not_activated"
@@ -78,7 +64,7 @@ RSpec.describe SessionsController do
         it "wrong_password" do
           post :create, {email: @activated_account.email, password: !@activated_account.password} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "wrong_password"
@@ -89,7 +75,7 @@ RSpec.describe SessionsController do
         it "invalid_account" do
           post :create, {email: !@activated_account.email, password: @activated_account.password} , format: :json
           expect(response.status).to eq(200)
-          expect(Account.count).to eq(3)
+          expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           @msg_expected = "error"
           @detail_expected = "invalid_account"
@@ -105,7 +91,7 @@ RSpec.describe SessionsController do
       post :destroy
       expect(session[:account_id]).to be nil
       expect(response.status).to eq(200)
-      expect(Account.count).to eq(3)
+      expect(Account.count).to eq(2)
       expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
       @msg_expected = "success"
       parsed_body = JSON.parse(response.body)

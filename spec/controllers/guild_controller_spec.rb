@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe GuildController do
   before :each do
-    @guild = create(:guild)
-    @guildmaster = @guild.guildmaster
+    @activated_account = create(:account, :activated)
+    @guildmaster = @activated_account.guildmaster
+    @guild = Guild.find_by(guildmaster_id: @guildmaster.id)
     @guildmaster.current_guild_id = @guild.id
-    @activated_account = @guild.guildmaster.account
-    @activated_account.email_confirmed = true
+    @guildmaster.save
   end
   describe 'POST #create' do
     context "valid session" do
@@ -22,19 +22,9 @@ RSpec.describe GuildController do
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
           expect(session[:account_id]).to_not be nil
           @msg_expected = "success"
-          @guild_expected = {level: @guild.level,
-          popularity: @guild.popularity,
-              pop_requirement: 100*(2**(@guild.level-1)),
-              gold_requirement: 2000*(@guild.level+1),
-              number_adventurer:@guild.adv_count,
-              number_quest:@guild.qst_count,
-              adventurer_capacity: @guild.level*5,
-              quest_capacity: @guild.level*10,
-              is_upgradable: @guild.is_upgradable,
-              is_full: @guild.is_full}
           parsed_body = JSON.parse(response.body)
-          # expect(parsed_body["detail"]).to eq(@msg_expected)
-          # expect(parsed_body["guild"]).to eq(@guild_expected)
+          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["guild"]).to_not be nil
         end
       end
       context "when params[:cmd] == create" do
