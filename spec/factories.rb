@@ -36,6 +36,7 @@ FactoryGirl.define do
     after(:create) do |guild|
       FactoryGirl.create(:adventurer, guild_id: guild.id)
       FactoryGirl.create(:quest, guild_id: guild.id)
+      FactoryGirl.create(:facility, guild_id: guild.id)
     end
     # association :guildmaster, factory: :guildmaster
   end
@@ -59,5 +60,12 @@ FactoryGirl.define do
     reward { Faker::Number.number(3) }
     guild_id 0
     description {Faker::Name.name}
+  end
+
+  factory :facility do
+    level { Faker::Number.between(1, 3) }
+    capacity { Faker::Number.number(2) }
+    guild_id 0
+    name "clinic"
   end
 end
