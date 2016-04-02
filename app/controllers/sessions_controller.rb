@@ -23,12 +23,8 @@ class SessionsController < ApplicationController
         session[:account_id] = account.id
         acc = Account.find(session[:account_id])
         guildmaster = acc.guildmaster
-        if !guildmaster.nil?
-          guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
-          result = {msg: :"success", guilds: guilds}
-        elsif guildmaster.nil?
-          result = {msg: :"error", detail: :"guildmaster_not_created"}
-        end
+        guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
+        result = {msg: :"success", guilds: guilds}
       end
     end
     render json: result.as_json

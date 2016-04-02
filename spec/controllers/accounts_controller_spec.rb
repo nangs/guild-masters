@@ -6,7 +6,7 @@ $semaphore = Mutex.new
 RSpec.describe AccountsController do
   before :each do
     @account = create(:account)
-    @activated_account = create(:account, email_confirmed: true)
+    @activated_account = create(:account, :activated)
   end
 
   # describe "GET #index" do
