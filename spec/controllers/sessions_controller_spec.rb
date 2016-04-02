@@ -6,7 +6,6 @@ RSpec.describe SessionsController do
   before :each do
     @activated_account = create(:account, :activated)
     @not_activated_account = create(:account)
-    request.session[:account_id] = @activated_account.id
   end
 
   describe 'POST #create' do

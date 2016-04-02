@@ -6,10 +6,10 @@ class AdventurersController < ApplicationController
   # POST /adventurers.json
   # Call this to get adventurers
   def create
+    acc = Account.find(session[:account_id])
+    guildmaster = acc.guildmaster
+    guild = Guild.find(guildmaster.current_guild_id)
     if params[:cmd] == "get"
-      acc = Account.find(session[:account_id])
-      guildmaster = acc.guildmaster
-      guild = Guild.find(guildmaster.current_guild_id)
       result = {msg: "success", adventurers: guild.adventurers}
     elsif params[:cmd].nil?
       result = {msg: :"error", detail: :"cmd_nil"}
