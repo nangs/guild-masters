@@ -1,3 +1,5 @@
+GM.IndexController = Ember.Controller.extend();
+
 function showHomePage(data) {
     showView(data);
 }
@@ -74,7 +76,7 @@ function setupLoginPage() {
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'wrong_password':
                                 showWrongPasswordError();
@@ -151,7 +153,7 @@ function setupSignupPage(email, password) {
                                 showEmailTaken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'unknown':
                                 showSignupError();
@@ -218,7 +220,7 @@ function setupForgetPasswordPage(email, password) {
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -271,7 +273,7 @@ function setupForgetPasswordPage(email, password) {
                                 showWrongToken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -358,7 +360,7 @@ function setupResendEmailButton(email) {
                 else {
                     switch(feedback.detail) {
                         case 'not_activated':
-                            showEmailNotActivated();
+                            GM.IndexController.showEmailNotActivated();
                             break;
                         case 'invalid_account':
                             showEmailNotValid();
@@ -408,7 +410,7 @@ function showEmailNotValid() {
     showAlertMessage('The email you entered is not valid.');
 }
     
-function showEmailNotActivated(email) {
+GM.IndexController.showEmailNotActivated = function(email) {
     $('#indexPage').html(emailNotActivatedTemplate);
     setupActivateAccountButton(email);
     setupResendEmailButton(email);
