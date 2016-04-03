@@ -30,7 +30,7 @@ FactoryGirl.define do
 
   factory :guild do |g|
     id { Faker::Number.number(3) }
-    level { Faker::Number.between(1, 3) }
+    level 1
     popularity { Faker::Number.number(2) }
     guildmaster_id 0
     after(:create) do |guild|
@@ -63,8 +63,8 @@ FactoryGirl.define do
   end
 
   factory :facility do
-    level { Faker::Number.between(1, 3) }
-    capacity { Faker::Number.number(2) }
+    level 2
+    capacity 2
     guild_id 0
     name "clinic"
   end

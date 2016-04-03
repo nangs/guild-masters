@@ -10,7 +10,7 @@ class GuildController < ApplicationController
     if params[:cmd] == "get"
       guild = Guild.find_by(id: guildmaster.current_guild_id)
       if guild.nil?
-        result = {msg: :"error", detail: :"guild_not_found"}
+        result = {msg: :"error", detail: :"guild_session_not_found"}
       elsif !guild.nil?
         result = {msg: :"success", guild: guild.get_info}
       end
