@@ -25,19 +25,19 @@ class Guild < ActiveRecord::Base
       return msg
     else
       if(gm.state!="available")
-        return {msg: :"error", detail: :"Guildmaster is busy now."}
+        return {msg: :"error", detail: :"guildmaster_busy"}
       end
       if(gm.gold<2000*(self.level+1))
-        return {msg: :"error", detail: :"Not enough gold.", require: 2000*(self.level+1)}
+        return {msg: :"error", detail: :"not_enough_gold", require: 2000*(self.level+1)}
       end
       facilities = self.facilities
       for fac in facilities
         if(fac.capacity!=fac.level*2)
-          return {msg: :"error", detail: :"You have facility in use, complete the event before upgrading the guild.", facility: fac}
+          return {msg: :"error", detail: :"facility_in_used", facility: fac}
         end
       end
       if(self.popularity<100*(2**(self.level-1)))
-        return {msg: :"error", detail: :"Your guild`s popularity is not enough for upgrading", require: 100*(2**(self.level-1))-self.popularity}
+        return {msg: :"error", detail: :"not_enough_popularity", require: 100*(2**(self.level-1))-self.popularity}
       end
     end
   end
