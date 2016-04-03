@@ -27,7 +27,7 @@ class EventsController < ApplicationController
         quest_id = params[:quest_id]
         adventurers_ids = params[:adventurers_ids]
         if !quest_id.nil?
-          quest = guild.quests.find_by(id: quest_id.chomp.to_i)
+          quest = guild.quests.find_by(id: quest_id)
           if !quest.nil?
             if adventurers_ids.nil?
               result = {msg: :"error", detail: :"no_adventurers_selected"}
@@ -47,23 +47,37 @@ class EventsController < ApplicationController
         end
 
       elsif params[:cmd] == "create_scout_event"
-        time_spent = params[:time_spent].chomp.to_i
-        gold_spent = params[:gold_spent].chomp.to_i
+        time_spent = params[:time_spent]
+        gold_spent = params[:gold_spent]
         if !time_spent.nil? && !gold_spent.nil?
-          result = ScoutEvent.assign(guild, time_spent, gold_spent)
+          result = ScoutEvent.assign(guild, time_spent.chomp.to_i, gold_spent.chomp.to_i)
         elsif time_spent.nil?
-          result = {msg: :"error", detail: :"invalid_time"}
+          result = {msg: :"error", detail: :"time_nil"}
         elsif gold_spent.nil?
-          result = {msg: :"error", detail: :"invalid_gold"}
+          result = {msg: :"error", detail: :"gold_nil"}
         end
 
       elsif params[:cmd] == "create_facility_event"
-        facility = guild.facilities.find_by(id: params[:facility_id])
-        if params[:adventurers_ids].nil?
-          result = {msg: :"error", detail: :"no_adventurers_selected"}
-        elsif !params[:adventurers_ids].nil?
-          adventurers = Adventurer.find(params[:adventurers_ids])
-          result = FacilityEvent.assign(facility, adventurers)
+        facility_id = params[:facility_id]
+        adventurers_ids = params[:adventurers_ids]
+        if !facility_id.nil?
+          facility = guild.facilities.find_by(id: facility_id)
+          if !facility.nil?
+            if adventurers_ids.nil?
+              result = {msg: :"error", detail: :"no_adventurers_selected"}
+            elsif !adventurers_ids.nil?
+              adventurers = Adventurer.find_by(id: adventurers_ids)
+              if !adventurers.nil?
+                result = FacilityEvent.assign(facility, adventurers)
+              elsif adventurers.nil?
+                result = {msg: :"error", detail: :"invalid_adventurers_ids"}
+              end
+            end
+          elsif facility.nil?
+            result = {msg: :"error", detail: :"invalid_facility_id"}
+          end
+        elsif facility_id.nil?
+          result = {msg: :"error", detail: :"facility_id_nil"}
         end
 
       elsif params[:cmd].nil?
