@@ -30,7 +30,7 @@ class EventsController < ApplicationController
           quest = guild.quests.find_by(id: quest_id)
           if !quest.nil?
             if adventurers_ids.nil?
-              result = {msg: :"error", detail: :"no_adventurers_selected"}
+              result = {msg: :"error", detail: :"adventurers_id_nil"}
             elsif !adventurers_ids.nil?
               adventurers = Adventurer.find_by(id: adventurers_ids)
               if !adventurers.nil?
@@ -64,7 +64,7 @@ class EventsController < ApplicationController
           facility = guild.facilities.find_by(id: facility_id)
           if !facility.nil?
             if adventurers_ids.nil?
-              result = {msg: :"error", detail: :"no_adventurers_selected"}
+              result = {msg: :"error", detail: :"adventurers_ids_nil"}
             elsif !adventurers_ids.nil?
               adventurers = Adventurer.find_by(id: adventurers_ids)
               if !adventurers.nil?
