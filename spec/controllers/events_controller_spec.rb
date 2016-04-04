@@ -309,13 +309,106 @@ RSpec.describe EventsController do
       end
       context "when params[:cmd] == create_scout_event" do
         context "valid" do
-
+          it "scouts" do
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: "10", gold_spent: "10"} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "success"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+          end
         end
         context "invalid" do
-
+          it "empty time" do
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: nil, gold_spent: "10"} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "time_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "empty gold" do
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: "10", gold_spent: nil} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "gold_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
         context "error" do
-
+          it "guildmaster is busy" do
+            @guildmaster.state = "busy"
+            @guildmaster.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: "10", gold_spent: "10"} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "guildmaster_busy"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "not enough gold" do
+            @guildmaster.gold = 0
+            @guildmaster.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: "10", gold_spent: "10"} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "not_enough_gold"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "guild is full" do
+            $i = 0
+            while $i <= (@guild.level*5)+1 do
+              create(:adventurer, guild_id: @guild.id)
+              $i +=1
+            end
+            $i = 0
+            while $i <= (@guild.level*10)+1 do
+              create(:quest, guild_id: @guild.id)
+              $i +=1
+            end
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_scout_event", time_spent: "10", gold_spent: "10"} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "guild_full"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
       end
       context "when params[:cmd] == create_facility_event" do

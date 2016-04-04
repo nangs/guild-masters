@@ -4,13 +4,13 @@ class ScoutEvent < ActiveRecord::Base
 	def self.assign(guild,time,gold)
 	  gm = guild.guildmaster
 	  if(gm.state!="available")
-	    return {msg: :"error", detail: :"Guildmaster is busy now"}
+	    return {msg: :"error", detail: :"guildmaster_busy"}
 	  end
 	  if(guild.is_full)
-	    return {msg: :"error", detail: :"This guild has not enough space for new adventurers and quests."}
+	    return {msg: :"error", detail: :"guild_full"}
 	  end
 	  if(gm.gold<gold)
-	    return {msg: :"error", detail: :"Not enough gold."}
+	    return {msg: :"error", detail: :"not_enough_gold"}
 	  end
 	  guild.scout_events.create(start_time:gm.game_time,
 	                            end_time:gm.game_time+time,

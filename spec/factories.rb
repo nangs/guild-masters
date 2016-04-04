@@ -56,7 +56,7 @@ FactoryGirl.define do
 
   factory :quest do
     difficulty { Faker::Number.between(1, 3) }
-    state "available"
+    state "pending"
     reward { Faker::Number.number(3) }
     guild_id 0
     description {Faker::Name.name}
