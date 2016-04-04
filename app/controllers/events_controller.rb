@@ -66,7 +66,7 @@ class EventsController < ApplicationController
             if adventurers_ids.nil?
               result = {msg: :"error", detail: :"adventurers_ids_nil"}
             elsif !adventurers_ids.nil?
-              adventurers = Adventurer.find_by(id: adventurers_ids)
+              adventurers = Adventurer.find(adventurers_ids)
               if !adventurers.nil?
                 result = FacilityEvent.assign(facility, adventurers)
               elsif adventurers.nil?
