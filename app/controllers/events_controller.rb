@@ -12,6 +12,8 @@ class EventsController < ApplicationController
       if params[:cmd] == "get"
         result = Event.get_events(guildmaster)
 
+
+
       elsif params[:cmd] == "complete"
         end_time = params[:end_time]
         if !end_time.nil?
@@ -20,8 +22,12 @@ class EventsController < ApplicationController
           result = {msg: :"error", detail: :"end_time_nil"}
         end
 
+
+
       elsif params[:cmd] == "create_guild_upgrade_event"
         result = Guild.find_by(id: guildmaster.current_guild_id).upgrade
+
+
 
       elsif params[:cmd] == "create_quest_event"
         quest_id = params[:quest_id]
@@ -32,19 +38,21 @@ class EventsController < ApplicationController
             if adventurers_ids.nil?
               result = {msg: :"error", detail: :"adventurers_id_nil"}
             elsif !adventurers_ids.nil?
-              adventurers = Adventurer.find(adventurers_ids)
-              if !adventurers.nil?
+              begin
+                adventurers = Adventurer.find(adventurers_ids)
                 result = QuestEvent.assign(quest, adventurers)
-              elsif adventurers.nil?
+              rescue ActiveRecord::RecordNotFound => e
                 result = {msg: :"error", detail: :"invalid_adventurers_ids"}
               end
             end
           elsif quest.nil?
             result = {msg: :"error", detail: :"invalid_quest_id"}
           end
-        elsif quest_id.nil
+        elsif quest_id.nil?
           result = {msg: :"error", detail: :"quest_id_nil"}
         end
+
+
 
       elsif params[:cmd] == "create_scout_event"
         time_spent = params[:time_spent]
@@ -56,6 +64,8 @@ class EventsController < ApplicationController
         elsif gold_spent.nil?
           result = {msg: :"error", detail: :"gold_nil"}
         end
+
+
 
       elsif params[:cmd] == "create_facility_event"
         facility_id = params[:facility_id]
@@ -79,6 +89,8 @@ class EventsController < ApplicationController
         elsif facility_id.nil?
           result = {msg: :"error", detail: :"facility_id_nil"}
         end
+
+
 
       elsif params[:cmd].nil?
         result = {msg: :"error", detail: :"cmd_nil"}

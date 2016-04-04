@@ -7,6 +7,7 @@ RSpec.describe EventsController do
     @activated_account = create(:account, :activated)
     @guildmaster = @activated_account.guildmaster
     @guild = Guild.find_by(guildmaster_id: @guildmaster.id)
+    @new_adventurer = create(:adventurer, guild_id: @guild.id)
     @facility = Facility.find_by(guild_id: @guild.id)
     @guildmaster.current_guild_id = @guild.id
     @guildmaster.save
@@ -186,13 +187,124 @@ RSpec.describe EventsController do
       end
       context "when params[:cmd] == create_quest_event" do
         context "valid" do
-
+          it "assigns adventurers to quest" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: @quest.id, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "success"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+          end
         end
         context "invalid" do
-
+          it "empty adventurers id" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: @quest.id, adventurers_ids: nil} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "adventurers_id_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "wrong adventurers id" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: @quest.id, adventurers_ids: 9999} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "invalid_adventurers_ids"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "wrong quest id" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: !@quest.id, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "invalid_quest_id"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "empty quest id" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: nil, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "quest_id_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
         context "error" do
-
+          it "quest assigned" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @quest.state = "assigned"
+            @quest.save
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: @quest.id, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "quest_not_available"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "adventurer dead" do
+            @quest = Quest.find_by(guild_id: @guild.id)
+            @new_adventurer.state = "dead"
+            @new_adventurer.save
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_quest_event", quest_id: @quest.id, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "adventurer_not_available"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
       end
       context "when params[:cmd] == create_scout_event" do

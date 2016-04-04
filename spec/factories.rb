@@ -35,10 +35,10 @@ FactoryGirl.define do
     guildmaster_id 0
     after(:create) do |guild|
       FactoryGirl.create(:adventurer, guild_id: guild.id)
-      FactoryGirl.create(:quest, guild_id: guild.id)
+      monster_template = FactoryGirl.create(:monster_template)
+      FactoryGirl.create(:quest, guild_id: guild.id, monster_template_id: monster_template.id)
       FactoryGirl.create(:facility, guild_id: guild.id)
     end
-    # association :guildmaster, factory: :guildmaster
   end
 
   factory :adventurer do
@@ -60,6 +60,7 @@ FactoryGirl.define do
     reward { Faker::Number.number(3) }
     guild_id 0
     description {Faker::Name.name}
+    monster_template_id 0
   end
 
   factory :facility do
@@ -67,5 +68,15 @@ FactoryGirl.define do
     capacity 2
     guild_id 0
     name "clinic"
+  end
+
+  factory :monster_template do
+    id { Faker::Number.number(3) }
+    name {Faker::Name.name}
+    max_hp { Faker::Number.number(3) }
+    max_energy { Faker::Number.number(3) }
+    attack { Faker::Number.number(2) }
+    defense { Faker::Number.number(2) }
+    invisibility { Faker::Number.number(2) }
   end
 end
