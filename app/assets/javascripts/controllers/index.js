@@ -69,9 +69,9 @@ function setupLoginPage() {
                 	console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
+                        var guild = feedback.guilds[0];
+                        GM.GuildModel.postGuildID(guild.id);
                         sessionStorage.setItem('loggedIn', 1);
-                        GM.GuildmasterModel.getGuildmaster();
-                        GM.GuildModel.getAllGuilds();
                         showGame();
                     } else {
                         switch(feedback.detail) {
