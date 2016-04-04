@@ -36,12 +36,12 @@ class EventsController < ApplicationController
           quest = guild.quests.find_by(id: quest_id)
           if !quest.nil?
             if adventurers_ids.nil?
-              result = {msg: :"error", detail: :"adventurers_id_nil"}
+              result = {msg: :"error", detail: :"adventurers_ids_nil"}
             elsif !adventurers_ids.nil?
               begin
                 adventurers = Adventurer.find(adventurers_ids)
                 result = QuestEvent.assign(quest, adventurers)
-              rescue ActiveRecord::RecordNotFound => e
+              rescue ActiveRecord::RecordNotFound
                 result = {msg: :"error", detail: :"invalid_adventurers_ids"}
               end
             end
@@ -76,10 +76,10 @@ class EventsController < ApplicationController
             if adventurers_ids.nil?
               result = {msg: :"error", detail: :"adventurers_ids_nil"}
             elsif !adventurers_ids.nil?
-              adventurers = Adventurer.find(adventurers_ids)
-              if !adventurers.nil?
+              begin
+                adventurers = Adventurer.find(adventurers_ids)
                 result = FacilityEvent.assign(facility, adventurers)
-              elsif adventurers.nil?
+              rescue ActiveRecord::RecordNotFound
                 result = {msg: :"error", detail: :"invalid_adventurers_ids"}
               end
             end

@@ -67,7 +67,10 @@ FactoryGirl.define do
     level 2
     capacity 2
     guild_id 0
-    name "clinic"
+    name "canteen"
+    trait :clinic do
+      name "clinic"
+    end
   end
 
   factory :monster_template do

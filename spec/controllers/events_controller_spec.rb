@@ -214,7 +214,7 @@ RSpec.describe EventsController do
             expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
             expect(session[:account_id]).to_not be nil
             @msg_expected = "error"
-            @detail_expected = "adventurers_id_nil"
+            @detail_expected = "adventurers_ids_nil"
             parsed_body = JSON.parse(response.body)
             expect(parsed_body["msg"]).to eq(@msg_expected)
             expect(parsed_body["detail"]).to eq(@detail_expected)
@@ -413,13 +413,182 @@ RSpec.describe EventsController do
       end
       context "when params[:cmd] == create_facility_event" do
         context "valid" do
-
+          it "assigns adventurers to facility" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @new_adventurer.energy = @new_adventurer.max_energy - 10
+            @new_adventurer.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: [@new_adventurer.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "success"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+          end
         end
         context "invalid" do
-
+          it "empty adventurers id" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: nil} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "adventurers_ids_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "wrong adventurers id" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: 9999} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "invalid_adventurers_ids"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "wrong facility id" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: !@facility.id, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "invalid_facility_id"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "empty facility id" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @adventurers = Adventurer.where(guild_id: @guild.id)
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: nil, adventurers_ids: @adventurers.ids} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "facility_id_nil"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
         context "error" do
-
+          it "not enough space" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @new_adventurer2 = create(:adventurer, guild_id: @guild.id)
+            @new_adventurer3 = create(:adventurer, guild_id: @guild.id)
+            @new_adventurer.energy = @new_adventurer.max_energy - 10
+            @new_adventurer2.energy = @new_adventurer2.max_energy - 10
+            @new_adventurer3.energy = @new_adventurer3.max_energy - 10
+            @new_adventurer.save
+            @new_adventurer2.save
+            @new_adventurer3.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: [@new_adventurer.id, @new_adventurer2.id, @new_adventurer3.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "not_enough_space"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "guildmaster busy" do
+            @guildmaster.state = "upgrading"
+            @guildmaster.save
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @new_adventurer.energy = @new_adventurer.max_energy - 10
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: [@new_adventurer.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "guildmaster_busy"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "adventurer busy" do
+            @new_adventurer.state = "assigned"
+            @new_adventurer.save
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @new_adventurer.energy = @new_adventurer.max_energy - 10
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: [@new_adventurer.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "adventurer_busy"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "energy is full" do
+            @facility = Facility.find_by(guild_id: @guild.id)
+            @new_adventurer.energy = @new_adventurer.max_energy
+            @new_adventurer.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility.id, adventurers_ids: [@new_adventurer.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "energy_is_full"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
+          it "hp is full" do
+            @facility_clinic = create(:facility, :clinic, guild_id: @guild.id)
+            @new_adventurer.hp = @new_adventurer.max_hp
+            @new_adventurer.save
+            request.session[:account_id] = @activated_account.id
+            post :create, {cmd: "create_facility_event", facility_id: @facility_clinic.id, adventurers_ids: [@new_adventurer.id]} , format: :json
+            expect(response.status).to eq(200)
+            expect(Account.count).to eq(1)
+            expect(Guild.count).to eq(1)
+            expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+            expect(session[:account_id]).to_not be nil
+            @msg_expected = "error"
+            @detail_expected = "hp_is_full"
+            parsed_body = JSON.parse(response.body)
+            expect(parsed_body["msg"]).to eq(@msg_expected)
+            expect(parsed_body["detail"]).to eq(@detail_expected)
+          end
         end
       end
       context "when params[:cmd] == nil or not valid" do
