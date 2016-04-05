@@ -45,15 +45,15 @@ GM.FacilityController.assign = function(id, capacity) {
 		assigned.push($(this).val());
 	});
 	if (assigned.length == 0) {
-		GM.FacilityController.showMessage('Please select at least one adventurer.')
+		GM.FacilityController.renderAlertMessage('Please select at least one adventurer.')
 	} else if (assigned.length > capacity) {
-		GM.FacilityController.showMessage('Please select at most ' + capacity + ' adventurer.')
+		GM.FacilityController.renderAlertMessage('Please select at most ' + capacity + ' adventurer.')
 	} else {
 		GM.FacilityModel.assign(id, assigned);
 	}	
 }
 
-GM.FacilityController.showMessage = function (message) {
+GM.FacilityController.renderAlertMessage = function (message) {
 	var alertMessage = alertMessageTemplate({'message' : message});
     $('#alert').html(alertMessage);
 }
