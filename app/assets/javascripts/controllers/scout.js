@@ -26,3 +26,25 @@ GM.ScoutController.setupScout = function() {
 		});	
 	}
 }
+
+GM.ScoutController.showMessage = function (error_msg) {
+	var message = '';
+	switch (error_msg) {
+		case "guildmaster_busy":
+			message = "The GuildMaster is currently unavailable for scouting.";
+			break;
+		case "guild_full":
+			message = "The maximum capacity of the Guild is reached. \
+					Level up the Guild in order to receive more Adventurers and Quests.";
+			break;
+		case "not_enough_gold":
+			message = "There is not enough gold for scouting."
+			break;
+	}
+	GM.ScoutController.renderAlertMessage(message);
+}
+
+GM.ScoutController.renderAlertMessage = function (message) {
+	var alertMessage = alertMessageTemplate({'message' : message});
+    $('#alert').html(alertMessage);
+}
