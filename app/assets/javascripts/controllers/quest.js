@@ -14,7 +14,7 @@ GM.QuestController.showAssign = function(id) {
 	GM.AdventurerModel.getAllAdventurers(function () {
 		var adventurers = GM.AdventurerController.filterForQuest(GM.AdventurerModel.adventurers_list.adventurers);
 		if (adventurers.length == 0) {
-			showView(questView + "<p>You do not have any adventurers to be assigned to the quest.</p>");
+			showView("<p>You do not have any adventurers to be assigned to the quest.</p>");
 		} else {
 			var adventurersView = adventurerAssignTemplate({'adventurers' : adventurers});
 			showView(questView + adventurersView);
