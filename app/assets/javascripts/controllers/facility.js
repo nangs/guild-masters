@@ -53,6 +53,18 @@ GM.FacilityController.assign = function(id, capacity) {
 	}	
 }
 
+GM.FacilityController.processErrorMessage = function (error_msg) {
+	var message = '';
+	switch (error_msg) {
+		case "not_enough_gold":
+			message = "Sorry you do not have enough gold to proceed.";
+			break;
+		default:
+			message = "An unknown error occured. Please contact the admin to resolve the issue.";
+	}
+	GM.FacilityController.renderAlertMessage(message);
+}
+
 GM.FacilityController.renderAlertMessage = function (message) {
 	var alertMessage = alertMessageTemplate({'message' : message});
     $('#alert').html(alertMessage);

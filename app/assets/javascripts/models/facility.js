@@ -26,7 +26,7 @@ GM.FacilityModel.assign = function(id, assigned) {
 	    success: function(data) {
 	    	console.log(data);
 	    	if (data.msg == "error") {
-	    		GM.FacilityController.renderAlertMessage(data.detail);
+	    		GM.FacilityController.processErrorMessage(data.detail);
 	    	} else {
 	    		showView('Adventueres successfully assigned');
 	    	}
