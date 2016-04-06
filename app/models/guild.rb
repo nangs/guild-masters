@@ -21,7 +21,7 @@ class Guild < ActiveRecord::Base
       gm.save
       self.save
       
-      msg = {msg: :"success", gold_spend: 250*(self.level+1), time_cost: self.level}
+      msg = {msg: :"success", gold_spent: 250*(self.level+1), time_cost: self.level}
       return msg
     else
       if(gm.state!="available")
