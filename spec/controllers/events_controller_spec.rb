@@ -77,8 +77,8 @@ RSpec.describe EventsController do
       context "when params[:cmd] == create_guild_upgrade_event" do
         context "valid" do
           it "create guild upgrade event" do
-            @guildmaster.gold = (2000*(@guild.level+1))+10
-            @guild.popularity = (100*(2**(@guild.level-1)))+10
+            @guildmaster.gold = (250*(@guild.level+1))+10
+            @guild.popularity = (50*(2**(@guild.level-1)))+10
             @guildmaster.state = "available"
             @facility.capacity = @facility.level*2
             @guildmaster.save
@@ -94,14 +94,14 @@ RSpec.describe EventsController do
             @msg_expected = "success"
             parsed_body = JSON.parse(response.body)
             expect(parsed_body["msg"]).to eq(@msg_expected)
-            expect(parsed_body["gold_spend"]).to_not be nil
+            expect(parsed_body["gold_spent"]).to_not be nil
             expect(parsed_body["time_cost"]).to_not be nil
           end
         end
         context "error" do
           it "guildmaster is busy" do
-            @guildmaster.gold = (2000*(@guild.level+1))+10
-            @guild.popularity = (100*(2**(@guild.level-1)))+10
+            @guildmaster.gold = (250*(@guild.level+1))+10
+            @guild.popularity = (50*(2**(@guild.level-1)))+10
             @guildmaster.state = "busy"
             @facility.capacity = @facility.level*2
             @guildmaster.save
@@ -121,8 +121,8 @@ RSpec.describe EventsController do
             expect(parsed_body["detail"]).to eq(@detail_expected)
           end
           it "not enough gold" do
-            @guildmaster.gold = (2000*(@guild.level+1))-10
-            @guild.popularity = (100*(2**(@guild.level-1)))+10
+            @guildmaster.gold = (250*(@guild.level+1))-10
+            @guild.popularity = (50*(2**(@guild.level-1)))+10
             @guildmaster.state = "available"
             @facility.capacity = @facility.level*2
             @guildmaster.save
@@ -142,8 +142,8 @@ RSpec.describe EventsController do
             expect(parsed_body["detail"]).to eq(@detail_expected)
           end
           it "facility in used" do
-            @guildmaster.gold = (2000*(@guild.level+1))+10
-            @guild.popularity = (100*(2**(@guild.level-1)))+10
+            @guildmaster.gold = (250*(@guild.level+1))+10
+            @guild.popularity = (50*(2**(@guild.level-1)))+10
             @guildmaster.state = "available"
             @facility.capacity = @facility.level*1
             @guildmaster.save
@@ -163,8 +163,8 @@ RSpec.describe EventsController do
             expect(parsed_body["detail"]).to eq(@detail_expected)
           end
           it "not enough popularity" do
-            @guildmaster.gold = (2000*(@guild.level+1))+10
-            @guild.popularity = (100*(2**(@guild.level-1)))-10
+            @guildmaster.gold = (250*(@guild.level+1))+10
+            @guild.popularity = (50*(2**(@guild.level-1)))-10
             @guildmaster.state = "available"
             @facility.capacity = @facility.level*2
             @guildmaster.save

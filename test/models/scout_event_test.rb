@@ -5,7 +5,7 @@ class ScoutEventTest < ActiveSupport::TestCase
   #   assert true
   # end
   test "test assign" do
-    error = {msg: :"error", detail: :"Not enough gold."}
+    error = {msg: :"error", detail: :"not_enough_gold"}
     success = {msg: :"success"}
     assert_equal error,ScoutEvent.assign(guilds(:TestGuild01),500,1000)
     assert_equal success,ScoutEvent.assign(guilds(:TestGuild02),500,500)

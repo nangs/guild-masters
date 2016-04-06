@@ -5,11 +5,11 @@ class FacilityEventTest < ActiveSupport::TestCase
   #   assert true
   # end
   test "test assign" do
-    nospace = {msg: :"error", detail: :"This facility doesn`t have enough space."}
-    noavai =  {msg: :"error", detail: :"An adventurer is currently not available."}
-    fullhp = {msg: :"error", detail: :"An adventurer is already fully healed."}
-    fullenergy= {msg: :"error", detail: :"An adventurer is already at full energy."}
-    nogold = {msg: :"error", detail: :"You don`t have enough gold.Sad."}
+    nospace = {msg: :"error", detail: :"not_enough_space"}
+    noavai =  {msg: :"error", detail: :"adventurer_busy"}
+    fullhp = {msg: :"error", detail: :"hp_is_full"}
+    fullenergy= {msg: :"error", detail: :"energy_is_full"}
+    nogold = {msg: :"error", detail: :"not_enough_gold"}
     success = :"success"
     
     assert_equal nospace, FacilityEvent.assign(facilities(:TestFac01),[adventurers(:Tester07),adventurers(:Tester08),adventurers(:Tester09)])
