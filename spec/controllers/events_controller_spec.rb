@@ -94,7 +94,7 @@ RSpec.describe EventsController do
             @msg_expected = "success"
             parsed_body = JSON.parse(response.body)
             expect(parsed_body["msg"]).to eq(@msg_expected)
-            expect(parsed_body["gold_spend"]).to_not be nil
+            expect(parsed_body["gold_spent"]).to_not be nil
             expect(parsed_body["time_cost"]).to_not be nil
           end
         end
