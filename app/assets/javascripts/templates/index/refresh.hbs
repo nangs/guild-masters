@@ -1,4 +1,9 @@
 <section>
-	<p>{{num_adv}} Adventurer(s) have joined your Guild.</p>
-	<p>{{num_quest}} new Quest(s) have been created beased on requests from the villagers.</p>
+	<p>Good morning! You have just passed another day as the GuildMaster.</p>
+	{{#if num_adv}}
+		<p>{{num_adv}} Adventurers have joined your Guild.</p>
+	{{/if}}
+	{{#if num_quest}}
+		<p>{{num_quest}} new Quests received beased on requests from the villagers.</p>
+	{{/if}}
 </section>
