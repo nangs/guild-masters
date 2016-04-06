@@ -10,3 +10,8 @@ env:
 before_script:
   - bundle exec rake db:schema:load RAILS_ENV=test
   - bundle exec rake db:test:prepare RAILS_ENV=test
+  - bundle exec rake db:fixtures:load RAILS_ENV=test
+
+script:
+  - bundle exec rake test test:models
+  - bundle exec rspec spec/
