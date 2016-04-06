@@ -15,7 +15,7 @@ GM.ScoutModel.scout = function (time, gold) {
 	    		GM.GuildmasterModel.getGuildmaster();
 	    		setupTimeBar();
 	    	} else {
-	    		console.log(data);
+	    		GM.ScoutController.showMessage(data.detail);
 	    	}
 	    }
 	});

@@ -1,8 +1,8 @@
 require 'rails_helper'
-#rspec spec/controllers/guild_controller_spec.rb
-#zeus test spec/controllers/guild_controller_spec.rb
+#rspec spec/controllers/guildmaster_controller_spec.rb
+#zeus test spec/controllers/guildmaster_controller_spec.rb
 
-RSpec.describe GuildController do
+RSpec.describe GuildmasterController do
   before :each do
     @activated_account = create(:account, :activated)
     @guildmaster = @activated_account.guildmaster
@@ -13,7 +13,7 @@ RSpec.describe GuildController do
   describe 'POST #create' do
     context "valid session" do
       context "when params[:cmd] == get" do
-        it "gets guild" do
+        it "get guildmaster info" do
           request.session[:account_id] = @activated_account.id
           post :create, {cmd: "get"} , format: :json
           expect(response.status).to eq(200)
@@ -24,19 +24,7 @@ RSpec.describe GuildController do
           @msg_expected = "success"
           parsed_body = JSON.parse(response.body)
           expect(parsed_body["msg"]).to eq(@msg_expected)
-          expect(parsed_body["guild"]).to_not be nil
-        end
-      end
-      context "when params[:cmd] == create" do
-        it "builds guild" do
-          request.session[:account_id] = @activated_account.id
-          post :create, {cmd: "create"} , format: :json
-          expect(response.status).to eq(200)
-          expect(Account.count).to eq(1)
-          expect(Guild.count).to eq(2)
-          @msg_expected = "success"
-          parsed_body = JSON.parse(response.body)
-          expect(parsed_body["msg"]).to eq(@msg_expected)
+          expect(parsed_body["guildmaster"]).to_not be nil
         end
       end
       context "when params[:cmd] == nil or not valid" do

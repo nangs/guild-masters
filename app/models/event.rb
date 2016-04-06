@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
   
   def self.complete(gm,end_time)
     if(end_time<=gm.game_time)
-      return {msg: :"error", detail: "Invalid end time"}
+      return {msg: :"error", detail: "invalid_end_time"}
     end
     start_day = gm.game_time/1000
     qes=gm.quest_events.where(end_time: (gm.game_time+1)..end_time).order(:end_time)

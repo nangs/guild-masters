@@ -13,6 +13,7 @@ class GuildUpgradeEvent < ActiveRecord::Base
     facMsg = Array.new
     for fac in facilities
       fac.capacity = guild.level*2
+      fac.level = guild.level
       msg={facility: fac, capacity: fac.capacity}
       facMsg<<msg
       fac.save

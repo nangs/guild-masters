@@ -16,28 +16,28 @@ class Guild < ActiveRecord::Base
       
       
       gm.state = "upgrading"
-      self.guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time+self.level*1000, gold_spent: 2000*(self.level+1))
-      gm.gold = gm.gold - 2000*(self.level+1)
+      self.guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time+self.level*1000, gold_spent: 250*(self.level+1))
+      gm.gold = gm.gold - 250*(self.level+1)
       gm.save
       self.save
       
-      msg = {msg: :"success", gold_spend: 2000*(self.level+1), time_cost: self.level}
+      msg = {msg: :"success", gold_spend: 250*(self.level+1), time_cost: self.level}
       return msg
     else
       if(gm.state!="available")
-        return {msg: :"error", detail: :"Guildmaster is busy now."}
+        return {msg: :"error", detail: :"guildmaster_busy"}
       end
-      if(gm.gold<2000*(self.level+1))
-        return {msg: :"error", detail: :"Not enough gold.", require: 2000*(self.level+1)}
+      if(gm.gold<250*(self.level+1))
+        return {msg: :"error", detail: :"not_enough_gold", require: 250*(self.level+1)}
       end
       facilities = self.facilities
       for fac in facilities
         if(fac.capacity!=fac.level*2)
-          return {msg: :"error", detail: :"You have facility in use, complete the event before upgrading the guild.", facility: fac}
+          return {msg: :"error", detail: :"facility_in_used", facility: fac}
         end
       end
-      if(self.popularity<100*(2**(self.level-1)))
-        return {msg: :"error", detail: :"Your guild`s popularity is not enough for upgrading", require: 100*(2**(self.level-1))-self.popularity}
+      if(self.popularity<50*(2**(self.level-1)))
+        return {msg: :"error", detail: :"not_enough_popularity", require: 50*(2**(self.level-1))-self.popularity}
       end
     end
   end
@@ -47,7 +47,7 @@ class Guild < ActiveRecord::Base
     if(gm.state!="available")
       return false
     end
-    if(gm.gold<2000*(self.level+1))
+    if(gm.gold<250*(self.level+1))
       return false
     end
     facilities = self.facilities
@@ -56,7 +56,7 @@ class Guild < ActiveRecord::Base
         return false
       end
     end
-    if(self.popularity<100*(2**(self.level-1)))
+    if(self.popularity<50*(2**(self.level-1)))
       return false
     end
     return true
@@ -65,11 +65,14 @@ class Guild < ActiveRecord::Base
   def get_info
     return {level: self.level, 
       popularity: self.popularity, 
-      pop_requirement: 100*(2**(self.level-1)), 
-      gold_requirement: 2000*(self.level+1), 
+      pop_requirement: 50*(2**(self.level-1)), 
+      gold_requirement: 250*(self.level+1),
+      number_adventurer:self.adv_count,
+      number_quest:self.qst_count, 
       adventurer_capacity: self.level*5,
       quest_capacity: self.level*10,
-      is_upgradable: self.is_upgradable}
+      is_upgradable: self.is_upgradable,
+      is_full: self.is_full}
   end
 	#This function creates a quest based on current level of guild
 	def create_quest
@@ -104,5 +107,22 @@ class Guild < ActiveRecord::Base
 	  adventurer.save
 	  return adventurer
 	end
-
+	#Get number of adventurer of the guild
+	def adv_count
+	  adventurers = self.adventurers.where(state: [:"available",:"resting",:"assigned"])
+	  return adventurers.size
+	end
+	#Get number of quests of the guild
+	def qst_count
+	  quests = self.quests.where(state: [:"pending",:"failed"])
+	  return quests.size
+	end
+	#Check whether the number of adventurer and number quest have reach the maxiumum capacity of guild
+	def is_full
+	  if(self.adv_count>=self.level*5&&self.qst_count>=self.level*10)
+	    return true
+	  else
+	    return false
+	  end
+	end
 end

@@ -1,10 +1,7 @@
+GM.IndexController = Ember.Controller.extend();
+
 function showHomePage(data) {
     showView(data);
-}
-
-function showFacilityPage(data) {
-    var view = facilitiesTemplate(data);
-    showView(view);
 }
 
 function showSection(section){
@@ -25,7 +22,7 @@ function showSection(section){
 			GM.GuildmasterModel.getGuildmaster(showHomePage);
             break;
         case 'facilities':
-            GM.FacilityModel.getFacilities(showFacilityPage);
+            GM.FacilityController.showFacilityPage();
             break;
         case 'scout':
             GM.ScoutController.setupScout();
@@ -72,14 +69,14 @@ function setupLoginPage() {
                 	console.log(feedback);
                     var msg = feedback.msg;
                     if (msg == 'success') {
+                        var guild = feedback.guilds[0];
+                        GM.GuildModel.postGuildID(guild.id);
                         sessionStorage.setItem('loggedIn', 1);
-                        GM.GuildmasterModel.getGuildmaster();
-                        GM.GuildModel.getAllGuilds();
                         showGame();
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'wrong_password':
                                 showWrongPasswordError();
@@ -156,7 +153,7 @@ function setupSignupPage(email, password) {
                                 showEmailTaken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'unknown':
                                 showSignupError();
@@ -223,7 +220,7 @@ function setupForgetPasswordPage(email, password) {
                     } else {
                         switch(feedback.detail) {
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -276,7 +273,7 @@ function setupForgetPasswordPage(email, password) {
                                 showWrongToken();
                                 break;
                             case 'not_activated':
-                                showEmailNotActivated(email);
+                                GM.IndexController.showEmailNotActivated(email);
                                 break;
                             case 'invalid_account':
                                 showEmailNotValid();
@@ -363,7 +360,7 @@ function setupResendEmailButton(email) {
                 else {
                     switch(feedback.detail) {
                         case 'not_activated':
-                            showEmailNotActivated();
+                            GM.IndexController.showEmailNotActivated();
                             break;
                         case 'invalid_account':
                             showEmailNotValid();
@@ -413,7 +410,7 @@ function showEmailNotValid() {
     showAlertMessage('The email you entered is not valid.');
 }
     
-function showEmailNotActivated(email) {
+GM.IndexController.showEmailNotActivated = function(email) {
     $('#indexPage').html(emailNotActivatedTemplate);
     setupActivateAccountButton(email);
     setupResendEmailButton(email);

@@ -42,17 +42,16 @@ class QuestEvent < ActiveRecord::Base
   
   #This function will create the relationship between adventurer and quest_event and quest
   def self.assign(quest,adventurers)
-    msg = {msg: :"error", detail: :"not available"}
     
     #Check Quest Status. Done by front end too
     if(quest.state == "assigned"||quest.state=="successful")
-    return msg
+    return {msg: :"error", detail: :"quest_not_available"}
     end
 
     #Check Adventurers Status. Done by front end too
     adventurers.each do |adventurer|
       if(adventurer.state =="assigned"||adventurer.state=="dead"||adventurer.energy<=0)
-      return msg
+      return {msg: :"error", detail: :"adventurer_not_available"}
       end
     end
     quest.state = "assigned"

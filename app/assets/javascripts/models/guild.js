@@ -17,7 +17,7 @@ GM.GuildModel.getAllGuilds = function (func) {
 	    	cmd: 'get'
 	    },
 	    success: function(feedback) {
-	    	var guild = feedback.guild_sessions[0];
+	    	var guild = feedback.guilds[0];
             GM.GuildmasterModel.guildmaster.guild = guild;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	GM.GuildModel.postGuildID(guild.id);
@@ -50,7 +50,7 @@ GM.GuildModel.getGuildInfo = function (func) {
 	    },
 	    success: function(feedback) {
 	    	console.log(feedback);
-	    	GM.GuildmasterModel.guildmaster.guild = feedback;
+	    	GM.GuildmasterModel.guildmaster.guild = feedback.guild;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	if (func) {
 	    		func(GM.GuildmasterView);

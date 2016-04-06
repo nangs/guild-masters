@@ -17,11 +17,13 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	    	cmd: 'get'
 	    },
 	    success: function(data) {
-	    	GM.GuildmasterModel.guildmaster = data;
-	    	if (func) {
-	    		GM.GuildModel.getGuildInfo(func);
-	    	} else {
-	    		GM.GuildModel.getGuildInfo();
+	    	if (data.msg == "success") {
+		    	GM.GuildmasterModel.guildmaster = data.guildmaster;
+		    	if (func) {
+		    		GM.GuildModel.getGuildInfo(func);
+		    	} else {
+		    		GM.GuildModel.getGuildInfo();
+		    	}	    		
 	    	}
 	    }
 	});

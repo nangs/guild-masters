@@ -3,19 +3,6 @@ class AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
-# #############################################################################
-# ########for testing not for release
-# ########
-# # GET /accounts.json
-#   def index
-#     accounts = Account.all
-#     render json: accounts.as_json(only: [:id, :email, :email_confirmed, :confirm_token])
-#   end
-# ########
-# ########for testing not for release
-# #############################################################################
-
-
 # POST /accounts.json
 #When a POST is done with parameters email and password, this function will check with if the post is a signup or login
 #it will then redirect to the respective function in the model
