@@ -16,19 +16,19 @@ class Guild < ActiveRecord::Base
       
       
       gm.state = "upgrading"
-      self.guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time+self.level*1000, gold_spent: 2000*(self.level+1))
-      gm.gold = gm.gold - 2000*(self.level+1)
+      self.guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time+self.level*1000, gold_spent: 250*(self.level+1))
+      gm.gold = gm.gold - 250*(self.level+1)
       gm.save
       self.save
       
-      msg = {msg: :"success", gold_spend: 2000*(self.level+1), time_cost: self.level}
+      msg = {msg: :"success", gold_spend: 250*(self.level+1), time_cost: self.level}
       return msg
     else
       if(gm.state!="available")
         return {msg: :"error", detail: :"guildmaster_busy"}
       end
-      if(gm.gold<2000*(self.level+1))
-        return {msg: :"error", detail: :"not_enough_gold", require: 2000*(self.level+1)}
+      if(gm.gold<250*(self.level+1))
+        return {msg: :"error", detail: :"not_enough_gold", require: 250*(self.level+1)}
       end
       facilities = self.facilities
       for fac in facilities
@@ -36,8 +36,8 @@ class Guild < ActiveRecord::Base
           return {msg: :"error", detail: :"facility_in_used", facility: fac}
         end
       end
-      if(self.popularity<100*(2**(self.level-1)))
-        return {msg: :"error", detail: :"not_enough_popularity", require: 100*(2**(self.level-1))-self.popularity}
+      if(self.popularity<50*(2**(self.level-1)))
+        return {msg: :"error", detail: :"not_enough_popularity", require: 50*(2**(self.level-1))-self.popularity}
       end
     end
   end
@@ -47,7 +47,7 @@ class Guild < ActiveRecord::Base
     if(gm.state!="available")
       return false
     end
-    if(gm.gold<2000*(self.level+1))
+    if(gm.gold<250*(self.level+1))
       return false
     end
     facilities = self.facilities
@@ -56,7 +56,7 @@ class Guild < ActiveRecord::Base
         return false
       end
     end
-    if(self.popularity<100*(2**(self.level-1)))
+    if(self.popularity<50*(2**(self.level-1)))
       return false
     end
     return true
@@ -65,8 +65,8 @@ class Guild < ActiveRecord::Base
   def get_info
     return {level: self.level, 
       popularity: self.popularity, 
-      pop_requirement: 100*(2**(self.level-1)), 
-      gold_requirement: 2000*(self.level+1),
+      pop_requirement: 50*(2**(self.level-1)), 
+      gold_requirement: 250*(self.level+1),
       number_adventurer:self.adv_count,
       number_quest:self.qst_count, 
       adventurer_capacity: self.level*5,
