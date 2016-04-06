@@ -30,6 +30,8 @@ class FacilityEvent < ActiveRecord::Base
 	  if(total_gold_cost>gm.gold)
 	    return {msg: :"error", detail: :"not_enough_gold"}
 	  end
+	  
+    gm.gold= gm.gold-total_gold_cost
 	  msgArray = Array.new
 	  for adv in adventurers
 	    fe=FacilityEvent.new
@@ -46,11 +48,11 @@ class FacilityEvent < ActiveRecord::Base
       fe.end_time = gm.game_time+facility.time_cost(adv)
       fe.gold_spent = facility.gold_cost(adv)
 	    fe.save
-	    gm.gold= gm.gold-total_gold_cost
-	    gm.save
 	    cost = {adventurer: adv, gold_cost: facility.gold_cost(adv)}
 	    msgArray<<cost
 	  end
+	  
+    gm.save
 	  return {msg: :"success", detail: msgArray}
 	end
 	
