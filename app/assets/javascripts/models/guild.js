@@ -50,7 +50,7 @@ GM.GuildModel.getGuildInfo = function (func) {
 	    },
 	    success: function(feedback) {
 	    	console.log(feedback);
-	    	GM.GuildmasterModel.guildmaster.guild = feedback;
+	    	GM.GuildmasterModel.guildmaster.guild = feedback.guild;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	if (func) {
 	    		func(GM.GuildmasterView);
