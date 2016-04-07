@@ -68,7 +68,9 @@ GM.GuildModel.upgrade = function () {
 	    },
 	    success: function(feedback) {
 	    	if (feedback.msg == 'success') {
-	    		showView(guildUpgradingTemplate({'guild' : feedback}));
+	    		console.log(feedback);
+	    		showView(guildUpgradingTemplate(feedback));
+	    		GM.GuildmasterModel.getGuildmaster();
 	    	} else {
 	    		console.log(feedback);
 	    	}

@@ -69,6 +69,9 @@ GM.EventController.showEvents = function (events) {
 				case "ScoutEvent":
 					eve.description = "The GuildMaster is scouting for Adventurers and Quests";
 					eve.adventurer_names = "The GuildMaster";
+				case "UpgradeEvent":
+					eve.description = "The Guild is being upgraded.";
+					eve.adventurer_names = "The GuildMaster";
 			}
 		}
 		showView(eventListTemplate({'events': events}));
