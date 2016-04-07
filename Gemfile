@@ -67,6 +67,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'rubocop', '~> 0.39.0', require: false
 end
 
 
