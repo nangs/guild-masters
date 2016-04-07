@@ -53,6 +53,10 @@ function renderTimeBar(events, currentGameTime){
 					break;
 				case "ScoutEvent":
 					renderScoutMark(eve, currentGameTime, canvas);
+					break;
+				case "UpgradeEvent":
+					renderUpgradeMark(eve, currentGameTime, canvas);
+					break;
 			}
 		}	
 	}
@@ -171,6 +175,42 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 		var infoText = "The GuildMaster is scouting\nfor Adventurers and Quests";
 		var text = new fabric.Text(infoText, {
 			left: endTime + timeBar_start_point + 70,
+			top: timeBar_top_padding + 15,
+			fontSize: 12,
+			stroke: 'rgb(200,100,50)'
+		});
+		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.setOpacity(0.8);
+		canvas.add(text);
+		text.selectable = false;
+		circle.isInfoShown = true;
+		circle.infoText = text;
+	};
+
+	circle.removeInfo = function () {
+		canvas.remove(this.infoText);
+	};
+
+	circle.selectable = false;
+	canvas.add(circle);
+}
+
+function renderUpgradeMark(eve, currentGameTime, canvas) {
+	var endTime = eve.end_time - currentGameTime;
+	var circle = new fabric.Circle({
+		top : timeBar_top_padding,
+		left : endTime + timeBar_start_point,
+		strokeWidth: 8,
+		radius: 8,
+		fill: '#fff',
+		stroke: 'yellow'
+	});
+	circle.isInfoShown = false;
+
+	circle.showInfo = function () {
+		var infoText = "The GuildMaster is\n upgrading the Guild.";
+		var text = new fabric.Text(infoText, {
+			left: endTime + timeBar_start_point + 50,
 			top: timeBar_top_padding + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
