@@ -20,7 +20,7 @@ class GuildUpgradeEvent < ActiveRecord::Base
     end
     guild.save
     gm.save
-    completeMsg = {msg: :"success", type: :"Upgrade Event", guild_level: guild.level, adventurer_room: guild.level*5, quest_room: guild.level*10, facility_capacity: facMsg}
+    completeMsg = {msg: :"success", type: :"UpgradeEvent", guild_level: guild.level, adventurer_room: guild.level*5, quest_room: guild.level*10, facility_capacity: facMsg}
     return completeMsg    
   end
 end
