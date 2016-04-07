@@ -30,6 +30,11 @@ GM.EventController.showEventResults = function (eventResults) {
 				break;
 			case "ScoutEvent":
 				message += scoutResultTemplate(eventReuslt);
+				break;
+			case "UpgradeEvent":
+				eventReuslt.newCapacity = eventReuslt.facility_capacity[0].capacity;
+				message += upgradeResultTemplate(eventReuslt);
+				break;
 		}
 		message += "<hr>";
 	}
