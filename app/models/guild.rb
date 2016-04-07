@@ -72,7 +72,10 @@ class Guild < ActiveRecord::Base
       adventurer_capacity: self.level*5,
       quest_capacity: self.level*10,
       is_upgradable: self.is_upgradable,
-      is_full: self.is_full}
+      is_full: self.is_full,
+      max_adventurer_max_hp: 10000,
+      max_adventurer_attributes: 1000
+      }
   end
 	#This function creates a quest based on current level of guild
 	def create_quest
