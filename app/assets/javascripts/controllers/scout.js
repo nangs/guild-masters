@@ -1,8 +1,11 @@
 GM.ScoutController = Ember.Controller.extend();
 
 GM.ScoutController.setupScout = function() {
-	if (GM.GuildmasterModel.guildmaster.state != "available") {
+	if (GM.GuildmasterModel.guildmaster.state == "scouting") {
 		showView("The GuildMaster is currently scouting for Adventurers and Quests.");
+	}
+	if (GM.GuildmasterModel.guildmaster.state == "upgrading") {
+		showView("The GuildMaster is currently upgrading the Guild.");
 	}
 	else {
 		showView(scoutSetTemplate);

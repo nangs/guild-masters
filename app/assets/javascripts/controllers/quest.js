@@ -1,8 +1,6 @@
 GM.QuestController = Ember.Controller.extend();
 
-GM.QuestController.showAssign = function(id) {
-	// Temporary way of getting the quest. 
-	// The API should be designed in a way that a particular Quest can be directly retrieved by id.
+GM.QuestController.showQuestAssignPage = function(id) {
 	var quests = GM.QuestModel.quest_list['quests'];
 	var quest;
 	for (var q in quests) {

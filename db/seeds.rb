@@ -5,27 +5,17 @@ acc = Account.create(email: "test@example.com",
                      password: "123456",
                      email_confirmed: true)
 
-gm = acc.create_guildmaster(gold: 20,
-	                          game_time: 10000)
+acc.initialize_guildmaster
 
-guild = gm.guilds.create(level: 3, popularity: 30)
+gm = acc.guildmaster
+gm.gold = 1000000
+gm.save
 
-# create adventurers and quests
-5.times do |i|
-  guild.adventurers.create(hp: 100+i, 
-  	                    max_hp: 120+i, 
-  	                    energy: 50+i, 
-  	                    max_energy: 60+i,
-  	                    attack: 100,
-  	                    defense: 50+i,
-  	                    vision: 100+i,
-  	                    state: "available",
-  	                    name: "adventurer#{i}")
+g = gm.guilds[0]
+g.popularity = 1000
+g.save
 
-  Quest.create(difficulty: 1+i,
-  	           state: "ongoing",
-  	           reward: 100+i)
-end
+
 
 AdventurerTemplate.create(max_hp: 1000,
 	                      max_energy: 1000,

@@ -45,6 +45,9 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rails-perftest'
 gem 'ruby-prof'
 
+# Builds tables for admin pages
+gem 'datagrid'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -74,3 +77,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'kaminari'
