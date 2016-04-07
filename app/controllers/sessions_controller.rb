@@ -22,9 +22,15 @@ class SessionsController < ApplicationController
       elsif !account.nil? && account.authenticate(password) && account.email_confirmed
         session[:account_id] = account.id
         acc = Account.find(session[:account_id])
-        guildmaster = acc.guildmaster
-        guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
-        result = {msg: :"success", guilds: guilds}
+        if acc.is_admin
+          session[:is_admin] = true
+          redirect_to admin_root_path
+          return
+        else
+          guildmaster = acc.guildmaster
+          guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
+          result = {msg: :"success", guilds: guilds}
+        end
       end
     end
     render json: result.as_json
