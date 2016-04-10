@@ -20,18 +20,41 @@ var adventurerNewButton = HandlebarsTemplates['adventurer/adventurer_get']();
 var adventurerAssignTemplate = HandlebarsTemplates['adventurer/adventurer_assign'];
 var adventurerDisplayTemplate = HandlebarsTemplates['adventurer/adventurer_display'];
 
+function regularPolygonPoints(sideCount, radius){
+    var sweep = Math.PI * 2 / sideCount;
+    var points = [];
+    for (var i = 0; i < sideCount; i++){
+    	var angle = i * sweep - Math.PI / 2;
+        var x = radius * Math.cos(angle);
+        var y = radius * Math.sin(angle);
+        points.push({x: x,y: y});
+    }
+    return points;
+}
+
 function renderAdventureDetails(adventurer) {
 	var canvas;
-	if (GM.AdventurerView.renderDetailBox) {
-		canvas = GM.AdventurerView.renderDetailBox;
+	console.log(GM.renderDetailBox);
+	if (GM.renderDetailBox) {
+		canvas = GM.renderDetailBox;
 	} else {
 		canvas = new fabric.Canvas('adventurer_detail');
 	}
 	canvas.clear();
-	
 
+	var cx = 250;
+	var cy = 200;
+	var points=regularPolygonPoints(5, 200);
 
+	var polygon = new fabric.Polygon(points, {
+		left: cx,
+		top: cy,
+		stroke: 'red',
+		fill: 'white',
+		selectable: false
+	});
+	canvas.add(polygon);
 
-	GM.AdventurerView.renderDetailBox = canvas;
+	GM.renderDetailBox = canvas;
 	return canvas;
 }
