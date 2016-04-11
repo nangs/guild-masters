@@ -1,5 +1,7 @@
 class Admin::AdventurerNamesController < AdminController
   before_action :set_adventurer_name, only: [:show, :edit, :update, :destroy]
+  before_action :authorized_admin
+
 
   # GET admin/adventurer_names
   # GET admin/adventurer_names.json
