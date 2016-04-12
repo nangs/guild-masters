@@ -9,17 +9,17 @@ class GuildUpgradeEvent < ActiveRecord::Base
     gm.game_time = end_time
     gm.state = 'available'
     facilities = guild.facilities
-    facMsg = []
+    fac_msg = []
     for fac in facilities
       fac.capacity = guild.level * 2
       fac.level = guild.level
       msg = { facility: fac, capacity: fac.capacity }
-      facMsg << msg
+      fac_msg << msg
       fac.save
     end
     guild.save
     gm.save
-    completeMsg = { msg: :success, type: :UpgradeEvent, guild_level: guild.level, adventurer_room: guild.level * 5, quest_room: guild.level * 10, facility_capacity: facMsg }
-    completeMsg
+    complete_msg = { msg: :success, type: :UpgradeEvent, guild_level: guild.level, adventurer_room: guild.level * 5, quest_room: guild.level * 10, facility_capacity: fac_msg }
+    complete_msg
   end
 end

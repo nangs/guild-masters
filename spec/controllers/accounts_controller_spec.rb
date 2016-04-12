@@ -336,7 +336,9 @@ RSpec.describe AccountsController do
               expect(@sent_email).to deliver_to(@account.email)
               expect(@sent_email).to deliver_from(:user_name)
               expect(@sent_email).to have_subject('Subject - Password Change and Account Activation')
-              expect(@sent_email).to have_body_text("Please change your account password and activate your account with the code provided:\nCode: #{Account.find_by_email(@account.email).confirm_token}")
+              expect(@sent_email).to have_body_text("Please change your account password
+                                                    and activate your account with the code provided:\nCode:
+                                                    #{Account.find_by_email(@account.email).confirm_token}")
             end
           end
           thr.join(0)

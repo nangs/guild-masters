@@ -34,7 +34,7 @@ class Guildmaster < ActiveRecord::Base
 
   def refresh
     guilds = self.guilds
-    msgArray = []
+    msg_array = []
     for guild in guilds
       advs = []
       qsts = []
@@ -55,9 +55,8 @@ class Guildmaster < ActiveRecord::Base
         end
       end
       msg = { guild: guild, new_quests: qsts, new_adventurers: advs, dropped_quests: nqst - qst_c, dropped_adventurers: nadv - adv_c }
-      msgArray << msg
+      msg_array << msg
     end
-    puts msgArray.inspect
-    msgArray
+    msg_array
   end
 end

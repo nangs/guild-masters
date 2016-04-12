@@ -12,7 +12,7 @@ class GuildController < ApplicationController
       if guild.nil?
         result = { msg: :error, detail: :guild_session_not_found }
       elsif !guild.nil?
-        result = { msg: :success, guild: guild.get_info }
+        result = { msg: :success, guild: guild.info }
       end
     elsif params[:cmd] == 'create'
       guildmaster.build_guild

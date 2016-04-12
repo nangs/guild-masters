@@ -4,7 +4,7 @@ class ScoutEvent < ActiveRecord::Base
   def self.assign(guild, time, gold)
     gm = guild.guildmaster
     return { msg: :error, detail: :guildmaster_busy } if gm.state != 'available'
-    return { msg: :error, detail: :guild_full } if guild.is_full
+    return { msg: :error, detail: :guild_full } if guild.full?
     return { msg: :error, detail: :not_enough_gold } if gm.gold < gold
     guild.scout_events.create(start_time: gm.game_time,
                               end_time: gm.game_time + time,
@@ -53,7 +53,7 @@ class ScoutEvent < ActiveRecord::Base
       quest = Quest.create(difficulty: guild.level + r.rand(0..1), state: 'pending')
       quest.reward = quest.difficulty * (100 + gold / 10) + r.rand(0..100)
       quest.monster_template = MonsterTemplate.order('RANDOM()').first
-      quest.description = 'There is a %s near the village! Find someone to help us kill it!' % [quest.monster_template.name]
+      quest.description = "There is a #{quest.monster_template.name} near the village! Find someone to help us kill it!"
       quest.save
       guild.quests << quest
       qsts << quest

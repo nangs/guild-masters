@@ -12,7 +12,7 @@ class Guild < ActiveRecord::Base
   # Upgrade the guild, creates an guild upgrade event
   def upgrade
     gm = guildmaster
-    if is_upgradable
+    if upgradable?
 
       gm.state = 'upgrading'
       guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time + level * 1000, gold_spent: 250 * (level + 1))
@@ -42,7 +42,7 @@ class Guild < ActiveRecord::Base
   end
 
   # Check whether the guild is upgradable, return true if it passes all the checks, else return false
-  def is_upgradable
+  def upgradable?
     gm = guildmaster
     return false if gm.state != 'available'
     return false if gm.gold < 250 * (level + 1)
@@ -55,7 +55,7 @@ class Guild < ActiveRecord::Base
   end
 
   # Return information of the guild, including the popularity requirement, gold requirement and whether it is upgradable
-  def get_info
+  def info
     { level: level,
       popularity: popularity,
       pop_requirement: 50 * (2**(level - 1)),
@@ -64,8 +64,8 @@ class Guild < ActiveRecord::Base
       number_quest: qst_count,
       adventurer_capacity: level * 5,
       quest_capacity: level * 10,
-      is_upgradable: is_upgradable,
-      is_full: is_full,
+      is_upgradable: upgradable?,
+      is_full: full?,
       max_adventurer_max_hp: 10_000,
       max_adventurer_attributes: 1000
       }
@@ -78,7 +78,7 @@ class Guild < ActiveRecord::Base
     quest.reward = quest.difficulty * 100 + r.rand(0..25) * quest.difficulty
     quest.monster_template = MonsterTemplate.order('RANDOM()').first
     quest.guild = self
-    quest.description = 'There is a %s near the village! Find someone to help us kill it!' % [quest.monster_template.name]
+    quest.description = "There is a #{quest.monster_template.name} near the village! Find someone to help us kill it!"
     quest.save
     quest
   end
@@ -118,7 +118,7 @@ class Guild < ActiveRecord::Base
   end
 
   # Check whether the number of adventurer and number quest have reach the maxiumum capacity of guild
-  def is_full
+  def full?
     if adv_count >= level * 5 && qst_count >= level * 10
       return true
     else

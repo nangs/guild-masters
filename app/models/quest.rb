@@ -30,27 +30,25 @@ class Quest < ActiveRecord::Base
     until end_of_battle
       turn += 1
       dead = { dead: nil }
-      advsPhase = []
+      advs_phase = []
       # Adventurers` phase
       for adv_id in survivers
         adventurer = adventurers[adv_id]
-        if monster.hp > 0
-          if adventurer.energy > 0
-            dmg = r.rand(0.75..1.25) * adventurer.attack * adventurer.attack / monster.defense
-            dmg = dmg.round
-            monster.hp = monster.hp - dmg
-            attacks[adv_id] = attacks[adv_id] + 1
-            adventurer.energy = adventurer.energy - 2
-            monster.hp = 0 if monster.hp < 0
-          else
-            adventurer.energy = 0
-            dmg = 0
-            survivers.delete(adv_id)
-            end_of_battle = true if survivers.empty?
-          end
+        if adventurer.energy > 0 && monster.hp > 0
+          dmg = r.rand(0.75..1.25) * adventurer.attack * adventurer.attack / monster.defense
+          dmg = dmg.round
+          monster.hp = monster.hp - dmg
+          attacks[adv_id] = attacks[adv_id] + 1
+          adventurer.energy = adventurer.energy - 2
+          monster.hp = 0 if monster.hp < 0
+        else
+          adventurer.energy = 0
+          dmg = 0
+          survivers.delete(adv_id)
+          end_of_battle = true if survivers.empty?
         end
-        advMsg = { adventurer_name: adventurer.name, adventurer_hp: adventurer.hp, dmg_deal: dmg, adventurer_energy: adventurer.energy }
-        advsPhase << advMsg
+        adv_msg = { adventurer_name: adventurer.name, adventurer_hp: adventurer.hp, dmg_deal: dmg, adventurer_energy: adventurer.energy }
+        advs_phase << adv_msg
       end
       # Monster`s phase
       if monster.hp > 0
@@ -61,7 +59,7 @@ class Quest < ActiveRecord::Base
           dmg = dmg.round
           target.hp = target.hp - dmg
           defenses[target_id] = defenses[target_id] + 1
-          mstMsg = { monster_name: monster_template.name, monster_hp: monster.hp, target: target.name, dmg_deal: dmg }
+          mst_msg = { monster_name: monster_template.name, monster_hp: monster.hp, target: target.name, dmg_deal: dmg }
           # Adventurer was killed
           if target.hp <= 0
             target.hp = 0
@@ -77,8 +75,8 @@ class Quest < ActiveRecord::Base
         end_of_battle = true
         adv_victory = true
       end
-      turnMsg = { turn: turn, adventurers: advsPhase, monsters: mstMsg, dead: dead }
-      record << turnMsg
+      turn_msg = { turn: turn, adventurers: advs_phase, monsters: mst_msg, dead: dead }
+      record << turn_msg
     end
 
     for adv_id in survivers

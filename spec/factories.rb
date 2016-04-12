@@ -87,5 +87,4 @@ FactoryGirl.define do
     defense { Faker::Number.number(2) }
     invisibility { Faker::Number.number(2) }
   end
-
 end

@@ -386,15 +386,15 @@ RSpec.describe EventsController do
             expect(parsed_body['detail']).to eq(@detail_expected)
           end
           it 'guild is full' do
-            $i = 0
-            while $i <= (@guild.level * 5) + 1
+            i = 0
+            while i <= (@guild.level * 5) + 1
               create(:adventurer, guild_id: @guild.id)
-              $i += 1
+              i += 1
             end
-            $i = 0
-            while $i <= (@guild.level * 10) + 1
+            i = 0
+            while i <= (@guild.level * 10) + 1
               create(:quest, guild_id: @guild.id)
-              $i += 1
+              i += 1
             end
             request.session[:account_id] = @activated_account.id
             post :create, { cmd: 'create_scout_event', time_spent: '10', gold_spent: '10' }, format: :json

@@ -2,10 +2,10 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 
-adminAcc = Account.create(email: 'admin@example.com',
-                          password: 'admin',
-                          email_confirmed: true,
-                          is_admin: true)
+Account.create(email: 'admin@example.com',
+               password: 'admin',
+               email_confirmed: true,
+               is_admin: true)
 
 acc = Account.create(email: 'test@example.com',
                      password: '123456',

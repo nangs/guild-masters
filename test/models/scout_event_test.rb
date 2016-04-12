@@ -16,6 +16,6 @@ class ScoutEventTest < ActiveSupport::TestCase
     guild = guilds(:TestGuild02)
     gm = guild.guildmaster
     ScoutEvent.assign(guild, 500, 500)
-    msg = Event.complete_next(gm)
+    Event.complete_next(gm)
   end
 end

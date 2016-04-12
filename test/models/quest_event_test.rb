@@ -25,7 +25,7 @@ class QuestEventTest < ActiveSupport::TestCase
   test 'test quest event complete' do
     QuestEvent.assign(quests(:TestQuest05), [adventurers(:Tester03)])
     qe = quests(:TestQuest05).quest_events.first
-    msg = qe.complete
+    qe.complete
     assert_equal 1, qe.adventurers.count
   end
 end
