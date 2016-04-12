@@ -7,8 +7,13 @@ FactoryGirl.define do
     password { Faker::Internet.password }
     confirm_token { Faker::Number.number(4) }
     email_confirmed { false }
+    is_admin { false }
     trait :activated do
-      email_confirmed true
+      email_confirmed { true }
+    end
+    trait :is_admin do
+      email_confirmed { true }
+      is_admin { true }
     end
     after(:create) do |account|
       FactoryGirl.create(:guildmaster, account_id: account.id)
@@ -82,4 +87,5 @@ FactoryGirl.define do
     defense { Faker::Number.number(2) }
     invisibility { Faker::Number.number(2) }
   end
+
 end

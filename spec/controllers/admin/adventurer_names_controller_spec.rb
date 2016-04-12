@@ -19,141 +19,143 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe Admin::AdventurerNamesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # AdventurerName. As you add validations to AdventurerName, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before :each do
+    @admin = create(:account, :is_admin)
+    request.session[:admin_id] = @admin.id
+  end
+  let(:valid_attributes) do
+    skip('Add a hash of attributes valid for your model')
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    skip('Add a hash of attributes invalid for your model')
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # AdventurerNamesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all adventurer_names as @adventurer_names" do
+  describe 'GET #index' do
+    it 'assigns all adventurer_names as @adventurer_names' do
       adventurer_name = AdventurerName.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:adventurer_names)).to eq([adventurer_name])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested adventurer_name as @adventurer_name" do
+  describe 'GET #show' do
+    it 'assigns the requested adventurer_name as @adventurer_name' do
       adventurer_name = AdventurerName.create! valid_attributes
-      get :show, {:id => adventurer_name.to_param}, valid_session
+      get :show, { id: adventurer_name.to_param }, valid_session
       expect(assigns(:adventurer_name)).to eq(adventurer_name)
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new adventurer_name as @adventurer_name" do
+  describe 'GET #new' do
+    it 'assigns a new adventurer_name as @adventurer_name' do
       get :new, {}, valid_session
       expect(assigns(:adventurer_name)).to be_a_new(AdventurerName)
     end
   end
 
-  describe "GET #edit" do
-    it "assigns the requested adventurer_name as @adventurer_name" do
+  describe 'GET #edit' do
+    it 'assigns the requested adventurer_name as @adventurer_name' do
       adventurer_name = AdventurerName.create! valid_attributes
-      get :edit, {:id => adventurer_name.to_param}, valid_session
+      get :edit, { id: adventurer_name.to_param }, valid_session
       expect(assigns(:adventurer_name)).to eq(adventurer_name)
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new AdventurerName" do
-        expect {
-          post :create, {:adventurer_name => valid_attributes}, valid_session
-        }.to change(AdventurerName, :count).by(1)
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new AdventurerName' do
+        expect do
+          post :create, { adventurer_name: valid_attributes }, valid_session
+        end.to change(AdventurerName, :count).by(1)
       end
 
-      it "assigns a newly created adventurer_name as @adventurer_name" do
-        post :create, {:adventurer_name => valid_attributes}, valid_session
+      it 'assigns a newly created adventurer_name as @adventurer_name' do
+        post :create, { adventurer_name: valid_attributes }, valid_session
         expect(assigns(:adventurer_name)).to be_a(AdventurerName)
         expect(assigns(:adventurer_name)).to be_persisted
       end
 
-      it "redirects to the created adventurer_name" do
-        post :create, {:adventurer_name => valid_attributes}, valid_session
+      it 'redirects to the created adventurer_name' do
+        post :create, { adventurer_name: valid_attributes }, valid_session
         expect(response).to redirect_to(AdventurerName.last)
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved adventurer_name as @adventurer_name" do
-        post :create, {:adventurer_name => invalid_attributes}, valid_session
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved adventurer_name as @adventurer_name' do
+        post :create, { adventurer_name: invalid_attributes }, valid_session
         expect(assigns(:adventurer_name)).to be_a_new(AdventurerName)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:adventurer_name => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+        post :create, { adventurer_name: invalid_attributes }, valid_session
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested adventurer_name" do
-        adventurer_name = AdventurerName.create! valid_attributes
-        put :update, {:id => adventurer_name.to_param, :adventurer_name => new_attributes}, valid_session
-        adventurer_name.reload
-        skip("Add assertions for updated state")
+  describe 'PUT #update' do
+    context 'with valid params' do
+      let(:new_attributes) do
+        skip('Add a hash of attributes valid for your model')
       end
 
-      it "assigns the requested adventurer_name as @adventurer_name" do
+      it 'updates the requested adventurer_name' do
         adventurer_name = AdventurerName.create! valid_attributes
-        put :update, {:id => adventurer_name.to_param, :adventurer_name => valid_attributes}, valid_session
+        put :update, { id: adventurer_name.to_param, adventurer_name: new_attributes }, valid_session
+        adventurer_name.reload
+        skip('Add assertions for updated state')
+      end
+
+      it 'assigns the requested adventurer_name as @adventurer_name' do
+        adventurer_name = AdventurerName.create! valid_attributes
+        put :update, { id: adventurer_name.to_param, adventurer_name: valid_attributes }, valid_session
         expect(assigns(:adventurer_name)).to eq(adventurer_name)
       end
 
-      it "redirects to the adventurer_name" do
+      it 'redirects to the adventurer_name' do
         adventurer_name = AdventurerName.create! valid_attributes
-        put :update, {:id => adventurer_name.to_param, :adventurer_name => valid_attributes}, valid_session
+        put :update, { id: adventurer_name.to_param, adventurer_name: valid_attributes }, valid_session
         expect(response).to redirect_to(adventurer_name)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the adventurer_name as @adventurer_name" do
+    context 'with invalid params' do
+      it 'assigns the adventurer_name as @adventurer_name' do
         adventurer_name = AdventurerName.create! valid_attributes
-        put :update, {:id => adventurer_name.to_param, :adventurer_name => invalid_attributes}, valid_session
+        put :update, { id: adventurer_name.to_param, adventurer_name: invalid_attributes }, valid_session
         expect(assigns(:adventurer_name)).to eq(adventurer_name)
       end
 
       it "re-renders the 'edit' template" do
         adventurer_name = AdventurerName.create! valid_attributes
-        put :update, {:id => adventurer_name.to_param, :adventurer_name => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+        put :update, { id: adventurer_name.to_param, adventurer_name: invalid_attributes }, valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested adventurer_name" do
+  describe 'DELETE #destroy' do
+    it 'destroys the requested adventurer_name' do
       adventurer_name = AdventurerName.create! valid_attributes
-      expect {
-        delete :destroy, {:id => adventurer_name.to_param}, valid_session
-      }.to change(AdventurerName, :count).by(-1)
+      expect do
+        delete :destroy, { id: adventurer_name.to_param }, valid_session
+      end.to change(AdventurerName, :count).by(-1)
     end
 
-    it "redirects to the adventurer_names list" do
+    it 'redirects to the adventurer_names list' do
       adventurer_name = AdventurerName.create! valid_attributes
-      delete :destroy, {:id => adventurer_name.to_param}, valid_session
+      delete :destroy, { id: adventurer_name.to_param }, valid_session
       expect(response).to redirect_to(adventurer_names_url)
     end
   end
-
 end
