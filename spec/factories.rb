@@ -19,7 +19,7 @@ FactoryGirl.define do
     id { Faker::Number.number(3) }
     gold 1000
     game_time 0
-    state "available"
+    state 'available'
     current_guild_id 0
     account_id 0
     after(:create) do |guildmaster|
@@ -28,7 +28,7 @@ FactoryGirl.define do
     # association :account, factory: :account, email_confirmed: true
   end
 
-  factory :guild do |g|
+  factory :guild do |_g|
     id { Faker::Number.number(3) }
     level 1
     popularity { Faker::Number.number(2) }
@@ -49,17 +49,17 @@ FactoryGirl.define do
     attack { Faker::Number.number(3) }
     defense { Faker::Number.number(3) }
     vision { Faker::Number.number(3) }
-    state "available"
+    state 'available'
     guild_id 0
-    name {Faker::Name.name}
+    name { Faker::Name.name }
   end
 
   factory :quest do
     difficulty { Faker::Number.between(1, 3) }
-    state "pending"
+    state 'pending'
     reward { Faker::Number.number(3) }
     guild_id 0
-    description {Faker::Name.name}
+    description { Faker::Name.name }
     monster_template_id 0
   end
 
@@ -67,15 +67,15 @@ FactoryGirl.define do
     level 2
     capacity 2
     guild_id 0
-    name "canteen"
+    name 'canteen'
     trait :clinic do
-      name "clinic"
+      name 'clinic'
     end
   end
 
   factory :monster_template do
     id { Faker::Number.number(3) }
-    name {Faker::Name.name}
+    name { Faker::Name.name }
     max_hp { Faker::Number.number(3) }
     max_energy { Faker::Number.number(3) }
     attack { Faker::Number.number(2) }

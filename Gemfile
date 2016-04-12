@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 
@@ -9,7 +8,7 @@ gem 'ember-rails'
 gem 'ember-source', '~> 2.0.0'
 
 # Use fabric.js for drawings
-gem "fabric-rails"
+gem 'fabric-rails'
 
 # install handlebars_assets
 gem 'handlebars_assets', '~> 0.21.0'
@@ -69,7 +68,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rubocop', '~> 0.39.0', require: false
 end
-
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
