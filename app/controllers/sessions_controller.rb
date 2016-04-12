@@ -5,35 +5,49 @@ class SessionsController < ApplicationController
   respond_to :json
 
   def create
+    is_admin_page = params[:is_admin_page]
     password = params[:password]
     email = params[:email]
     if email.nil?
-      result = {msg: :"error", detail: :"email_nil"}
+      flash[:error] = "email_nil"
+      json_result = {msg: :"error", detail: :"email_nil"}
     elsif password.nil?
-      result = {msg: :"error", detail: :"password_nil"}
+      flash[:error] = "password_nil"
+      json_result = {msg: :"error", detail: :"password_nil"}
     elsif !email.nil? && !password.nil?
       account = Account.find_by(email: email)
       if account.nil?
-        result = {msg: :"error", detail: :"invalid_account"}
+        flash[:error] = "Wrong Email or Password"
+        json_result = {msg: :"error", detail: :"invalid_account"}
       elsif !account.authenticate(password) && !account.nil?
-        result = {msg: :"error", detail: :"wrong_password"}
+        flash[:error] = "Wrong Email or Password"
+        json_result = {msg: :"error", detail: :"wrong_password"}
       elsif !account.email_confirmed && !account.nil?
-        result = {msg: :"error", detail: :"not_activated"}
+        flash[:error] = "Wrong Email or Password"
+        json_result = {msg: :"error", detail: :"not_activated"}
       elsif !account.nil? && account.authenticate(password) && account.email_confirmed
-        session[:account_id] = account.id
-        acc = Account.find(session[:account_id])
-        if acc.is_admin
-          session[:is_admin] = true
-          redirect_to admin_root_path
-          return
-        else
+        if !account.is_admin
+          session[:account_id] = account.id
+          acc = Account.find(session[:account_id])
           guildmaster = acc.guildmaster
           guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
-          result = {msg: :"success", guilds: guilds}
+          flash[:error] = "You are not an admin"
+        elsif account.is_admin
+          session[:admin_id] = account.id
+          flash[:success] = "successful login"
+          if is_admin_page
+            redirect_to :controller => 'admin/dashboard', :action => 'index'
+            return
+          end
         end
+        json_result = {msg: :"success", guilds: guilds}
       end
     end
-    render json: result.as_json
+    if is_admin_page.nil?
+      render json: json_result.as_json
+    elsif is_admin_page
+      redirect_to :controller => 'admin/dashboard', :action => 'new'
+    end
   end
 
   # DELETE /sessions.json

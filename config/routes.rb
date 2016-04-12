@@ -16,10 +16,11 @@ Rails.application.routes.draw do
   resources :sessions, :only => [:create, :delete]
 
   namespace :admin do
-    root to: 'dashboard#index'
+    root to: 'dashboard#new'
     resources :adventurer_names
     resources :adventurer_templates
     resources :monster_templates
+    resources :dashboard
   end
   get "*any", via: :all, to: "errors#not_found"
   # get "*path", to: redirect('/')

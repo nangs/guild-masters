@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Adventurer Names</h1>
-<p><%= link_to 'Back to Dashboard', admin_root_path %></p>
+<p><%= link_to 'Logout', admin_root_path %></p>
+<p><%= link_to 'Back to Dashboard', :controller => 'admin/dashboard', :action => 'index' %></p>
 <p><%= link_to 'New Adventurer name', new_admin_adventurer_name_path %></p>
 
 <table>
