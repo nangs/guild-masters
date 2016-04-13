@@ -13,17 +13,11 @@ class FacilityEvent < ActiveRecord::Base
       return { msg: :error, detail: :guildmaster_busy }
     end
     total_gold_cost = 0
-    for adv in adventurers
-      if adv.state != 'available'
-        return { msg: :error, detail: :adventurer_busy }
-
-      elsif adv.hp == adv.max_hp && facility.name == 'clinic'
-        return { msg: :error, detail: :hp_is_full }
-      elsif adv.energy == adv.max_energy && facility.name == 'canteen'
-        return { msg: :error, detail: :energy_is_full }
-      else
-        total_gold_cost += facility.gold_cost(adv)
-      end
+    adventurers.each do |adv|
+      return { msg: :error, detail: :adventurer_busy } if adv.state != 'available'
+      return { msg: :error, detail: :hp_is_full } if adv.hp == adv.max_hp && facility.name == 'clinic'
+      return { msg: :error, detail: :energy_is_full } if adv.energy == adv.max_energy && facility.name == 'canteen'
+      total_gold_cost += facility.gold_cost(adv)
     end
     gm = facility.guildmaster
     if total_gold_cost > gm.gold
@@ -32,7 +26,8 @@ class FacilityEvent < ActiveRecord::Base
 
     gm.gold = gm.gold - total_gold_cost
     msg_array = []
-    for adv in adventurers
+
+    adventurers.each do |adv|
       fe = FacilityEvent.new
 
       facility.facility_events << fe

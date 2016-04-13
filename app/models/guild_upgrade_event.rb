@@ -10,7 +10,7 @@ class GuildUpgradeEvent < ActiveRecord::Base
     gm.state = 'available'
     facilities = guild.facilities
     fac_msg = []
-    for fac in facilities
+    facilities.each do |fac|
       fac.capacity = guild.level * 2
       fac.level = guild.level
       msg = { facility: fac, capacity: fac.capacity }

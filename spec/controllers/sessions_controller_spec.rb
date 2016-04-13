@@ -24,7 +24,7 @@ RSpec.describe SessionsController do
           expect(parsed_body['guilds']).to match_array(@guilds_expected)
         end
         it 'create session for admin' do
-          post :create, { email: @admin_account.email, password: @admin_account.password, is_admin_page: true}, format: :json
+          post :create, { email: @admin_account.email, password: @admin_account.password, is_admin_page: true }, format: :json
           expect(response.status).to eq(302)
           expect(session[:admin_id]).to_not be nil
           @flash_expected = 'Successful login'
@@ -75,7 +75,7 @@ RSpec.describe SessionsController do
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
         it 'wrong_password for admin' do
-          post :create, { email: @admin_account.email, password: !@admin_account.password, is_admin_page: true}, format: :json
+          post :create, { email: @admin_account.email, password: !@admin_account.password, is_admin_page: true }, format: :json
           expect(response.status).to eq(302)
           expect(session[:admin_id]).to be nil
           @flash_expected = 'Wrong Email or Password'
@@ -92,7 +92,7 @@ RSpec.describe SessionsController do
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
         it 'invalid_account for admin' do
-          post :create, { email: !@admin_account.email, password: @admin_account.password, is_admin_page: true}, format: :json
+          post :create, { email: !@admin_account.email, password: @admin_account.password, is_admin_page: true }, format: :json
           expect(response.status).to eq(302)
           expect(session[:admin_id]).to be nil
           @flash_expected = 'You are not an admin'

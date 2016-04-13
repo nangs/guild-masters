@@ -23,16 +23,16 @@ class Event < ActiveRecord::Base
     ses = gm.scout_events.where(end_time: (gm.game_time + 1)..end_time).order(:end_time)
     ges = gm.guild_upgrade_events.where(end_time: (gm.game_time + 1)..end_time).order(:end_time)
     msg_array = []
-    for qe in qes
+    qes.each do |qe|
       msg_array << qe.complete
     end
-    for fe in fes
+    fes.each do |fe|
       msg_array << fe.complete
     end
-    for se in ses
+    ses.each do |se|
       msg_array << se.complete
     end
-    for ge in ges
+    ges.each do |ge|
       msg_array << ge.complete
     end
     day_dif = end_time / 1000 - start_day
@@ -51,54 +51,54 @@ class Event < ActiveRecord::Base
     @quest_events = gm.quest_events
     array_of_all_events_details = []
     event_id = 1
-    for @quest_event in @quest_events
+    @quest_events.each do |qe|
       array_of_all_events_details << {
         event_id: event_id,
         type: :QuestEvent,
-        quest_event_id: @quest_event.id,
-        start_time: @quest_event.start_time,
-        end_time: @quest_event.end_time,
-        quest: @quest_event.quest,
-        adventurers: @quest_event.adventurers
+        quest_event_id: qe.id,
+        start_time: qe.start_time,
+        end_time: qe.end_time,
+        quest: qe.quest,
+        adventurers: qe.adventurers
       }
       event_id += 1
     end
     @facility_events = gm.facility_events
-    for @facility_event in @facility_events
+    @facility_events.each do |fe|
       array_of_all_events_details << {
         event_id: event_id,
         type: :FacilityEvent,
-        facility_event_id: @facility_event.id,
-        start_time: @facility_event.start_time,
-        end_time: @facility_event.end_time,
-        facility: @facility_event.facility,
-        adventurer: @facility_event.adventurer,
-        gold_spent: @facility_event.gold_spent
+        facility_event_id: fe.id,
+        start_time: fe.start_time,
+        end_time: fe.end_time,
+        facility: fe.facility,
+        adventurer: fe.adventurer,
+        gold_spent: fe.gold_spent
       }
       event_id += 1
     end
     @scout_events = gm.scout_events
-    for @scout_event in @scout_events
+    @scout_events.each do |se|
       array_of_all_events_details << {
         event_id: event_id,
         type: :ScoutEvent,
-        scout_event_id: @scout_event.id,
-        start_time: @scout_event.start_time,
-        end_time: @scout_event.end_time,
-        gold_spent: @scout_event.gold_spent
+        scout_event_id: se.id,
+        start_time: se.start_time,
+        end_time: se.end_time,
+        gold_spent: se.gold_spent
       }
       event_id += 1
     end
     @upgrade_events = gm.guild_upgrade_events
-    for @upgrade_event in @upgrade_events
+    @upgrade_events.each do |ue|
       array_of_all_events_details << {
         event_id: event_id,
         type: :UpgradeEvent,
-        upgrade_event_id: @upgrade_event.id,
-        start_time: @upgrade_event.start_time,
-        end_time: @upgrade_event.end_time,
-        gold_spent: @upgrade_event.gold_spent,
-        guild: @upgrade_event.guild
+        upgrade_event_id: ue.id,
+        start_time: ue.start_time,
+        end_time: ue.end_time,
+        gold_spent: ue.gold_spent,
+        guild: ue.guild
       }
       event_id += 1
     end
