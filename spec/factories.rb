@@ -2,7 +2,6 @@ require 'faker'
 
 FactoryGirl.define do
   factory :account do
-    id { Faker::Number.number(3) }
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     confirm_token { Faker::Number.number(4) }
@@ -21,7 +20,6 @@ FactoryGirl.define do
   end
 
   factory :guildmaster do
-    id { Faker::Number.number(3) }
     gold 1000
     game_time 0
     state 'available'
@@ -34,7 +32,6 @@ FactoryGirl.define do
   end
 
   factory :guild do |_g|
-    id { Faker::Number.number(3) }
     level 1
     popularity { Faker::Number.number(2) }
     guildmaster_id 0
@@ -79,12 +76,15 @@ FactoryGirl.define do
   end
 
   factory :monster_template do
-    id { Faker::Number.number(3) }
     name { Faker::Name.name }
     max_hp { Faker::Number.number(3) }
     max_energy { Faker::Number.number(3) }
     attack { Faker::Number.number(2) }
     defense { Faker::Number.number(2) }
     invisibility { Faker::Number.number(2) }
+  end
+
+  factory :adventurer_name do
+    name { Faker::Name.name }
   end
 end

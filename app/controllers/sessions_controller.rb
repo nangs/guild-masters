@@ -9,21 +9,21 @@ class SessionsController < ApplicationController
     password = params[:password]
     email = params[:email]
     if email.nil?
-      flash[:error] = 'email_nil'
+      flash[:error] = 'Email entered nil'
       json_result = { msg: :error, detail: :email_nil }
     elsif password.nil?
-      flash[:error] = 'password_nil'
+      flash[:error] = 'Password entered nil'
       json_result = { msg: :error, detail: :password_nil }
     elsif !email.nil? && !password.nil?
       account = Account.find_by(email: email)
       if account.nil?
-        flash[:error] = 'Wrong Email or Password'
+        flash[:error] = 'You are not an admin'
         json_result = { msg: :error, detail: :invalid_account }
       elsif !account.authenticate(password) && !account.nil?
         flash[:error] = 'Wrong Email or Password'
         json_result = { msg: :error, detail: :wrong_password }
       elsif !account.email_confirmed && !account.nil?
-        flash[:error] = 'Wrong Email or Password'
+        flash[:error] = 'You are not an admin'
         json_result = { msg: :error, detail: :not_activated }
       elsif !account.nil? && account.authenticate(password) && account.email_confirmed
         if !account.is_admin
@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
           flash[:error] = 'You are not an admin'
         elsif account.is_admin
           session[:admin_id] = account.id
-          flash[:success] = 'successful login'
+          flash[:success] = 'Successful login'
           if is_admin_page
             redirect_to controller: 'admin/dashboard', action: 'index'
             return
