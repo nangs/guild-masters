@@ -13,11 +13,8 @@ class Account < ActiveRecord::Base
   def self.create_account(email, password)
     account = Account.find_by(email: email)
     if !account.nil?
-      if account.email_confirmed
-        return { msg: :error, detail: :account_taken }
-      elsif !account.email_confirmed
-        return { msg: :error, detail: :not_activated }
-      end
+      return { msg: :error, detail: :account_taken } if account.email_confirmed
+      { msg: :error, detail: :not_activated }
     elsif account.nil?
       new_account = Account.new(password: password, email: email)
       new_account.save

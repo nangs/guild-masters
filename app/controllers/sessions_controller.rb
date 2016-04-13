@@ -44,10 +44,10 @@ class SessionsController < ApplicationController
       end
     end
     if is_admin_page.nil?
-      flash[:error] = error_msg
       render json: json_result.as_json
     elsif is_admin_page
       # redirect_to controller: 'admin/dashboard', action: 'new'
+      flash[:error] = error_msg
       redirect_to '/'
     end
   end
