@@ -29,10 +29,6 @@ Style/GlobalVars:
 Metrics/ClassLength:
   Enabled: false
 
-# to remove prefer each over for
-#For:
-#  Enabled: false
-
 # to remove restriction on complexity
 Metrics/CyclomaticComplexity:
   Enabled: false
