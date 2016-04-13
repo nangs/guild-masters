@@ -31,6 +31,17 @@ GM.AdventurerController.filterForQuest = function (adventurers) {
 	});
 };
 
+GM.AdventurerController.searchById = function (id) {
+	var adventurers = GM.AdventurerModel.adventurers_list;
+	for (var ad in adventurers) {
+		var adventurer = adventurers[ad];
+		if (adventurer.id == id) {
+			return adventurer;
+		}
+	}
+	return null;
+}
+
 GM.AdventurerController.showAdventurerPage = function() {
 	GM.AdventurerModel.getAllAdventurers(function (data) {
 	    var adventurers = GM.AdventurerController.filterAlive(data);
