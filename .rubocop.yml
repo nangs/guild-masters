@@ -7,7 +7,9 @@ AllCops:
     - 'spec/spec_helper.rb'
     - 'test/test_helper.rb'
     - 'db/migrate/*'
-    - 'app/helpers/*'
+    - 'app/helpers/admin/*'
+    - 'app/models/game.rb'
+    - 'test/models/game_test.rb'
 
 Rails:
   Enabled: true
