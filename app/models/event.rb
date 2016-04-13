@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
       event_id += 1
     end
     @facility_events = gm.facility_events
-    @facility_event.each do |fe|
+    @facility_events.each do |fe|
       array_of_all_events_details << {
         event_id: event_id,
         type: :FacilityEvent,
