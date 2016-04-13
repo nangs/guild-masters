@@ -32,7 +32,7 @@ class Quest < ActiveRecord::Base
       dead = { dead: nil }
       advs_phase = []
       # Adventurers` phase
-      for adv_id in survivers
+      survivers.each do |adv_id|
         adventurer = adventurers[adv_id]
         if adventurer.energy > 0 && monster.hp > 0
           dmg = r.rand(0.75..1.25) * adventurer.attack * adventurer.attack / monster.defense
@@ -79,7 +79,7 @@ class Quest < ActiveRecord::Base
       record << turn_msg
     end
 
-    for adv_id in survivers
+    survivers.each do |adv_id|
       adventurers[adv_id].attack = adventurers[adv_id].attack + attacks[adv_id] * difficulty + r.rand(0..5)
       adventurers[adv_id].defense = adventurers[adv_id].defense + defenses[adv_id] * difficulty + r.rand(0..5)
       adventurers[adv_id].max_hp = adventurers[adv_id].max_hp + defenses[adv_id] * difficulty * 5 + r.rand(0..25)
@@ -87,7 +87,7 @@ class Quest < ActiveRecord::Base
     end
 
     # Energy cost calculation
-    for adventurer in advs
+    advs.each do |adventurer|
       adventurer.energy = adventurer.energy - 15 - r.rand(0..5)
       adventurer.state = 'available' if adventurer.state == 'assigned'
       adventurer.energy = 0 if adventurer.energy < 0

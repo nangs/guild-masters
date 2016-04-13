@@ -9,21 +9,21 @@ class SessionsController < ApplicationController
     password = params[:password]
     email = params[:email]
     if email.nil?
-      flash[:error] = 'Email entered nil'
+      error_msg = 'Email entered nil'
       json_result = { msg: :error, detail: :email_nil }
     elsif password.nil?
-      flash[:error] = 'Password entered nil'
+      error_msg = 'Password entered nil'
       json_result = { msg: :error, detail: :password_nil }
     elsif !email.nil? && !password.nil?
       account = Account.find_by(email: email)
       if account.nil?
-        flash[:error] = 'You are not an admin'
+        error_msg = 'You are not an admin'
         json_result = { msg: :error, detail: :invalid_account }
       elsif !account.authenticate(password) && !account.nil?
-        flash[:error] = 'Wrong Email or Password'
+        error_msg = 'Wrong Email or Password'
         json_result = { msg: :error, detail: :wrong_password }
       elsif !account.email_confirmed && !account.nil?
-        flash[:error] = 'You are not an admin'
+        error_msg = 'You are not an admin'
         json_result = { msg: :error, detail: :not_activated }
       elsif !account.nil? && account.authenticate(password) && account.email_confirmed
         if !account.is_admin
@@ -31,11 +31,11 @@ class SessionsController < ApplicationController
           acc = Account.find(session[:account_id])
           guildmaster = acc.guildmaster
           guilds = guildmaster.guilds.as_json(except: [:created_at, :updated_at])
-          flash[:error] = 'You are not an admin'
+          error_msg = 'You are not an admin'
         elsif account.is_admin
           session[:admin_id] = account.id
-          flash[:success] = 'Successful login'
           if is_admin_page
+            flash[:success] = 'Successful login'
             redirect_to controller: 'admin/dashboard', action: 'index'
             return
           end
@@ -47,6 +47,7 @@ class SessionsController < ApplicationController
       render json: json_result.as_json
     elsif is_admin_page
       # redirect_to controller: 'admin/dashboard', action: 'new'
+      flash[:error] = error_msg
       redirect_to '/'
     end
   end

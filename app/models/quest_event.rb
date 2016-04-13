@@ -28,7 +28,7 @@ class QuestEvent < ActiveRecord::Base
       guild.popularity = guild.popularity - quest.difficulty
       msg = { msg: :failed, type: :QuestEvent, popularity_lost: quest.difficulty, quest: quest, adventurers: adventurers, battle_log: result[:log] }
     end
-    for adv in adventurers
+    adventurers.each do |adv|
       guild.popularity = guild.popularity / 2 if adv.state == 'dead'
     end
     guild.save
@@ -75,12 +75,12 @@ class QuestEvent < ActiveRecord::Base
   def time_cost
     adv_vision = 0
     adventurers = self.adventurers
-    for adventurer in adventurers
+    adventurers.each do |adventurer|
       adv_vision += adventurer.vision
     end
     mon_invis = quest.difficulty * quest.monster_template.invisibility
     turns = mon_invis.to_f / adv_vision.to_f
-    for adventurer in adventurers
+    adventurers.each do |adventurer|
       adventurer.vision = adventurer.vision + turns.round * quest.difficulty
       adventurer.save
     end

@@ -24,9 +24,8 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 	    	cmd : 'get'
 	    },
 	    success: function(data) {
-	    	GM.AdventurerModel.adventurers_list = data;
-	    	console.log(data);
-	    	func(data);
+	    	GM.AdventurerModel.adventurers_list = data.adventurers;
+	    	func(GM.AdventurerModel.adventurers_list);
 	    }
 	});
 }

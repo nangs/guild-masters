@@ -7,6 +7,9 @@ AllCops:
     - 'spec/spec_helper.rb'
     - 'test/test_helper.rb'
     - 'db/migrate/*'
+    - 'app/helpers/admin/*'
+    - 'app/models/game.rb'
+    - 'test/models/game_test.rb'
 
 Rails:
   Enabled: true
@@ -23,8 +26,7 @@ Metrics/AbcSize:
 Style/GlobalVars:
   Enabled: false
 
-# to remove prefer each over for
-For:
+Metrics/ClassLength:
   Enabled: false
 
 # to remove restriction on complexity
@@ -37,4 +39,10 @@ Metrics/PerceivedComplexity:
 
 # to remove restriction on nesting
 Metrics/BlockNesting:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Style/GuardClause:
   Enabled: false
