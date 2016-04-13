@@ -1,4 +1,5 @@
 class GuildmasterController < ApplicationController
+  skip_before_action :verify_authenticity_token
   respond_to :json
   before_action :authorize
 
