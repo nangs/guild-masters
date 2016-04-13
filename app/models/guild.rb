@@ -119,10 +119,7 @@ class Guild < ActiveRecord::Base
 
   # Check whether the number of adventurer and number quest have reach the maxiumum capacity of guild
   def full?
-    if adv_count >= level * 5 && qst_count >= level * 10
-      return true
-    else
-      return false
-    end
+    return true if adv_count >= level * 5 && qst_count >= level * 10
+    false
   end
 end

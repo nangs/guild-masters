@@ -14,16 +14,10 @@ class FacilityEvent < ActiveRecord::Base
     end
     total_gold_cost = 0
     adventurers.each do |adv|
-      if adv.state != 'available'
-        return { msg: :error, detail: :adventurer_busy }
-
-      elsif adv.hp == adv.max_hp && facility.name == 'clinic'
-        return { msg: :error, detail: :hp_is_full }
-      elsif adv.energy == adv.max_energy && facility.name == 'canteen'
-        return { msg: :error, detail: :energy_is_full }
-      else
-        total_gold_cost += facility.gold_cost(adv)
-      end
+      return { msg: :error, detail: :adventurer_busy } if adv.state != 'available'
+      return { msg: :error, detail: :hp_is_full } if adv.hp == adv.max_hp && facility.name == 'clinic'
+      return { msg: :error, detail: :energy_is_full } if adv.energy == adv.max_energy && facility.name == 'canteen'
+      total_gold_cost += facility.gold_cost(adv)
     end
     gm = facility.guildmaster
     if total_gold_cost > gm.gold
