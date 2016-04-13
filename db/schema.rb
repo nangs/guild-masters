@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20160413110537) do
     t.string   "confirm_token"
     t.integer  "session_id"
     t.boolean  "is_admin",            default: false
-    t.boolean  "is_logged_in"
-    t.integer  "num_failed_attempts"
+    t.boolean  "is_logged_in",        default: false
+    t.integer  "num_failed_attempts", default: 0
   end
 
   create_table "adventurer_names", force: :cascade do |t|
