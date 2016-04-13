@@ -10,16 +10,16 @@ class AdventurersController < ApplicationController
     guildmaster = acc.guildmaster
     guild = Guild.find_by(id: guildmaster.current_guild_id)
     if !guild.nil?
-      if params[:cmd] == "get"
-        result = {msg: "success", adventurers: guild.adventurers}
-      elsif params[:cmd].nil?
-        result = {msg: :"error", detail: :"cmd_nil"}
-      else
-        result = {msg: :"error", detail: :"no_such_cmd"}
-      end
+      result = if params[:cmd] == 'get'
+                 { msg: :success, adventurers: guild.adventurers }
+               elsif params[:cmd].nil?
+                 { msg: :error, detail: :cmd_nil }
+               else
+                 { msg: :error, detail: :no_such_cmd }
+               end
     elsif guild.nil?
-      result = {msg: :"error", detail: :"guild_session_not_found"}
+      result = { msg: :error, detail: :guild_session_not_found }
     end
-    render json: result.as_json(:except => [:created_at, :updated_at])
+    render json: result.as_json(except: [:created_at, :updated_at])
   end
 end

@@ -11,55 +11,52 @@ class Guildmaster < ActiveRecord::Base
   has_many :facilities, through: :guilds
   has_many :facility_events, through: :facilities
 
-  
   def build_guild
     guild = Guild.new
     guild.level = 1
     guild.popularity = 50
     guild.guildmaster = self
-    clinic=Facility.new
-    clinic.guild =guild
-    clinic.name = "clinic"
+    clinic = Facility.new
+    clinic.guild = guild
+    clinic.name = 'clinic'
     clinic.level = 1
-    clinic.capacity=2
+    clinic.capacity = 2
     clinic.save
-    canteen=Facility.new
-    canteen.guild =guild
-    canteen.name = "canteen"
+    canteen = Facility.new
+    canteen.guild = guild
+    canteen.name = 'canteen'
     canteen.level = 1
-    canteen.capacity=2
+    canteen.capacity = 2
     canteen.save
     guild.save
-    return guild
+    guild
   end
-  
+
   def refresh
     guilds = self.guilds
-    msgArray = Array.new
+    msg_array = []
     for guild in guilds
-      advs = Array.new
-      qsts = Array.new
-      nqst = guild.popularity/(25*(2**(guild.level-1)))
-      qst_c =0
+      advs = []
+      qsts = []
+      nqst = guild.popularity / (25 * (2**(guild.level - 1)))
+      qst_c = 0
       nqst.times do
-       if(guild.qst_count<guild.level*10)
-        qsts<<guild.create_quest
-        qst_c = qst_c+1
-       end
-      end
-      nadv = guild.popularity/(50*(2**(guild.level-1)))
-      adv_c = 0
-      nadv.times do
-        if(guild.adv_count<guild.level*5)
-          adv_c = adv_c+1
-          advs<<guild.create_adventurer
+        if guild.qst_count < guild.level * 10
+          qsts << guild.create_quest
+          qst_c += 1
         end
       end
-      msg = {guild: guild, new_quests: qsts, new_adventurers: advs, dropped_quests: nqst-qst_c, dropped_adventurers: nadv-adv_c}
-      msgArray<<msg
+      nadv = guild.popularity / (50 * (2**(guild.level - 1)))
+      adv_c = 0
+      nadv.times do
+        if guild.adv_count < guild.level * 5
+          adv_c += 1
+          advs << guild.create_adventurer
+        end
+      end
+      msg = { guild: guild, new_quests: qsts, new_adventurers: advs, dropped_quests: nqst - qst_c, dropped_adventurers: nadv - adv_c }
+      msg_array << msg
     end
-    puts msgArray.inspect
-    return msgArray
+    msg_array
   end
-  
 end

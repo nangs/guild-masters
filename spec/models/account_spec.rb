@@ -1,5 +1,5 @@
 require 'rails_helper'
-#rspec spec/models/account_spec.rb
+# rspec spec/models/account_spec.rb
 
 RSpec.describe Account do
   it 'has a valid factor' do
@@ -10,7 +10,7 @@ RSpec.describe Account do
   end
   it 'is invalid without password' do
     expect(Account.count).to eq(0)
-    expect{FactoryGirl.create(:account, password: nil)}.to raise_error(ActiveRecord::RecordInvalid)
+    expect { FactoryGirl.create(:account, password: nil) }.to raise_error(ActiveRecord::RecordInvalid)
     expect(Account.count).to eq(0)
   end
 end

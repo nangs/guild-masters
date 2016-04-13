@@ -1,0 +1,40 @@
+Metrics/LineLength:
+  Max: 200
+
+AllCops:
+  Exclude:
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
+    - 'test/test_helper.rb'
+    - 'db/migrate/*'
+
+Rails:
+  Enabled: true
+
+Documentation:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+# to remove prefer each over for
+For:
+  Enabled: false
+
+# to remove restriction on complexity
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# to remove restriction on complexity
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# to remove restriction on nesting
+Metrics/BlockNesting:
+  Enabled: false

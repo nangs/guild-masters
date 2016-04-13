@@ -1,5 +1,5 @@
 require 'rails_helper'
-#rspec spec/models/guild_spec.rb
+# rspec spec/models/guild_spec.rb
 
 RSpec.describe Guild do
   it 'has a valid factor' do

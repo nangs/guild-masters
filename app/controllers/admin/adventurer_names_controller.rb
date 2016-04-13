@@ -2,7 +2,6 @@ class Admin::AdventurerNamesController < AdminController
   before_action :set_adventurer_name, only: [:show, :edit, :update, :destroy]
   before_action :authorized_admin
 
-
   # GET admin/adventurer_names
   # GET admin/adventurer_names.json
   def index
@@ -64,13 +63,12 @@ class Admin::AdventurerNamesController < AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_adventurer_name
-      @adventurer_name = AdventurerName.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def adventurer_name_params
-      params.require(:adventurer_name).permit(:name)
-    end
+  def set_adventurer_name
+    @adventurer_name = AdventurerName.find(params[:id])
+  end
+
+  def adventurer_name_params
+    params.require(:adventurer_name).permit(:name)
+  end
 end
