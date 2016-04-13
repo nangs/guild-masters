@@ -51,6 +51,8 @@ GM.GuildModel.getGuildInfo = function (func) {
 	    success: function(feedback) {
 	    	console.log(feedback);
 	    	GM.GuildmasterModel.guildmaster.guild = feedback.guild;
+	    	GM.max_adventurer_max_hp = feedback.guild.max_adventurer_max_hp;
+	    	GM.max_adventurer_attributes = feedback.guild.max_adventurer_attributes;
 	    	GM.GuildmasterView = guildmasterTemplate(GM.GuildmasterModel.guildmaster);
 	    	if (func) {
 	    		func(GM.GuildmasterView);
