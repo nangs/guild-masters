@@ -23,13 +23,14 @@ class SessionsController < ApplicationController
         error_msg = 'Wrong Email or Password'
         json_result = { msg: :error, detail: :wrong_password }
         account.num_failed_attempts += 1
+        account.save
         if account.num_failed_attempts >= 3
           account.email_confirmed = false
           account.confirm_token = account.id * rand(999)
+          account.save
           error_msg = 'Account Disabled Due to too many Login attempts'
           json_result = { msg: :error, detail: :account_disabled_too_many_attempts }
         end
-        account.save
       elsif !account.email_confirmed && !account.nil?
         error_msg = 'You are not an admin'
         json_result = { msg: :error, detail: :not_activated }

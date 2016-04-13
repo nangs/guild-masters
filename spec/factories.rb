@@ -7,6 +7,8 @@ FactoryGirl.define do
     confirm_token { Faker::Number.number(4) }
     email_confirmed { false }
     is_admin { false }
+    is_logged_in { false }
+    num_failed_attempts 0
     trait :activated do
       email_confirmed { true }
     end
