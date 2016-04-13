@@ -13,7 +13,7 @@ class FacilityEvent < ActiveRecord::Base
       return { msg: :error, detail: :guildmaster_busy }
     end
     total_gold_cost = 0
-    for adv in adventurers
+    adventurers.each do |adv|
       if adv.state != 'available'
         return { msg: :error, detail: :adventurer_busy }
 
@@ -32,7 +32,8 @@ class FacilityEvent < ActiveRecord::Base
 
     gm.gold = gm.gold - total_gold_cost
     msg_array = []
-    for adv in adventurers
+    
+    adventurers.each do |adv|
       fe = FacilityEvent.new
 
       facility.facility_events << fe

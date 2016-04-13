@@ -35,7 +35,7 @@ class Guildmaster < ActiveRecord::Base
   def refresh
     guilds = self.guilds
     msg_array = []
-    for guild in guilds
+    guilds.each do |guild|
       advs = []
       qsts = []
       nqst = guild.popularity / (25 * (2**(guild.level - 1)))

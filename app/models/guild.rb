@@ -30,7 +30,7 @@ class Guild < ActiveRecord::Base
         return { msg: :error, detail: :not_enough_gold, require: 250 * (level + 1) }
       end
       facilities = self.facilities
-      for fac in facilities
+      facilities.each do |fac|
         if fac.capacity != fac.level * 2
           return { msg: :error, detail: :facility_in_used, facility: fac }
         end
@@ -47,7 +47,7 @@ class Guild < ActiveRecord::Base
     return false if gm.state != 'available'
     return false if gm.gold < 250 * (level + 1)
     facilities = self.facilities
-    for fac in facilities
+    facilities.each do|fac|
       return false if fac.capacity != fac.level * 2
     end
     return false if popularity < 50 * (2**(level - 1))
