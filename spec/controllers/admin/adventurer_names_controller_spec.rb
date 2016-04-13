@@ -28,7 +28,7 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
     request.session[:admin_id] = @admin.id
   end
   let(:valid_attributes) do
-    { name: "name" }
+    { name: 'name' }
   end
 
   let(:invalid_attributes) do
@@ -44,7 +44,7 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
 
   describe 'GET #show' do
     it 'assigns the requested adventurer_name as @adventurer_name' do
-      get :show, { id: @adventurer_name.to_param }
+      get :show, id: @adventurer_name.to_param
       expect(assigns(:adventurer_name)).to eq(@adventurer_name)
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
 
   describe 'GET #edit' do
     it 'assigns the requested adventurer_name as @adventurer_name' do
-      get :edit, { id: @adventurer_name.to_param }
+      get :edit, id: @adventurer_name.to_param
       expect(assigns(:adventurer_name)).to eq(@adventurer_name)
     end
   end
@@ -67,12 +67,12 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
     context 'with valid params' do
       it 'creates a new AdventurerName' do
         expect do
-          post :create, { adventurer_name: valid_attributes }
+          post :create, adventurer_name: valid_attributes
         end.to change(AdventurerName, :count).by(1)
       end
 
       it 'assigns a newly created adventurer_name as @adventurer_name' do
-        post :create, { adventurer_name: valid_attributes }
+        post :create, adventurer_name: valid_attributes
         expect(assigns(:adventurer_name)).to be_a(AdventurerName)
         expect(assigns(:adventurer_name)).to be_persisted
       end
@@ -99,16 +99,16 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        { name: "new_name"}
+        { name: 'new_name' }
       end
 
       it 'updates the requested adventurer_name' do
-        put :update, { id: @adventurer_name.to_param, adventurer_name: new_attributes }
+        put :update, id: @adventurer_name.to_param, adventurer_name: new_attributes
         @adventurer_name.reload
       end
 
       it 'assigns the requested adventurer_name as @adventurer_name' do
-        put :update, { id: @adventurer_name.to_param, adventurer_name: valid_attributes }
+        put :update, id: @adventurer_name.to_param, adventurer_name: valid_attributes
         expect(assigns(:adventurer_name)).to eq(@adventurer_name)
       end
 
@@ -120,7 +120,7 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
 
     context 'with invalid params' do
       it 'assigns the adventurer_name as @adventurer_name' do
-        put :update, { id: @adventurer_name.to_param, adventurer_name: invalid_attributes }
+        put :update, id: @adventurer_name.to_param, adventurer_name: invalid_attributes
         expect(assigns(:adventurer_name)).to eq(@adventurer_name)
       end
 
@@ -134,12 +134,12 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested adventurer_name' do
       expect do
-        delete :destroy, { id: @adventurer_name.to_param }
+        delete :destroy, id: @adventurer_name.to_param
       end.to change(AdventurerName, :count).by(-1)
     end
 
     it 'redirects to the adventurer_names list' do
-      delete :destroy, { id: @adventurer_name.to_param }
+      delete :destroy, id: @adventurer_name.to_param
       expect(response).to redirect_to(admin_adventurer_names_path)
     end
   end

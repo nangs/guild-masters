@@ -26,7 +26,7 @@ class Event < ActiveRecord::Base
     qes.each do |qe|
       msg_array << qe.complete
     end
-    fes.each do|fe|
+    fes.each do |fe|
       msg_array << fe.complete
     end
     ses.each do |se|

@@ -32,7 +32,7 @@ class FacilityEvent < ActiveRecord::Base
 
     gm.gold = gm.gold - total_gold_cost
     msg_array = []
-    
+
     adventurers.each do |adv|
       fe = FacilityEvent.new
 

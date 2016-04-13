@@ -47,7 +47,7 @@ class Guild < ActiveRecord::Base
     return false if gm.state != 'available'
     return false if gm.gold < 250 * (level + 1)
     facilities = self.facilities
-    facilities.each do|fac|
+    facilities.each do |fac|
       return false if fac.capacity != fac.level * 2
     end
     return false if popularity < 50 * (2**(level - 1))
