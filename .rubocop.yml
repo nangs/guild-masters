@@ -10,7 +10,7 @@ AllCops:
     - 'app/helpers/admin/*'
     - 'app/models/game.rb'
     - 'test/models/game_test.rb'
-
+    - 'db/schema.rb'
 Rails:
   Enabled: true
 

@@ -19,6 +19,8 @@ class Account < ActiveRecord::Base
       new_account = Account.new(password: password, email: email)
       new_account.save
       new_account.confirm_token = new_account.id * rand(999)
+      new_account.num_failed_attempts = 0
+      new_account.is_logged_in = false
       new_account.save
       new_account.initialize_guildmaster
       thr = Thread.new do
@@ -71,6 +73,7 @@ class Account < ActiveRecord::Base
     account = Account.find_by(email: email)
     if !account.nil? && account.confirm_token == confirm_token && !account.email_confirmed
       account.email_confirmed = true
+      account.num_failed_attempts = 0
       account.save
       return { msg: :success }
     elsif account.nil?
