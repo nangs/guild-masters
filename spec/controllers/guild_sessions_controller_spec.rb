@@ -59,7 +59,7 @@ RSpec.describe GuildSessionsController do
         context 'error' do
           it 'wrong guild_id' do
             request.session[:account_id] = @activated_account.id
-            post :create, { cmd: 'create', guild_id: !@guild_id }, format: :json
+            post :create, { cmd: 'create', guild_id: !Guild.all.ids }, format: :json
             expect(response.status).to eq(200)
             expect(Account.count).to eq(1)
             expect(Guild.count).to eq(1)
