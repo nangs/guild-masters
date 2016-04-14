@@ -6,3 +6,4 @@ var resetPasswordTemplate = HandlebarsTemplates['admin/resetPassword'];
 var resetPasswordSuccessTemplate = HandlebarsTemplates['admin/resetPasswordSuccess'];
 var emailNotActivatedTemplate = HandlebarsTemplates['admin/emailNotActivated'];
 var alertMessageTemplate = HandlebarsTemplates['admin/alertMessage'];
+var unauthorizedTemplate = HandlebarsTemplates['admin/unauthorized'];
