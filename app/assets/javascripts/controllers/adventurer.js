@@ -45,22 +45,30 @@ GM.AdventurerController.searchById = function (id) {
 GM.AdventurerController.showAdventurerPage = function() {
 	GM.AdventurerModel.getAllAdventurers(function (data) {
 	    var adventurers = GM.AdventurerController.filterAlive(data);
-	    if (adventurers.length == 0) {
-	    	showView("There is no Adventurer in your Guild, please try scouting for some Adventurers and Quests");
-	    }
-	    else {
-	    	var list = adventurerSummaryTableTemplate({'adventurers' : adventurers});
-	    	var view = adventurerDisplayTemplate();
-	    	showView(view);	
-	    	$('#adventurers_list').html(list);
-	    	$('.adventurer_row').mouseup(function() {
-	    		var adventurer = GM.AdventurerController.searchById(this.id);
-	    		$('.adventurer_row').css('background-color', 'white');
-	    		renderAdventureDetails(adventurer);
-	    		$(this).css('background-color', 'yellow');
-	    	});
-	    	var first_id = adventurers[0].id;
-	    	$('#' + first_id).mouseup();
-	    }
+	    GM.AdventurerController.showAdventurerWithGraph(adventurers, adventurerSummaryTableTemplate);
 	});
+};
+
+GM.AdventurerController.showAdventurerWithGraph = function(adventurers, tableTemplate, prependHtml) {
+    if (adventurers.length == 0) {
+    	showView("There is no Adventurer in your Guild, please try scouting for some Adventurers and Quests");
+    }
+    else {
+    	var list = tableTemplate({'adventurers' : adventurers});
+    	var view = adventurerDisplayTemplate();
+    	if (prependHtml) {
+    		showView(prependHtml + view);
+    	} else{
+    		showView(view);
+    	}
+    	$('#adventurers_list').html(list);
+    	$('.adventurer_row').mouseup(function() {
+    		var adventurer = GM.AdventurerController.searchById(this.id);
+    		$('.adventurer_row').css('background-color', 'white');
+    		renderAdventureDetails(adventurer);
+    		$(this).css('background-color', 'yellow');
+    	});
+    	var first_id = adventurers[0].id;
+    	$('#' + first_id).mouseup();
+    }
 };
