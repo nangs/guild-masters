@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<p><%= link_to 'Logout', admin_root_path %></p>
+
+<p>
+  <strong>Max HP:</strong>
+  <%= @adventurer_template.max_hp %>
+</p>
+<p>
+  <strong>Max Energy:</strong>
+  <%= @adventurer_template.max_energy %>
+</p>
+<p>
+  <strong>Attack:</strong>
+  <%= @adventurer_template.attack %>
+</p>
+<p>
+  <strong>Defense:</strong>
+  <%= @adventurer_template.defense %>
+</p>
+<p>
+  <strong>Vision:</strong>
+  <%= @adventurer_template.vision %>
+</p>
+<%= link_to 'Edit', edit_admin_adventurer_template_path(@adventurer_template) %> |
+<%= link_to 'Back', admin_adventurer_templates_path %>

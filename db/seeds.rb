@@ -21,20 +21,20 @@ g = gm.guilds[0]
 g.popularity = 1000
 g.save
 
-AdventurerTemplate.create(max_hp: 1000,
-                          max_energy: 1000,
-                          attack: 100,
-                          defense: 100,
-                          vision: 100)
+AdventurerTemplate.create([
+    {max_hp: 1000, max_energy: 1000, attack: 100, defense: 100, vision: 100},
+    {max_hp: 1200, max_energy: 1100, attack: 110, defense: 90, vision: 70},
+    {max_hp: 900, max_energy: 1000, attack: 100, defense: 90, vision: 120},
+    {max_hp: 1000, max_energy: 1300, attack: 90, defense: 90, vision: 110},
+    {max_hp: 1200, max_energy: 1000, attack: 80, defense: 120, vision: 90}])
 
-5.times do |i|
-  MonsterTemplate.create(name: "monster#{i}",
-                         max_hp: 1000,
-                         max_energy: 100,
-                         attack: 100,
-                         defense: 100,
-                         invisibility: 100)
-end
+MonsterTemplate.create([
+    {name: "slime", max_hp: 1000, max_energy: 800, attack: 70, defense: 70, invisibility: 100},
+    {name: "goblin", max_hp: 800, max_energy: 1000, attack: 80, defense: 80, invisibility: 80},
+    {name: "skeleton", max_hp: 800, max_energy: 1000, attack: 100, defense: 90, invisibility: 90},
+    {name: "elf", max_hp: 700, max_energy: 1300, attack: 110, defense: 80, invisibility: 130},
+    {name: "giant", max_hp: 1400, max_energy: 800, attack: 120, defense: 100, invisibility: 60}
+    ])
 
 # Insert a list of possible adventurer names
 AdventurerName.create([

@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<p><%= link_to 'Logout', admin_root_path %></p>
+<p>
+  <strong>Name:</strong>
+  <%= @monster_template.name %>
+</p>
+<p>
+  <strong>Max HP:</strong>
+  <%= @monster_template.max_hp %>
+</p>
+<p>
+  <strong>Max Energy:</strong>
+  <%= @monster_template.max_energy %>
+</p>
+<p>
+  <strong>Attack:</strong>
+  <%= @monster_template.attack %>
+</p>
+<p>
+  <strong>Defense:</strong>
+  <%= @monster_template.defense %>
+</p>
+<p>
+  <strong>Invisibility:</strong>
+  <%= @monster_template.invisibility %>
+</p>
+<%= link_to 'Edit', edit_admin_monster_template_path(@monster_template) %> |
+<%= link_to 'Back', admin_monster_templates_path %>

@@ -1,11 +1,11 @@
-<h1>Listing Monster Template</h1>
+<h1>Listing Adventurer Template</h1>
 
 <p><%= link_to 'Logout', admin_root_path %></p>
 <p><%= link_to 'Back to Dashboard', :controller => 'admin/dashboard', :action => 'index' %></p>
-<p><%= link_to "New Monster Template", new_admin_monster_template_path %></p><br>
+<p><%= link_to "New Adventurer Template", new_admin_adventurer_template_path %></p><br>
 
 
-<%= datagrid_form_for @grid, :method => :get, :url => admin_monster_templates_path %>
+<%= datagrid_form_for @grid, :method => :get, :url => admin_adventurer_templates_path %>
 
 <%= paginate(@grid.assets) %>
 <%#	assets = @grid.assets.page(params[:page]) %>
