@@ -17,6 +17,11 @@ GM.QuestModel.getNewQuests = function(){
 	   	data: {
 	    	cmd: 'generate'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	GM.QuestModel.new_quests = data;
 	    	GM.QuestModel.quest_list.quests.push(data);
@@ -32,6 +37,11 @@ GM.QuestModel.getAllQuests = function (func) {
 	    data: {
 	    	cmd: 'get'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	GM.QuestModel.quest_list = data;
 	    	func(GM.QuestModel.quest_list);
@@ -48,6 +58,11 @@ GM.QuestModel.assign = function(id, assigned) {
 	    	quest_id: id,
 	    	adventurers_ids: assigned
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	console.log(data);
 	    	showView('Quest successfully assigned!');

@@ -23,6 +23,11 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 	    data:{
 	    	cmd : 'get'
 	    },
+		statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	GM.AdventurerModel.adventurers_list = data.adventurers;
 	    	func(GM.AdventurerModel.adventurers_list);
@@ -34,6 +39,11 @@ GM.AdventurerModel.getNewAdventurers = function () {
 	$.ajax({
 		type: 'POST',
 	    url: 'adventurers.json',
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	console.log(data);
 	    	// GM.AdventurerModel.new_adventure = data;

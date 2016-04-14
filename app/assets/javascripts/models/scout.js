@@ -9,6 +9,11 @@ GM.ScoutModel.scout = function (time, gold) {
 	    	time_spent: time,
 	    	gold_spent: gold
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	if (data.msg == 'success') {
 	    		showView('You spent ' + gold + ' gold for this scouting.');

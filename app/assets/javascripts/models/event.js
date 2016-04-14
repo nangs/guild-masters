@@ -14,6 +14,11 @@ GM.EventModel.getAllEvents = function (func) {
 	    data: {
 	    	cmd: 'get'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	GM.EventModel.event_list = GM.EventController.filterFuture(data.events);
 	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];
@@ -29,6 +34,11 @@ GM.EventModel.completeNextEvent = function () {
 	    data :{
 	    	cmd: 'complete_next',
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	console.log(data);
 	    	GM.EventController.showEventResults(data.events);
@@ -45,6 +55,11 @@ GM.EventModel.completeEventsUntil = function (time) {
 	    	cmd: 'complete',
 	    	end_time: time
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	console.log(data);
 	    	GM.EventController.showEventResults(data);

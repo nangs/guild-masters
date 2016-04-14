@@ -16,6 +16,11 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	    data: {
 	    	cmd: 'get'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	if (data.msg == "success") {
 		    	GM.GuildmasterModel.guildmaster = data.guildmaster;

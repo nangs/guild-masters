@@ -7,6 +7,11 @@ GM.FacilityModel.getFacilities = function (func) {
 	    data: {
 	    	cmd: 'get'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	GM.FacilityModel.facilities = data.facilities;
 	    	func(data);
@@ -23,6 +28,11 @@ GM.FacilityModel.assign = function(id, assigned) {
 	    	facility_id: id,
 	    	adventurers_ids: assigned
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(data) {
 	    	console.log(data);
 	    	if (data.msg == "error") {

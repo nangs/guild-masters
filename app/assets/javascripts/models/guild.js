@@ -16,6 +16,11 @@ GM.GuildModel.getAllGuilds = function (func) {
 	    data: {
 	    	cmd: 'get'
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(feedback) {
 	    	var guild = feedback.guilds[0];
             GM.GuildmasterModel.guildmaster.guild = guild;
@@ -36,6 +41,11 @@ GM.GuildModel.postGuildID = function (guildID) {
 	    	cmd: 'create',
 	    	guild_id : guildID
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(feedback) {
 	    }
 	});
@@ -48,6 +58,11 @@ GM.GuildModel.getGuildInfo = function (func) {
 	    data: {
 	    	cmd: 'get',
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(feedback) {
 	    	console.log(feedback);
 	    	GM.GuildmasterModel.guildmaster.guild = feedback.guild;
@@ -68,6 +83,11 @@ GM.GuildModel.upgrade = function () {
 	    data: {
 	    	cmd: 'create_guild_upgrade_event',
 	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
 	    success: function(feedback) {
 	    	if (feedback.msg == 'success') {
 	    		console.log(feedback);
