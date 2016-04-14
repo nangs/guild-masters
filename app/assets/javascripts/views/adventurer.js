@@ -39,7 +39,7 @@ function renderAdventureDetails(adventurer) {
 	if (GM.renderDetailBox) {
 		canvas = GM.renderDetailBox;
 	} else {
-		canvas = new fabric.Canvas('adventurer_detail');
+		canvas = new fabric.StaticCanvas('adventurer_detail');
 	}
 	canvas.clear();
 
@@ -94,18 +94,26 @@ function renderAdventureDetails(adventurer) {
 		}
 		var distance = Math.sqrt(percentage) * radius;
 		var angle = angles[i];
-        var x = distance * Math.cos(angle);
-        var y = distance * Math.sin(angle);
-        adventurer_points.push({x: x ,y: y});
+        var x = distance * Math.cos(angle) + cx;
+        var y = distance * Math.sin(angle) + cy + 7;
+        console.log([x,y]);
+        adventurer_points.push([x , y]);
 	}
 
-	var attribute_polygon = new fabric.Polygon(adventurer_points, {
-		left: cx,
-		top: cy,
-		stroke: 'blue',
-		fill: 'rgba(0,0,0,0)',
-	});
-	canvas.add(attribute_polygon);
+	for (var i = 0; i < 5; i++) {
+		var p1 = adventurer_points[i];
+		var p2;
+		if (i == 4) {
+			p2 = adventurer_points[0];
+		} else {
+			p2 = adventurer_points[i + 1];
+		}
+		var line = new fabric.Line([p1[0], p1[1], p2[0], p2[1]], {
+			stroke: 'green',
+			selectable: false
+		});
+		canvas.add(line);
+	} 
 
 	GM.renderDetailBox = canvas;
 	return canvas;
