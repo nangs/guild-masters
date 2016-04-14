@@ -35,13 +35,6 @@ RSpec.describe Admin::AdventurerNamesController, type: :controller do
     { name: nil }
   end
 
-  describe 'GET #index' do
-    it 'assigns all adventurer_names as @adventurer_names' do
-      get :index, {}
-      expect(assigns(:adventurer_names)).to eq([@adventurer_name])
-    end
-  end
-
   describe 'GET #show' do
     it 'assigns the requested adventurer_name as @adventurer_name' do
       get :show, id: @adventurer_name.to_param
