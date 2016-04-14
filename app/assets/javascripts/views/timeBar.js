@@ -136,10 +136,10 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var facility = eve.facility.name;
 		var adventurer = eve.adventurer.name;
-		var infoText = "Your adventurer " + adventurer +"\nis in the " + facility;
+		var infoText = "Your adventurer\n" + adventurer +"\nis in the " + facility;
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 100,
-			top: timeBar_top_padding + 18,
+			left: endTime + timeBar_start_point + 45,
+			top: timeBar_top_padding + 25,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
