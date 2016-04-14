@@ -442,3 +442,11 @@ function showAlertMessage(message) {
     $('#alert').html(alertMessage);
 }
 
+function show401Redirect(message) {
+    $('#indexPage').html(unauthorizedTemplate);
+    sessionStorage.removeItem('loggedIn');
+    $('#goToLogin').mouseup(function() {
+        setupLoginPage();
+    });
+}
+
