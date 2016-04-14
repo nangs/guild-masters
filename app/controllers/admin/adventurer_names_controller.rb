@@ -2,28 +2,22 @@ class Admin::AdventurerNamesController < AdminController
   before_action :set_adventurer_name, only: [:show, :edit, :update, :destroy]
   before_action :authorized_admin
 
-  # GET admin/adventurer_names
-  # GET admin/adventurer_names.json
   def index
-    @adventurer_names = AdventurerName.all
+    @grid = AdventurerNamesGrid.new(params[:adventurer_names_grid]) do |scope|
+      scope.page(params[:page])
+    end
   end
 
-  # GET admin/adventurer_names/1
-  # GET admin/adventurer_names/1.json
   def show
   end
 
-  # GET admin/adventurer_names/new
   def new
     @adventurer_name = AdventurerName.new
   end
 
-  # GET admin/adventurer_names/1/edit
   def edit
   end
 
-  # POST admin/adventurer_names
-  # POST admin/adventurer_names.json
   def create
     @adventurer_name = AdventurerName.new(adventurer_name_params)
 
@@ -38,8 +32,6 @@ class Admin::AdventurerNamesController < AdminController
     end
   end
 
-  # PATCH/PUT admin/adventurer_names/1
-  # PATCH/PUT admin/adventurer_names/1.json
   def update
     respond_to do |format|
       if @adventurer_name.update(adventurer_name_params)
@@ -52,8 +44,6 @@ class Admin::AdventurerNamesController < AdminController
     end
   end
 
-  # DELETE admin/adventurer_names/1
-  # DELETE admin/adventurer_names/1.json
   def destroy
     @adventurer_name.destroy
     respond_to do |format|

@@ -1,0 +1,37 @@
+<%= form_for [:admin, @adventurer_template] do |f| %>
+  <% if @adventurer_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@adventurer_template.errors.count, "error") %> prohibited this adventurer_template from being saved:</h2>
+
+      <ul>
+      <% @adventurer_template.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :max_hp %><br>
+    <%= f.number_field :max_hp %>
+  </div>
+  <div class="field">
+    <%= f.label :max_energy %><br>
+    <%= f.number_field :max_energy %>
+  </div>
+  <div class="field">
+    <%= f.label :attack %><br>
+    <%= f.number_field :attack %>
+  </div>
+  <div class="field">
+    <%= f.label :defense %><br>
+    <%= f.number_field :defense %>
+  </div>
+  <div class="field">
+    <%= f.label :vision %><br>
+    <%= f.number_field :vision %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

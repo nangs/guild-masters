@@ -1,28 +1,13 @@
-<p id="notice"><%= notice %></p>
+<h1>Listing Adventurer Name</h1>
 
-<h1>Listing Adventurer Names</h1>
 <p><%= link_to 'Logout', admin_root_path %></p>
 <p><%= link_to 'Back to Dashboard', :controller => 'admin/dashboard', :action => 'index' %></p>
-<p><%= link_to 'New Adventurer name', new_admin_adventurer_name_path %></p>
+<p><%= link_to "New Adventurer Name", new_admin_adventurer_name_path %></p><br>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @adventurer_names.each do |adventurer_name| %>
-      <tr>
-        <td><%= adventurer_name.name %></td>
-        <!-- <td><%= link_to 'Show', admin_adventurer_name_path(adventurer_name) %></td> -->
-        <td><%= link_to 'Edit', edit_admin_adventurer_name_path(adventurer_name) %></td>
-        <td><%= link_to 'Delete', admin_adventurer_name_path(adventurer_name), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= datagrid_form_for @grid, :method => :get, :url => admin_adventurer_names_path %>
 
-<br>
+<%= paginate(@grid.assets) %>
+<%# assets = @grid.assets.page(params[:page]) %>
+<%= datagrid_table(@grid, :html => {:class => "table table-hover"}) %>
+<%= paginate(@grid.assets) %>
