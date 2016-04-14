@@ -20,7 +20,7 @@ GM.FacilityController.showAssign = function(id) {
 	}
 	var facilityView = facilityAssignTemplate(facility);
 	GM.AdventurerModel.getAllAdventurers(function () {
-		var adventurers = GM.AdventurerModel.adventurers_list.adventurers;
+		var adventurers = GM.AdventurerModel.adventurers_list;
 		switch (facility.name) {
 			case 'clinic' :
 				adventurers = GM.AdventurerController.filterForClinic(adventurers);
