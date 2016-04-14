@@ -49,8 +49,18 @@ GM.AdventurerController.showAdventurerPage = function() {
 	    	showView("There is no Adventurer in your Guild, please try scouting for some Adventurers and Quests");
 	    }
 	    else {
-	    	var view = adventurersTableTemplate({'adventurers' : adventurers});
+	    	var list = adventurerSummaryTableTemplate({'adventurers' : adventurers});
+	    	var view = adventurerDisplayTemplate();
 	    	showView(view);	
+	    	$('#adventurers_list').html(list);
+	    	$('.adventurer_row').mouseup(function() {
+	    		var adventurer = GM.AdventurerController.searchById(this.id);
+	    		$('.adventurer_row').css('background-color', 'white');
+	    		renderAdventureDetails(adventurer);
+	    		$(this).css('background-color', 'yellow');
+	    	});
+	    	var first_id = adventurers[0].id;
+	    	$('#' + first_id).mouseup();
 	    }
 	});
 };

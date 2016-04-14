@@ -6,6 +6,7 @@ function showHomePage(data) {
 
 function showSection(section){
 	var view;
+    GM.renderDetailBox = null;
 	switch(section){
 		case 'events':
             GM.EventModel.getAllEvents(function (events) {
