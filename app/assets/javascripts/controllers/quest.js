@@ -10,7 +10,7 @@ GM.QuestController.showQuestAssignPage = function(id) {
 	}
 	var questView = questAssignTemplate(quest);
 	GM.AdventurerModel.getAllAdventurers(function () {
-		var adventurers = GM.AdventurerController.filterForQuest(GM.AdventurerModel.adventurers_list.adventurers);
+		var adventurers = GM.AdventurerController.filterForQuest(GM.AdventurerModel.adventurers_list);
 		if (adventurers.length == 0) {
 			showView("<p>You do not have any adventurers to be assigned to the quest.</p>");
 		} else {
