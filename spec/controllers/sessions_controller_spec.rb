@@ -74,11 +74,32 @@ RSpec.describe SessionsController do
           expect(parsed_body['msg']).to eq(@msg_expected)
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
+        it 'wrong_password more than 3 times' do
+          post :create, { email: @activated_account.email, password: !@activated_account.password }, format: :json
+          post :create, { email: @activated_account.email, password: !@activated_account.password }, format: :json
+          post :create, { email: @activated_account.email, password: !@activated_account.password }, format: :json
+          expect(response.status).to eq(200)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = 'error'
+          @detail_expected = 'account_disabled_too_many_attempts'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['detail']).to eq(@detail_expected)
+        end
         it 'wrong_password for admin' do
           post :create, { email: @admin_account.email, password: !@admin_account.password, is_admin_page: true }, format: :json
           expect(response.status).to eq(302)
           expect(session[:admin_id]).to be nil
           @flash_expected = 'Wrong Email or Password'
+          expect(flash[:error]).to eq(@flash_expected)
+        end
+        it 'wrong_password more than 3 times for admin' do
+          post :create, { email: @admin_account.email, password: !@admin_account.password,  is_admin_page: true }, format: :json
+          post :create, { email: @admin_account.email, password: !@admin_account.password,  is_admin_page: true }, format: :json
+          post :create, { email: @admin_account.email, password: !@admin_account.password,  is_admin_page: true }, format: :json
+          expect(response.status).to eq(302)
+          expect(session[:admin_id]).to be nil
+          @flash_expected = 'Account Disabled Due to too many Login attempts'
           expect(flash[:error]).to eq(@flash_expected)
         end
         it 'invalid_account' do

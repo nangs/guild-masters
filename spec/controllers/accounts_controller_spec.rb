@@ -19,7 +19,7 @@ RSpec.describe AccountsController do
               @sent_email = EmailSender.send_email('testing@gmail.com', :signup)
               expect(@sent_email).to deliver_to('testing@gmail.com')
               expect(@sent_email).to deliver_from(:user_name)
-              expect(@sent_email).to have_subject('Subject - Thank You for signing up')
+              expect(@sent_email).to have_subject('Thank You for signing up with GuildMasters')
               expect(@sent_email).to have_body_text("Please activate your account with the code provided:\nActivation Code: #{Account.find_by_email('testing@gmail.com').confirm_token}")
             end
           end
@@ -256,7 +256,7 @@ RSpec.describe AccountsController do
               @sent_email = EmailSender.send_email(@account.email, :signup)
               expect(@sent_email).to deliver_to(@account.email)
               expect(@sent_email).to deliver_from(:user_name)
-              expect(@sent_email).to have_subject('Subject - Thank You for signing up')
+              expect(@sent_email).to have_subject('Thank You for signing up with GuildMasters')
               expect(@sent_email).to have_body_text("Please activate your account with the code provided:\nActivation Code: #{Account.find_by_email(@account.email).confirm_token}")
             end
           end
@@ -316,7 +316,7 @@ RSpec.describe AccountsController do
               @sent_email = EmailSender.send_email(@activated_account.email, :reset_password)
               expect(@sent_email).to deliver_to(@activated_account.email)
               expect(@sent_email).to deliver_from(:user_name)
-              expect(@sent_email).to have_subject('Subject - Password Change')
+              expect(@sent_email).to have_subject('GuildMasters - Password Change')
               expect(@sent_email).to have_body_text("Please change your account password with the code provided:\nCode: #{Account.find_by_email(@activated_account.email).confirm_token}")
             end
           end
@@ -335,7 +335,7 @@ RSpec.describe AccountsController do
               @sent_email = EmailSender.send_email(@account.email, :reset_password)
               expect(@sent_email).to deliver_to(@account.email)
               expect(@sent_email).to deliver_from(:user_name)
-              expect(@sent_email).to have_subject('Subject - Password Change and Account Activation')
+              expect(@sent_email).to have_subject('GuildMasters - Password Change and Account Activation')
               expect(@sent_email).to have_body_text("Please change your account password
                                                     and activate your account with the code provided:\nCode:
                                                     #{Account.find_by_email(@account.email).confirm_token}")

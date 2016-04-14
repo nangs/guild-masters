@@ -1,0 +1,6 @@
+<%= datagrid_form_for @grid, :method => :get, :url => admin_monster_templates_path %>
+
+<%= paginate(@grid.assets) %>
+<%#	assets = @grid.assets.page(params[:page]) %>
+<%= datagrid_table(@grid, :html => {:class => "table table-hover"}) %>
+<%= paginate(@grid.assets) %>

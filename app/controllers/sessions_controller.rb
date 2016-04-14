@@ -22,6 +22,15 @@ class SessionsController < ApplicationController
       elsif !account.authenticate(password) && !account.nil?
         error_msg = 'Wrong Email or Password'
         json_result = { msg: :error, detail: :wrong_password }
+        account.num_failed_attempts += 1
+        account.save
+        if account.num_failed_attempts >= 3
+          account.email_confirmed = false
+          account.confirm_token = account.id * rand(999)
+          account.save
+          error_msg = 'Account Disabled Due to too many Login attempts'
+          json_result = { msg: :error, detail: :account_disabled_too_many_attempts }
+        end
       elsif !account.email_confirmed && !account.nil?
         error_msg = 'You are not an admin'
         json_result = { msg: :error, detail: :not_activated }
@@ -34,12 +43,16 @@ class SessionsController < ApplicationController
           error_msg = 'You are not an admin'
         elsif account.is_admin
           session[:admin_id] = account.id
+          acc = Account.find(session[:admin_id])
           if is_admin_page
             flash[:success] = 'Successful login'
             redirect_to controller: 'admin/dashboard', action: 'index'
             return
           end
         end
+        acc.num_failed_attempts = 0
+        acc.is_logged_in = true
+        acc.save
         json_result = { msg: :success, guilds: guilds }
       end
     end
@@ -54,6 +67,14 @@ class SessionsController < ApplicationController
 
   # DELETE /sessions.json
   def destroy
+    unless session[:admin_id].nil?
+      acc_admin = Account.find(session[:admin_id])
+      acc_admin.is_logged_in = false
+    end
+    unless session[:account_id].nil?
+      acc_player = Account.find(session[:account_id])
+      acc_player.is_logged_in = false
+    end
     reset_session
     result = { msg: :success }
     render json: result.as_json

@@ -11,191 +11,195 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_160_324_015_721) do
-  create_table 'accounts', force: :cascade do |t|
-    t.string   'username'
-    t.string   'password_digest'
-    t.string   'email'
-    t.datetime 'created_at',                      null: false
-    t.datetime 'updated_at',                      null: false
-    t.boolean  'email_confirmed', default: false
-    t.string   'confirm_token'
-    t.integer  'session_id'
-    t.boolean  'is_admin', default: false
+ActiveRecord::Schema.define(version: 20160413110537) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "username"
+    t.string   "password_digest"
+    t.string   "email"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.boolean  "email_confirmed",     default: false
+    t.string   "confirm_token"
+    t.integer  "session_id"
+    t.boolean  "is_admin",            default: false
+    t.boolean  "is_logged_in",        default: false
+    t.integer  "num_failed_attempts", default: 0
   end
 
-  create_table 'adventurer_names', force: :cascade do |t|
-    t.string   'name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "adventurer_names", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'adventurer_templates', force: :cascade do |t|
-    t.integer  'max_hp'
-    t.integer  'max_energy'
-    t.integer  'attack'
-    t.integer  'defense'
-    t.integer  'vision'
-    t.integer  'region_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "adventurer_templates", force: :cascade do |t|
+    t.integer  "max_hp"
+    t.integer  "max_energy"
+    t.integer  "attack"
+    t.integer  "defense"
+    t.integer  "vision"
+    t.integer  "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index 'adventurer_templates', ['region_id'], name: 'index_adventurer_templates_on_region_id'
+  add_index "adventurer_templates", ["region_id"], name: "index_adventurer_templates_on_region_id"
 
-  create_table 'adventurers', force: :cascade do |t|
-    t.integer  'hp'
-    t.integer  'max_hp'
-    t.integer  'energy'
-    t.integer  'max_energy'
-    t.integer  'attack'
-    t.integer  'defense'
-    t.integer  'vision'
-    t.string   'state'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer  'guild_id'
-    t.string   'name'
+  create_table "adventurers", force: :cascade do |t|
+    t.integer  "hp"
+    t.integer  "max_hp"
+    t.integer  "energy"
+    t.integer  "max_energy"
+    t.integer  "attack"
+    t.integer  "defense"
+    t.integer  "vision"
+    t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "guild_id"
+    t.string   "name"
   end
 
-  add_index 'adventurers', ['guild_id'], name: 'index_adventurers_on_guild_id'
+  add_index "adventurers", ["guild_id"], name: "index_adventurers_on_guild_id"
 
-  create_table 'adventurers_quest_events', id: false, force: :cascade do |t|
-    t.integer 'adventurer_id'
-    t.integer 'quest_event_id'
+  create_table "adventurers_quest_events", id: false, force: :cascade do |t|
+    t.integer "adventurer_id"
+    t.integer "quest_event_id"
   end
 
-  add_index 'adventurers_quest_events', ['adventurer_id'], name: 'index_adventurers_quest_events_on_adventurer_id'
-  add_index 'adventurers_quest_events', ['quest_event_id'], name: 'index_adventurers_quest_events_on_quest_event_id'
+  add_index "adventurers_quest_events", ["adventurer_id"], name: "index_adventurers_quest_events_on_adventurer_id"
+  add_index "adventurers_quest_events", ["quest_event_id"], name: "index_adventurers_quest_events_on_quest_event_id"
 
-  create_table 'events', force: :cascade do |t|
-    t.integer  'start_time'
-    t.integer  'end_time'
-    t.integer  'gold_spend'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spend"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'facilities', force: :cascade do |t|
-    t.integer  'level'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string   'name'
-    t.integer  'capacity'
-    t.integer  'guild_id'
+  create_table "facilities", force: :cascade do |t|
+    t.integer  "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.integer  "capacity"
+    t.integer  "guild_id"
   end
 
-  add_index 'facilities', ['guild_id'], name: 'index_facilities_on_guild_id'
+  add_index "facilities", ["guild_id"], name: "index_facilities_on_guild_id"
 
-  create_table 'facility_events', force: :cascade do |t|
-    t.integer  'start_time'
-    t.integer  'end_time'
-    t.integer  'gold_spent'
-    t.datetime 'created_at',    null: false
-    t.datetime 'updated_at',    null: false
-    t.integer  'facility_id'
-    t.integer  'adventurer_id'
+  create_table "facility_events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "facility_id"
+    t.integer  "adventurer_id"
   end
 
-  add_index 'facility_events', ['adventurer_id'], name: 'index_facility_events_on_adventurer_id'
-  add_index 'facility_events', ['facility_id'], name: 'index_facility_events_on_facility_id'
+  add_index "facility_events", ["adventurer_id"], name: "index_facility_events_on_adventurer_id"
+  add_index "facility_events", ["facility_id"], name: "index_facility_events_on_facility_id"
 
-  create_table 'guild_upgrade_events', force: :cascade do |t|
-    t.integer  'start_time'
-    t.integer  'end_time'
-    t.integer  'gold_spent'
-    t.integer  'guild_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "guild_upgrade_events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
+    t.integer  "guild_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index 'guild_upgrade_events', ['guild_id'], name: 'index_guild_upgrade_events_on_guild_id'
+  add_index "guild_upgrade_events", ["guild_id"], name: "index_guild_upgrade_events_on_guild_id"
 
-  create_table 'guildmasters', force: :cascade do |t|
-    t.integer  'gold'
-    t.integer  'game_time'
-    t.string   'state'
-    t.datetime 'created_at',       null: false
-    t.datetime 'updated_at',       null: false
-    t.integer  'account_id'
-    t.integer  'current_guild_id'
+  create_table "guildmasters", force: :cascade do |t|
+    t.integer  "gold"
+    t.integer  "game_time"
+    t.string   "state"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "account_id"
+    t.integer  "current_guild_id"
   end
 
-  add_index 'guildmasters', ['account_id'], name: 'index_guildmasters_on_account_id'
+  add_index "guildmasters", ["account_id"], name: "index_guildmasters_on_account_id"
 
-  create_table 'guilds', force: :cascade do |t|
-    t.integer  'level'
-    t.integer  'popularity'
-    t.datetime 'created_at',     null: false
-    t.datetime 'updated_at',     null: false
-    t.integer  'guildmaster_id'
+  create_table "guilds", force: :cascade do |t|
+    t.integer  "level"
+    t.integer  "popularity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "guildmaster_id"
   end
 
-  add_index 'guilds', ['guildmaster_id'], name: 'index_guilds_on_guildmaster_id'
+  add_index "guilds", ["guildmaster_id"], name: "index_guilds_on_guildmaster_id"
 
-  create_table 'monster_templates', force: :cascade do |t|
-    t.string   'name'
-    t.integer  'max_hp'
-    t.integer  'max_energy'
-    t.integer  'attack'
-    t.integer  'defense'
-    t.integer  'invisibility'
-    t.datetime 'created_at',   null: false
-    t.datetime 'updated_at',   null: false
+  create_table "monster_templates", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "max_hp"
+    t.integer  "max_energy"
+    t.integer  "attack"
+    t.integer  "defense"
+    t.integer  "invisibility"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  create_table 'quest_events', force: :cascade do |t|
-    t.integer  'quest_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer  'start_time'
-    t.integer  'end_time'
-    t.integer  'gold_spent'
+  create_table "quest_events", force: :cascade do |t|
+    t.integer  "quest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
   end
 
-  add_index 'quest_events', ['quest_id'], name: 'index_quest_events_on_quest_id'
+  add_index "quest_events", ["quest_id"], name: "index_quest_events_on_quest_id"
 
-  create_table 'quests', force: :cascade do |t|
-    t.integer  'difficulty'
-    t.string   'state'
-    t.integer  'reward'
-    t.datetime 'created_at',          null: false
-    t.datetime 'updated_at',          null: false
-    t.integer  'guild_id'
-    t.integer  'monster_template_id'
-    t.text     'description'
+  create_table "quests", force: :cascade do |t|
+    t.integer  "difficulty"
+    t.string   "state"
+    t.integer  "reward"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "guild_id"
+    t.integer  "monster_template_id"
+    t.text     "description"
   end
 
-  add_index 'quests', ['guild_id'], name: 'index_quests_on_guild_id'
-  add_index 'quests', ['monster_template_id'], name: 'index_quests_on_monster_template_id'
+  add_index "quests", ["guild_id"], name: "index_quests_on_guild_id"
+  add_index "quests", ["monster_template_id"], name: "index_quests_on_monster_template_id"
 
-  create_table 'regions', force: :cascade do |t|
-    t.string   'name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "regions", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'scout_events', force: :cascade do |t|
-    t.integer  'start_time'
-    t.integer  'end_time'
-    t.integer  'gold_spent'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer  'guild_id'
+  create_table "scout_events", force: :cascade do |t|
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.integer  "gold_spent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "guild_id"
   end
 
-  add_index 'scout_events', ['guild_id'], name: 'index_scout_events_on_guild_id'
+  add_index "scout_events", ["guild_id"], name: "index_scout_events_on_guild_id"
 
-  create_table 'scouts', force: :cascade do |t|
-    t.string   'scout_type'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "scouts", force: :cascade do |t|
+    t.string   "scout_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'treasures', force: :cascade do |t|
-    t.string   'name'
-    t.integer  'invisibility'
-    t.datetime 'created_at',   null: false
-    t.datetime 'updated_at',   null: false
+  create_table "treasures", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "invisibility"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
+
 end
