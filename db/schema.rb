@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413110537) do
+ActiveRecord::Schema.define(version: 20160414021205) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
@@ -145,6 +145,12 @@ ActiveRecord::Schema.define(version: 20160413110537) do
     t.integer  "invisibility"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "quest_descriptions", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "quest_events", force: :cascade do |t|
