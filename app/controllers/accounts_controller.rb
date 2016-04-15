@@ -11,14 +11,21 @@ class AccountsController < ApplicationController
     if params[:cmd] == 'signup'
       email = params[:email]
       password = params[:password]
+      username = params[:username]
       if email.nil?
         result = { msg: :error, detail: :email_nil }
       elsif password.nil?
         result = { msg: :error, detail: :password_nil }
+      elsif username.nil?
+        result = { msg: :error, detail: :username_nil }
       elsif password.size < 6
         result = { msg: :error, detail: :password_too_short }
-      elsif !email.nil? && !password.nil?
-        result = Account.create_account(email, password)
+      elsif username.size < 5
+        result = { msg: :error, detail: :username_too_short }
+      elsif username.size > 15
+        result = { msg: :error, detail: :username_too_long }
+      elsif !email.nil? && !password.nil? && !username.nil?
+        result = Account.create_account(email, password, username)
       end
     elsif params[:cmd] == 'activate_account'
       email = params[:email]
