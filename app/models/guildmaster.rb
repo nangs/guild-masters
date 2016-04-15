@@ -15,13 +15,15 @@ class Guildmaster < ActiveRecord::Base
     all_guildmaster_details = []
     Account.where(is_admin: false).find_each do |user|
       guild = user.guildmaster.guilds.first
-      all_guildmaster_details << {
-        username: user.username,
-        game_time: user.guildmaster.game_time,
-        gold: user.guildmaster.gold,
-        popularity: guild.popularity,
-        level: guild.level
-      }
+      unless guild.nil?
+        all_guildmaster_details << {
+          username: user.username,
+          game_time: user.guildmaster.game_time,
+          gold: user.guildmaster.gold,
+          popularity: guild.popularity,
+          level: guild.level
+        }
+      end
     end
     all_guildmaster_details
   end
