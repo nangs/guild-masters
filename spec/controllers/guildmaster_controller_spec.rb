@@ -27,6 +27,21 @@ RSpec.describe GuildmasterController do
           expect(parsed_body['guildmaster']).to_not be nil
         end
       end
+      context 'when params[:cmd] == show_all' do
+        it 'get guildmaster info' do
+          request.session[:account_id] = @activated_account.id
+          post :create, { cmd: 'show_all' }, format: :json
+          expect(response.status).to eq(200)
+          expect(Account.count).to eq(1)
+          expect(Guild.count).to eq(1)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          expect(session[:account_id]).to_not be nil
+          @msg_expected = 'success'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['users']).to_not be nil
+        end
+      end
       context 'when params[:cmd] == nil or not valid' do
         context 'invalid params' do
           it 'empty cmd' do
