@@ -123,6 +123,19 @@ RSpec.describe AccountsController do
           expect(parsed_body['msg']).to eq(@msg_expected)
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
+        it 'username taken' do
+          @activated_account.username = 'username'
+          @activated_account.save
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456', username: 'username' }, format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = 'error'
+          @detail_expected = 'username_taken'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['detail']).to eq(@detail_expected)
+        end
       end
     end
     context 'when params[:cmd] == activate_account' do
