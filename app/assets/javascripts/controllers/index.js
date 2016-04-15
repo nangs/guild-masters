@@ -127,7 +127,7 @@ function setupSignupPage(email, password) {
         if (password != confirmPassword) { // check whether the two passwords are the same
             showDifferentPasswordError();
         } else if (password.length < 6){
-            passwordTooShortError();
+            showPasswordTooShortError();
         } else if (email == ''){
             showSignupNullError('email');
         } else if (password == '') {
@@ -429,8 +429,9 @@ function showSignupNullError(field) {
 	showAlertMessage('You must enter a valid ' + field);
 }
 
-function passwordTooShortError() {
-	showAlertMessage('The password must be at least than 6 characters');
+function showPasswordTooShortError() {
+	showAlertMessage('The password must be at least 6 characters');
+}
 }
 
 function showLoginError() {
