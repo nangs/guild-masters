@@ -33,8 +33,7 @@ GM.FacilityController.showAssign = function(id) {
 		if (adventurers.length == 0) {
 			showView('There are no adventurers available to be sent to the ' + facility.name);
 		} else {
-			var adventurersView = adventurerAssignTemplate({"adventurers" : adventurers});
-			showView(facilityView + adventurersView);			
+			GM.AdventurerController.showAdventurerWithGraph(adventurers, adventurerAssignTableTemplate, facilityView) 		
 		}
 	});
 }
