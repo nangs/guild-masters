@@ -14,7 +14,7 @@ class Guildmaster < ActiveRecord::Base
   def self.show_all
     all_guildmaster_details = []
     Account.where(is_admin: false).find_each do |user|
-      guild = user.guildmaster.Guild.first
+      guild = user.guildmaster.guilds.first
       all_guildmaster_details << {
         username: user.username,
         game_time: user.guildmaster.game_time,
