@@ -9,6 +9,7 @@ Account.create(email: 'admin@example.com',
 
 acc = Account.create(email: 'test@example.com',
                      password: '123456',
+                     username: 'testuser1'
                      email_confirmed: true)
 
 acc.initialize_guildmaster
@@ -35,6 +36,12 @@ MonsterTemplate.create([
                          { name: 'elf', max_hp: 700, max_energy: 1300, attack: 110, defense: 80, invisibility: 130 },
                          { name: 'giant', max_hp: 1400, max_energy: 800, attack: 120, defense: 100, invisibility: 60 }
                        ])
+
+QuestDescription.create([
+                          { description: 'A %s assaulted our village. Please kill it for the villagers.' },
+                          { description: 'A %s has been attacking our villagers for a long time. Please kill it to protect our villagers.' },
+                          { description: 'A %s has become a threat to our villagers\' cattle. Please help our villagers to get rid of it.' }
+                        ])
 
 # Insert a list of possible adventurer names
 AdventurerName.create([
