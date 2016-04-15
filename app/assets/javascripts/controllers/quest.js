@@ -14,8 +14,7 @@ GM.QuestController.showQuestAssignPage = function(id) {
 		if (adventurers.length == 0) {
 			showView("<p>You do not have any adventurers to be assigned to the quest.</p>");
 		} else {
-			var adventurersView = adventurerAssignTemplate({'adventurers' : adventurers});
-			showView(questView + adventurersView);
+			GM.AdventurerController.showAdventurerWithGraph(adventurers, adventurerAssignTableTemplate, questView)
 		}
 	});
 }
@@ -50,7 +49,7 @@ GM.QuestController.showQuestPage = function() {
 		if (quests.length == 0) {
 			showView("There is no Quest, please try scouting for some Adventurers and Quests")
 		} else {
-			var view = questsTableTemplate({"quests" : quests});
+			var view = questPendingTableTemplate({"quests" : quests});
 			showView(view);	
 		}
 	})
