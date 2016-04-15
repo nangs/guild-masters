@@ -121,17 +121,24 @@ function setupSignupPage(email, password) {
     $('#signupButton').mouseup(function() {
 
         var email = $('#email').val();
+        var username = $('#username').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
-        if (password != confirmPassword) { // check whether the two passwords are the same
-            showDifferentPasswordError();
-        } else if (password.length < 6){
-            showPasswordTooShortError();
-        } else if (email == ''){
+        if (email == ''){
             showSignupNullError('email');
+        } else if (username == ''){
+            showSignupNullError('username');
+        } else if (username.length < 5){
+            showUsernameTooShortError();
+        } else if (username.length > 15){
+            showUsernameTooLongError();
         } else if (password == '') {
             showSignupNullError('password');
+        } else if (password.length < 6){
+            showPasswordTooShortError();
+        } else if (password != confirmPassword) { // check whether the two passwords are the same
+            showDifferentPasswordError();
         } 
         else {
             submitted = true;
@@ -141,6 +148,7 @@ function setupSignupPage(email, password) {
                 data: {
                 	cmd: 'signup',
                     email: email,
+                    username: username,
                     password: password
                 },
                 success: function(feedback) {
