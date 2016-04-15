@@ -252,7 +252,7 @@ function setupForgetPasswordPage(email, password) {
         if (password != confirmPassword) { // check whether the two passwords are the same
             showDifferentPasswordError();
         } else if (password.length < 6){
-            passwordTooShortError();
+            showPasswordTooShortError();
         } else if (email == ''){
             showSignupNullError('email');
         } else if (password == '') {
@@ -412,7 +412,7 @@ function showWrongToken () {
 }
 
 function showEmailTaken() {
-	showAlertMessage('The email you used to register is already taken.');
+	showAlertMessage('The email you entered to register is already taken.');
 }
 
 function showEmailNotValid() {
