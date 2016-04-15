@@ -109,7 +109,7 @@ function setupLoginPage() {
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
-            $('#loginButton').mouseup();
+            $('.enterButton').mouseup();
         }
     });
 }
@@ -174,11 +174,6 @@ function setupSignupPage(email, password) {
                     }
                 }
             });
-        }
-    });
-    $(document).keypress(function(e) {
-        if(e.which == 13) {
-            $('#signupButton').mouseup();
         }
     });
 }
