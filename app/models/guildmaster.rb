@@ -14,7 +14,7 @@ class Guildmaster < ActiveRecord::Base
   def self.show_all
     all_guildmaster_details = []
     Account.where(is_admin: false).find_each do |user|
-      guild = Guild.find_by(id: user.guildmaster.current_guild_id)
+      guild = user.guildmaster.Guild.first
       all_guildmaster_details << {
         username: user.username,
         game_time: user.guildmaster.game_time,
@@ -44,7 +44,6 @@ class Guildmaster < ActiveRecord::Base
     canteen.capacity = 2
     canteen.save
     guild.save
-    self.current_guild_id = guild.id
     guild
   end
 
