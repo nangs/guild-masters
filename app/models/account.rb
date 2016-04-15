@@ -9,14 +9,15 @@ class Account < ActiveRecord::Base
   # email created and activated
   # email created but not activated
   # email does not exist
-  # To call this function: Account.create_account(params[:email],params[:password])
-  def self.create_account(email, password)
+  def self.create_account(email, password, username)
     account = Account.find_by(email: email)
     if !account.nil?
       return { msg: :error, detail: :account_taken } if account.email_confirmed
       { msg: :error, detail: :not_activated }
     elsif account.nil?
-      new_account = Account.new(password: password, email: email)
+      name = Account.find_by(username: username)
+      return { msg: :error, detail: :username_taken } unless name.nil?
+      new_account = Account.new(password: password, email: email, username: username)
       new_account.save
       new_account.confirm_token = new_account.id * rand(999)
       new_account.num_failed_attempts = 0

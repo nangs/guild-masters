@@ -13,7 +13,7 @@ RSpec.describe AccountsController do
     context 'when params[:cmd] == signup' do
       context 'valid' do
         it 'create account and sends email' do
-          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456' }, format: :json
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456', username: 'username' }, format: :json
           thr = Thread.new do
             $semaphore.synchronize do
               @sent_email = EmailSender.send_email('testing@gmail.com', :signup)
@@ -34,7 +34,7 @@ RSpec.describe AccountsController do
       end
       context 'invalid' do
         it 'password less than 6 characters' do
-          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '12345' }, format: :json
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '12345', username: 'username' }, format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
@@ -44,8 +44,30 @@ RSpec.describe AccountsController do
           expect(parsed_body['msg']).to eq(@msg_expected)
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
+        it 'username less than 5 characters' do
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456', username: 'name' }, format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = 'error'
+          @detail_expected = 'username_too_short'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['detail']).to eq(@detail_expected)
+        end
+        it 'username more than 15 characters' do
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456', username: '1234567890123456' }, format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = 'error'
+          @detail_expected = 'username_too_long'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['detail']).to eq(@detail_expected)
+        end
         it 'empty email' do
-          post :create, { cmd: 'signup', email: nil, password: '123456' }, format: :json
+          post :create, { cmd: 'signup', email: nil, password: '123456', username: 'username' }, format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
@@ -55,8 +77,19 @@ RSpec.describe AccountsController do
           expect(parsed_body['msg']).to eq(@msg_expected)
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
+        it 'empty username' do
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: '123456', username: nil }, format: :json
+          expect(response.status).to eq 200
+          expect(Account.count).to eq(2)
+          expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
+          @msg_expected = 'error'
+          @detail_expected = 'username_nil'
+          parsed_body = JSON.parse(response.body)
+          expect(parsed_body['msg']).to eq(@msg_expected)
+          expect(parsed_body['detail']).to eq(@detail_expected)
+        end
         it 'empty password' do
-          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: nil }, format: :json
+          post :create, { cmd: 'signup', email: 'testing@gmail.com', password: nil, username: 'username' }, format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
@@ -69,7 +102,7 @@ RSpec.describe AccountsController do
       end
       context 'error' do
         it 'account has been activated' do
-          post :create, { cmd: 'signup', email: @activated_account.email, password: @activated_account.password }, format: :json
+          post :create, { cmd: 'signup', email: @activated_account.email, password: @activated_account.password, username: 'username' }, format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
@@ -80,7 +113,7 @@ RSpec.describe AccountsController do
           expect(parsed_body['detail']).to eq(@detail_expected)
         end
         it 'account has been taken but not activated' do
-          post :create, { cmd: 'signup', email: @account.email, password: @account.password }, format: :json
+          post :create, { cmd: 'signup', email: @account.email, password: @account.password, username: 'username' }, format: :json
           expect(response.status).to eq 200
           expect(Account.count).to eq(2)
           expect(ActiveSupport::JSON.decode(response.body)).not_to be_nil
