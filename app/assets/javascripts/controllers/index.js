@@ -161,6 +161,9 @@ function setupSignupPage(email, password) {
                             case 'account_taken':
                                 showEmailTaken();
                                 break;
+                            case 'username_taken':
+                                showUsernameTaken();
+                                break;
                             case 'not_activated':
                                 GM.IndexController.showEmailNotActivated(email);
                                 break;
@@ -413,6 +416,10 @@ function showWrongToken () {
 
 function showEmailTaken() {
 	showAlertMessage('The email you entered to register is already taken.');
+}
+
+function showUsernameTaken() {
+    showAlertMessage('The username you entered is already taken. Please try another one.');
 }
 
 function showEmailNotValid() {
