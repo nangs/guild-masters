@@ -53,7 +53,8 @@ class ScoutEvent < ActiveRecord::Base
       quest = Quest.create(difficulty: guild.level + r.rand(0..1), state: 'pending')
       quest.reward = quest.difficulty * (100 + gold / 10) + r.rand(0..100)
       quest.monster_template = MonsterTemplate.order('RANDOM()').first
-      quest.description = "There is a #{quest.monster_template.name} near the village! Find someone to help us kill it!"
+      description = QuestDescription.order('RANDOM()').first.description
+      quest.description = description.sub("%s",quest.monster_template.name)
       quest.save
       guild.quests << quest
       qsts << quest
