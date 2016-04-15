@@ -36,6 +36,12 @@ MonsterTemplate.create([
                          { name: 'giant', max_hp: 1400, max_energy: 800, attack: 120, defense: 100, invisibility: 60 }
                        ])
 
+QuestDescription.create([
+                          { description: 'A %s assaulted our village. Please kill %s for the villagers.' },
+                          { description: 'A %s has been attacking our villagers for a long time. Please kill it to protect our villagers.' },
+                          { description: 'A %s has become a threat to our villagers\' cattle. Please help our villagers to get rid of it.' }
+                        ])
+
 # Insert a list of possible adventurer names
 AdventurerName.create([
                         { name: 'Abel Tasman' },
