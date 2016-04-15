@@ -139,7 +139,7 @@ function setupSignupPage(email, password) {
             showPasswordTooShortError();
         } else if (password != confirmPassword) { // check whether the two passwords are the same
             showDifferentPasswordError();
-        } 
+        }
         else {
             submitted = true;
             $.ajax({
@@ -447,6 +447,13 @@ function showSignupNullError(field) {
 function showPasswordTooShortError() {
 	showAlertMessage('The password must be at least 6 characters');
 }
+
+function showUsernameTooShortError() {
+    showAlertMessage('The username must be at least 5 characters');
+}
+
+function showUsernameTooLongError() {
+    showAlertMessage('The username must be at most 15 characters');
 }
 
 function showLoginError() {
