@@ -9,6 +9,8 @@ class GuildmasterController < ApplicationController
     guildmaster = acc.guildmaster
     result = if params[:cmd] == 'get'
                { msg: 'success', guildmaster: guildmaster }
+             elsif params[:cmd] == 'show_all'
+               { msg: 'success', users: Guildmaster.show_all }
              elsif params[:cmd].nil?
                { msg: :error, detail: :cmd_nil }
              else
