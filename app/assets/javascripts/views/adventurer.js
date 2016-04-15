@@ -16,6 +16,7 @@ var adventurersListTemplate = HandlebarsTemplates['adventurer/adventurer_list'];
 var adventurerNewTemplate = HandlebarsTemplates['adventurer/adventurer_new'];
 var adventurersTableTemplate = HandlebarsTemplates['adventurer/adventurer_table'];
 var adventurerSummaryTableTemplate = HandlebarsTemplates['adventurer/adventurer_summary_table'];
+var adventurerAssignTableTemplate = HandlebarsTemplates['adventurer/adventurer_assign_table'];
 var adventurerNewButton = HandlebarsTemplates['adventurer/adventurer_get']();
 var adventurerAssignTemplate = HandlebarsTemplates['adventurer/adventurer_assign'];
 var adventurerDisplayTemplate = HandlebarsTemplates['adventurer/adventurer_display'];
@@ -96,7 +97,6 @@ function renderAdventureDetails(adventurer) {
 		var angle = angles[i];
         var x = distance * Math.cos(angle) + cx;
         var y = distance * Math.sin(angle) + cy + 7;
-        console.log([x,y]);
         adventurer_points.push([x , y]);
 	}
 
