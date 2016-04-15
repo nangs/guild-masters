@@ -121,18 +121,25 @@ function setupSignupPage(email, password) {
     $('#signupButton').mouseup(function() {
 
         var email = $('#email').val();
+        var username = $('#username').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
-        if (password != confirmPassword) { // check whether the two passwords are the same
-            showDifferentPasswordError();
-        } else if (password.length < 6){
-            passwordTooShortError();
-        } else if (email == ''){
+        if (email == ''){
             showSignupNullError('email');
+        } else if (username == ''){
+            showSignupNullError('username');
+        } else if (username.length < 5){
+            showUsernameTooShortError();
+        } else if (username.length > 15){
+            showUsernameTooLongError();
         } else if (password == '') {
             showSignupNullError('password');
-        } 
+        } else if (password.length < 6){
+            showPasswordTooShortError();
+        } else if (password != confirmPassword) { // check whether the two passwords are the same
+            showDifferentPasswordError();
+        }
         else {
             submitted = true;
             $.ajax({
@@ -141,6 +148,7 @@ function setupSignupPage(email, password) {
                 data: {
                 	cmd: 'signup',
                     email: email,
+                    username: username,
                     password: password
                 },
                 success: function(feedback) {
@@ -152,6 +160,9 @@ function setupSignupPage(email, password) {
                         switch(feedback.detail) {
                             case 'account_taken':
                                 showEmailTaken();
+                                break;
+                            case 'username_taken':
+                                showUsernameTaken();
                                 break;
                             case 'not_activated':
                                 GM.IndexController.showEmailNotActivated(email);
@@ -244,7 +255,7 @@ function setupForgetPasswordPage(email, password) {
         if (password != confirmPassword) { // check whether the two passwords are the same
             showDifferentPasswordError();
         } else if (password.length < 6){
-            passwordTooShortError();
+            showPasswordTooShortError();
         } else if (email == ''){
             showSignupNullError('email');
         } else if (password == '') {
@@ -404,7 +415,11 @@ function showWrongToken () {
 }
 
 function showEmailTaken() {
-	showAlertMessage('The email you used to register is already taken.');
+	showAlertMessage('The email you entered to register is already taken.');
+}
+
+function showUsernameTaken() {
+    showAlertMessage('The username you entered is already taken. Please try another one.');
 }
 
 function showEmailNotValid() {
@@ -429,8 +444,16 @@ function showSignupNullError(field) {
 	showAlertMessage('You must enter a valid ' + field);
 }
 
-function passwordTooShortError() {
-	showAlertMessage('The password must be at least than 6 characters');
+function showPasswordTooShortError() {
+	showAlertMessage('The password must be at least 6 characters');
+}
+
+function showUsernameTooShortError() {
+    showAlertMessage('The username must be at least 5 characters');
+}
+
+function showUsernameTooLongError() {
+    showAlertMessage('The username must be at most 15 characters');
 }
 
 function showLoginError() {
