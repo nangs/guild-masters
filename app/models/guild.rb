@@ -78,7 +78,9 @@ class Guild < ActiveRecord::Base
     quest.reward = quest.difficulty * 100 + r.rand(0..25) * quest.difficulty
     quest.monster_template = MonsterTemplate.order('RANDOM()').first
     quest.guild = self
-    quest.description = "There is a #{quest.monster_template.name} near the village! Find someone to help us kill it!"
+    
+    description = QuestDescription.order('RANDOM()').first.description
+    quest.description = description.sub("%s",quest.monster_template.name)
     quest.save
     quest
   end
