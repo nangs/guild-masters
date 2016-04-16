@@ -9,7 +9,7 @@ Account.create(email: 'admin@example.com',
 
 acc = Account.create(email: 'test@example.com',
                      password: '123456',
-                     username: 'testuser1'
+                     username: 'testuser1',
                      email_confirmed: true)
 
 acc.initialize_guildmaster
