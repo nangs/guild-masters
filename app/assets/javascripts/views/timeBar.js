@@ -1,5 +1,6 @@
 var TIMEBAR_LEFT_PADDING = 20;
 var TIMEBAR_TOP_PADDING = 16;
+var MARK_RADIUS = 6;
 function renderTimeBar(events, currentGameTime){
 	var canvas;
 	if (GM.timebar) {
@@ -90,7 +91,7 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 		top : TIMEBAR_TOP_PADDING,
 		left : endTime + TIMEBAR_LEFT_PADDING,
 		strokeWidth: 8,
-		radius: 8,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'blue'
 	});
@@ -127,7 +128,7 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 		top : TIMEBAR_TOP_PADDING,
 		left : endTime + TIMEBAR_LEFT_PADDING,
 		strokeWidth: 8,
-		radius: 8,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'purple'
 	});
@@ -165,7 +166,7 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 		top : TIMEBAR_TOP_PADDING,
 		left : endTime + TIMEBAR_LEFT_PADDING,
 		strokeWidth: 8,
-		radius: 8,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'yellow'
 	});
@@ -201,7 +202,7 @@ function renderUpgradeMark(eve, currentGameTime, canvas) {
 		top : TIMEBAR_TOP_PADDING,
 		left : endTime + TIMEBAR_LEFT_PADDING,
 		strokeWidth: 8,
-		radius: 8,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'yellow'
 	});
