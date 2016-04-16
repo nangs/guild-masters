@@ -5,3 +5,7 @@ section {
 .checkbox {
 	margin: 0px !important;
 }
+
+#showRankings, #loginButton {
+	margin-right: 5px !important;
+}
