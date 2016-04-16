@@ -47,9 +47,8 @@ GM.GuildmasterModel.getAll = function (func) {
 			}
 		},
 	    success: function(data) {
-	    	console.log(data);
 	    	if (data.msg == "success") {
-				console.log(data.users);    		
+				func(data.users); 		
 	    	}
 	    }
 	});
