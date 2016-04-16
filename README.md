@@ -17,12 +17,8 @@ You can access the website at nus school of computing: [http://172.25.79.43:3000
     $ rake db:setup		
     ```		
 		
-* Run the server		
+* Run the server
     ```		
-    $ Rails server		
-    ```		
-    or 		
-    ```		
-    $ rails server		
+    $ bundle exec rails server
     ```		
 * You can access the website at: [http://localhost:3000/](http://localhost:3000/)
