@@ -20,7 +20,8 @@ GM.EventModel.getAllEvents = function (func) {
 			}
 		},
 	    success: function(data) {
-	    	GM.EventModel.event_list = GM.EventController.filterFuture(data.events);
+	    	var gameTime = GM.GuildmasterModel.guildmaster.game_time;
+	    	GM.EventModel.event_list = GM.EventController.filterFuture(data.events, gameTime);
 	    	GM.EventModel.nextEvent = GM.EventModel.event_list[0];
 	    	func(GM.EventModel.event_list);
 	    }

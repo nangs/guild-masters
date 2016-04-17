@@ -1,7 +1,6 @@
 GM.EventController = Ember.Controller.extend();
 
-GM.EventController.filterFuture = function (events){
-	var gameTime = GM.GuildmasterModel.guildmaster.game_time;
+GM.EventController.filterFuture = function (events, gameTime){
 	events = events.filter(function(e) {
 		return e.end_time > gameTime;
 	});
