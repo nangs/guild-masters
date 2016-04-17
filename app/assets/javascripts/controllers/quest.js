@@ -1,7 +1,7 @@
 GM.QuestController = Ember.Controller.extend();
 
 GM.QuestController.showQuestAssignPage = function(id) {
-	var quests = GM.QuestModel.quest_list['quests'];
+	var quests = GM.QuestModel.quest_list;
 	var quest;
 	for (var q in quests) {
 		if (quests[q]['id'] == id) {
