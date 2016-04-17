@@ -140,11 +140,12 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 		var adventurer = eve.adventurer.name;
 		var infoText = "Your adventurer\n" + adventurer +"\nis in the " + facility;
 		var text = new fabric.Text(infoText, {
-			left: endTime + TIMEBAR_LEFT_PADDING + 45,
+			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
@@ -176,11 +177,12 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var infoText = "The GuildMaster is scouting\nfor Adventurers and Quests";
 		var text = new fabric.Text(infoText, {
-			left: endTime + TIMEBAR_LEFT_PADDING + 70,
+			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
@@ -212,11 +214,12 @@ function renderUpgradeMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var infoText = "The GuildMaster is\n upgrading the Guild.";
 		var text = new fabric.Text(infoText, {
-			left: endTime + TIMEBAR_LEFT_PADDING + 50,
+			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
