@@ -45,7 +45,7 @@ GM.QuestController.filterPending = function(quests) {
 
 GM.QuestController.showQuestPage = function() {
 	GM.QuestModel.getAllQuests(function(data) {
-		var quests = GM.QuestController.filterPending(data.quests);
+		var quests = GM.QuestController.filterPending(data);
 		if (quests.length == 0) {
 			showView("There is no Quest, please try scouting for some Adventurers and Quests")
 		} else {
