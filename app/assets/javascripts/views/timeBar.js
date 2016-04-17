@@ -101,11 +101,12 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 		var quest = eve.quest;
 		var infoText = quest.description + "\nDifficulty: " + quest.difficulty + "\nReward :" + quest.reward;
 		var text = new fabric.Text(infoText, {
-			left: endTime + TIMEBAR_LEFT_PADDING + 160,
+			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
