@@ -179,6 +179,7 @@ function setupSignupPage(email, password) {
 }
 
 function showGame() {
+    GM.timebar = null;
 	$('#indexPage').html(gameTemplate);
 	$('button').click(function(){
 		var section = $(this).attr('id');
