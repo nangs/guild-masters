@@ -1,7 +1,7 @@
 # guild-masters
 A Web-based guild strategy simulation game.
 
-You can access the website at nus school of computing: [http://172.25.79.43:3000/](http://172.25.79.43:3000/)
+You can access the website at nus school of computing: [https://172.25.79.43:3000/](http://172.25.79.43:3000/)
 
 
 ## Setting Up For developers:
@@ -17,8 +17,17 @@ You can access the website at nus school of computing: [http://172.25.79.43:3000
     $ rake db:setup		
     ```		
 		
-* Run the server
+* Run the server in development mode
     ```		
     $ bundle exec rails server
     ```		
-* You can access the website at: [http://localhost:3000/](http://localhost:3000/)
+* You can access the website at: [https://localhost:3000/](https://localhost:3000/)
+
+* For production mode:
+    ** setup the databse:
+    ```     
+    $ db:migrate RAILS_ENV="production"
+    ```
+    ** run the server:
+    $ bundle exec rails server -e production
+    ``` 
