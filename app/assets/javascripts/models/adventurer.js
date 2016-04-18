@@ -29,8 +29,9 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 			}
 		},
 		fail: function (response) {
+			console.log('Error catched');
 			show401Redirect(response);
-		}
+		},
 	    success: function(data) {
 	    	GM.AdventurerModel.adventurers_list = data.adventurers;
 	    	func(GM.AdventurerModel.adventurers_list);
