@@ -24,10 +24,11 @@ You can access the website at nus school of computing: [https://172.25.79.43:300
 * You can access the website at: [https://localhost:3000/](https://localhost:3000/)
 
 * For production mode:
-    ** setup the databse:
+    * setup the databse:
     ```     
     $ db:migrate RAILS_ENV="production"
     ```
-    ** run the server:
+    * run the server:
+    ```
     $ bundle exec rails server -e production
     ``` 
