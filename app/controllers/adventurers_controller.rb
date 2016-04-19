@@ -1,10 +1,17 @@
+# This class controller handles retrieving of adventurer objects with appropriate references to the database
 class AdventurersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authorize
   respond_to :json
 
   # POST /adventurers.json
-  # Call this to get adventurers
+  # possible cmd: get
+  #
+  # ----- get --
+  # Pre-condition: signed in
+  # gets adventurers
+  # returns json format msg:success adventurers: guild.adventurers
+  #
   def create
     acc = Account.find_by(id: session[:account_id])
     guildmaster = acc.guildmaster

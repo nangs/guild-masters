@@ -1,7 +1,7 @@
 GM.QuestController = Ember.Controller.extend();
 
 GM.QuestController.showQuestAssignPage = function(id) {
-	var quests = GM.QuestModel.quest_list['quests'];
+	var quests = GM.QuestModel.quest_list;
 	var quest;
 	for (var q in quests) {
 		if (quests[q]['id'] == id) {
@@ -45,7 +45,7 @@ GM.QuestController.filterPending = function(quests) {
 
 GM.QuestController.showQuestPage = function() {
 	GM.QuestModel.getAllQuests(function(data) {
-		var quests = GM.QuestController.filterPending(data.quests);
+		var quests = GM.QuestController.filterPending(data);
 		if (quests.length == 0) {
 			showView("There is no Quest, please try scouting for some Adventurers and Quests")
 		} else {

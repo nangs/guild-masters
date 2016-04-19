@@ -30,7 +30,7 @@ class GuildUpgradeEventTest < ActiveSupport::TestCase
     assert_equal :success, msg[:msg]
   end
 
-  test 'test assign complete' do
+  test 'test complete' do
     guild = guilds(:TestGuild08)
     guild.upgrade
     gue = guild.guild_upgrade_events.first

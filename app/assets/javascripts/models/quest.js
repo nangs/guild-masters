@@ -43,7 +43,7 @@ GM.QuestModel.getAllQuests = function (func) {
 			}
 		},
 	    success: function(data) {
-	    	GM.QuestModel.quest_list = data;
+	    	GM.QuestModel.quest_list = data.quests;
 	    	func(GM.QuestModel.quest_list);
 	    }
 	});

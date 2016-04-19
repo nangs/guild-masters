@@ -179,6 +179,7 @@ function setupSignupPage(email, password) {
 }
 
 function showGame() {
+    GM.timebar = null;
 	$('#indexPage').html(gameTemplate);
 	$('button').click(function(){
 		var section = $(this).attr('id');
@@ -460,6 +461,11 @@ function showAlertMessage(message) {
     $('#alert').html(alertMessage);
 }
 
+function showRankings() {
+    GM.timebar = null;
+    GM.GuildmasterModel.getAll(GM.RankingController.displayRanking);
+}
+
 function show401Redirect(message) {
     $('#indexPage').html(unauthorizedTemplate);
     sessionStorage.removeItem('loggedIn');
@@ -467,4 +473,3 @@ function show401Redirect(message) {
         setupLoginPage();
     });
 }
-

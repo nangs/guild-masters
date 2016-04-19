@@ -1,5 +1,7 @@
-var timeBar_start_point = 20;
-var timeBar_top_padding = 16;
+var TIMEBAR_LEFT_PADDING = 20;
+var TIMEBAR_TOP_PADDING = 16;
+var MARK_RADIUS = 6;
+var MARK_STROKE_WIDTH = 6;
 function renderTimeBar(events, currentGameTime){
 	var canvas;
 	if (GM.timebar) {
@@ -8,14 +10,14 @@ function renderTimeBar(events, currentGameTime){
 		canvas = new fabric.Canvas('timeBar');
 	}
 	canvas.clear();
-	var timeBar = new fabric.Line([timeBar_start_point, timeBar_top_padding, 1100, timeBar_top_padding], {
+	var timeBar = new fabric.Line([TIMEBAR_LEFT_PADDING, TIMEBAR_TOP_PADDING, 1100, TIMEBAR_TOP_PADDING], {
 		strokeWidth: 10,
 		stroke: 'green'
 	});
 
 	var start = new fabric.Circle({
-		top : timeBar_top_padding,
-		left : timeBar_start_point,
+		top : TIMEBAR_TOP_PADDING,
+		left : TIMEBAR_LEFT_PADDING,
 		strokeWidth: 10,
 		radius: 10,
 		fill: '#fff',
@@ -23,8 +25,8 @@ function renderTimeBar(events, currentGameTime){
 	});
 
 	var nextDay = Math.floor(currentGameTime / 1000 + 1) * 1000;
-	var nextDayPoint = nextDay - currentGameTime + timeBar_start_point;
-	var endOfDay = new fabric.Line([nextDayPoint , timeBar_top_padding - 15, nextDayPoint, timeBar_top_padding + 15], {
+	var nextDayPoint = nextDay - currentGameTime + TIMEBAR_LEFT_PADDING;
+	var endOfDay = new fabric.Line([nextDayPoint , TIMEBAR_TOP_PADDING - 15, nextDayPoint, TIMEBAR_TOP_PADDING + 15], {
 		strokeWidth: 10,
 		stroke: 'red',
 		selectable: false
@@ -33,7 +35,7 @@ function renderTimeBar(events, currentGameTime){
 		'End of the\ncurrent day',
 		{
 			left: nextDayPoint,
-			top: timeBar_top_padding + 30,
+			top: TIMEBAR_TOP_PADDING + 30,
 			fontSize: 14,
 			stroke: 'rgb(200,100,200)'
 		}
@@ -87,10 +89,10 @@ function renderTimeBar(events, currentGameTime){
 function renderQuestMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
-		top : timeBar_top_padding,
-		left : endTime + timeBar_start_point,
-		strokeWidth: 8,
-		radius: 8,
+		top : TIMEBAR_TOP_PADDING,
+		left : endTime + TIMEBAR_LEFT_PADDING,
+		strokeWidth: MARK_STROKE_WIDTH,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'blue'
 	});
@@ -100,11 +102,12 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 		var quest = eve.quest;
 		var infoText = quest.description + "\nDifficulty: " + quest.difficulty + "\nReward :" + quest.reward;
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 160,
-			top: timeBar_top_padding + 25,
+			left: endTime + TIMEBAR_LEFT_PADDING,
+			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
@@ -124,10 +127,10 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 function renderFacilityMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
-		top : timeBar_top_padding,
-		left : endTime + timeBar_start_point,
-		strokeWidth: 8,
-		radius: 8,
+		top : TIMEBAR_TOP_PADDING,
+		left : endTime + TIMEBAR_LEFT_PADDING,
+		strokeWidth: MARK_STROKE_WIDTH,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'purple'
 	});
@@ -138,11 +141,12 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 		var adventurer = eve.adventurer.name;
 		var infoText = "Your adventurer\n" + adventurer +"\nis in the " + facility;
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 45,
-			top: timeBar_top_padding + 25,
+			left: endTime + TIMEBAR_LEFT_PADDING,
+			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
@@ -162,10 +166,10 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 function renderScoutMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
-		top : timeBar_top_padding,
-		left : endTime + timeBar_start_point,
-		strokeWidth: 8,
-		radius: 8,
+		top : TIMEBAR_TOP_PADDING,
+		left : endTime + TIMEBAR_LEFT_PADDING,
+		strokeWidth: MARK_STROKE_WIDTH,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'yellow'
 	});
@@ -174,11 +178,12 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var infoText = "The GuildMaster is scouting\nfor Adventurers and Quests";
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 70,
-			top: timeBar_top_padding + 15,
+			left: endTime + TIMEBAR_LEFT_PADDING,
+			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);
@@ -198,10 +203,10 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 function renderUpgradeMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
-		top : timeBar_top_padding,
-		left : endTime + timeBar_start_point,
-		strokeWidth: 8,
-		radius: 8,
+		top : TIMEBAR_TOP_PADDING,
+		left : endTime + TIMEBAR_LEFT_PADDING,
+		strokeWidth: MARK_STROKE_WIDTH,
+		radius: MARK_RADIUS,
 		fill: '#fff',
 		stroke: 'yellow'
 	});
@@ -210,11 +215,12 @@ function renderUpgradeMark(eve, currentGameTime, canvas) {
 	circle.showInfo = function () {
 		var infoText = "The GuildMaster is\n upgrading the Guild.";
 		var text = new fabric.Text(infoText, {
-			left: endTime + timeBar_start_point + 50,
-			top: timeBar_top_padding + 15,
+			left: endTime + TIMEBAR_LEFT_PADDING,
+			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
 			stroke: 'rgb(200,100,50)'
 		});
+		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
 		text.set('backgroundColor', 'rgb(0,200,200)');
 		text.setOpacity(0.8);
 		canvas.add(text);

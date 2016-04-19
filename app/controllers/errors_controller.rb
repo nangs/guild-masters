@@ -1,4 +1,6 @@
+# This class controller handles rendering to 404 page if not found.
 class ErrorsController < ApplicationController
+  # renders Error 404 route is not found in routes
   def not_found
     respond_to do |format|
       format.html { render status: 404 }

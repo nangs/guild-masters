@@ -33,3 +33,23 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	    }
 	});
 }
+
+GM.GuildmasterModel.getAll = function (func) {
+	$.ajax({
+		type: 'POST',
+	    url: 'guildmaster.json',
+	    data: {
+	    	cmd: 'show_all'
+	    },
+	    statusCode: {
+			401: function (response) {
+				show401Redirect(response);
+			}
+		},
+	    success: function(data) {
+	    	if (data.msg == "success") {
+				func(data.users); 		
+	    	}
+	    }
+	});
+}

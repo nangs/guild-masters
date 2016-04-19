@@ -1,10 +1,21 @@
-# This class controller handles the login and sign up values with appropriate references to the database
+# This class controller retrieves guildmaster's guilds and setting guildmaster's current_guild
+# with appropriate references to the database
 class GuildSessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authorize
   respond_to :json
 
   # POST /guild_sessions.json
+  # possible cmd: get, create
+  #
+  # ----- get --
+  # Pre-condition: must be signed in
+  # returns json format {guilds: guildmaster.guilds}
+  #
+  # ----- create --
+  # Pre-condition: must be signed in, params guild_id
+  # returns json format {msg: :success, guild: guild}
+  #
   def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster

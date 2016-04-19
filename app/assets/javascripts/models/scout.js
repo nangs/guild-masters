@@ -16,7 +16,11 @@ GM.ScoutModel.scout = function (time, gold) {
 		},
 	    success: function(data) {
 	    	if (data.msg == 'success') {
-	    		showView('You spent ' + gold + ' gold for this scouting.');
+	    		if (gold == 0) {
+	    			showView('You are not spending any gold for this scouting.');
+	    		} else {
+	    			showView('You spent ' + gold + ' gold for this scouting.');
+	    		}
 	    		GM.GuildmasterModel.getGuildmaster();
 	    		setupTimeBar();
 	    	} else {

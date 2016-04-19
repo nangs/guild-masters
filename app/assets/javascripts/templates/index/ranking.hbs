@@ -1,0 +1,29 @@
+<section class="btn-group" style="float:right">
+	<button type="button" class="btn btn-info" id='backToGame' onclick='showGame()'>Back to Game</button>
+ 	<button type="button" class="btn btn-warning" id='logout' onclick='logout()'>Logout</button>
+</section>
+<h1>Guild Masters</h1>
+<section>
+	<table class="table table-hover table-bordered">
+	    <thead>
+	      <tr>
+	      	<th>Ranking</th>
+	        <th>Guildmaster</th>
+	        <th>Level</th>
+	        <th>Popularity</th>
+	        <th>Gold</th>
+	        <th>Game time</th>
+	      </tr>
+	    </thead>
+		{{#each users as |user|}}
+			<tr>
+				<td>{{ranking}}</td>
+				<td>{{username}}</td>
+				<td>{{level}}</td>
+				<td>{{popularity}}</td>
+				<td>{{gold}}</td>
+				<td>{{game_time}}</td>
+			</tr>
+		{{/each}}
+	</table>
+</section>
