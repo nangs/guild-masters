@@ -1,4 +1,5 @@
-# This class controller handles the login and sign up values with appropriate references to the database
+# This class controller retrieves guildmaster's guilds and setting guildmaster's current_guild
+# with appropriate references to the database
 class GuildSessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authorize

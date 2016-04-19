@@ -1,3 +1,5 @@
+# This class controller handles retrieving of current guild of the guildmaster
+# and guild creation for the same guildmaster with appropriate references to the database
 class GuildController < ApplicationController
   respond_to :json
   skip_before_action :verify_authenticity_token

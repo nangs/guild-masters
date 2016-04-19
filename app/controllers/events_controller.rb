@@ -1,3 +1,5 @@
+# This class controller handles retrieving of events, creation of events, completion of events
+# with appropriate references to the database
 class EventsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authorize

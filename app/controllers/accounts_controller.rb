@@ -1,3 +1,4 @@
+# This class controller handles account creation and edition with appropriate references to the database
 class AccountsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :verify_authenticity_token

@@ -1,3 +1,4 @@
+# This class controller handles rendering to 401 page if not authorized.
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   protect_from_forgery with: :exception

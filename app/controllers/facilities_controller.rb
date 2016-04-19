@@ -1,3 +1,4 @@
+# This class controller handles retrieving of facility objects with appropriate references to the database
 class FacilitiesController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json

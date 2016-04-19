@@ -1,3 +1,4 @@
+# This class controller handles retrieving of adventurer objects with appropriate references to the database
 class AdventurersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authorize
