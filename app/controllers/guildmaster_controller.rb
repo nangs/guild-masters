@@ -4,6 +4,16 @@ class GuildmasterController < ApplicationController
   before_action :authorize
 
   # # POST /guildmaster.json
+  # possible cmd: get, show_all
+  #
+  # ----- get --
+  # Pre-condition: must be signed in
+  # returns json format {msg: success, guildmaster: guildmaster}
+  #
+  # ----- show_all --
+  # Pre-condition: must be signed in
+  # returns json format {msg: success, users: user_details}
+  #
   def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster

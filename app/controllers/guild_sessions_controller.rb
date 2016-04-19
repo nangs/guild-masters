@@ -5,6 +5,16 @@ class GuildSessionsController < ApplicationController
   respond_to :json
 
   # POST /guild_sessions.json
+  # possible cmd: get, create
+  #
+  # ----- get --
+  # Pre-condition: must be signed in
+  # returns json format {guilds: guildmaster.guilds}
+  #
+  # ----- create --
+  # Pre-condition: must be signed in, params guild_id
+  # returns json format {msg: :success, guild: guild}
+  #
   def create
     acc = Account.find(session[:account_id])
     guildmaster = acc.guildmaster

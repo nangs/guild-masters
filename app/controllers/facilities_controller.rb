@@ -4,6 +4,12 @@ class FacilitiesController < ApplicationController
   before_action :authorize
 
   # POST /facilities.json
+  # possible cmd: get
+  #
+  # ----- get --
+  # Pre-condition: signed in
+  # returns json format {msg: success, facilities: guild.facilities}
+  #
   def create
     acc = Account.find_by(id: session[:account_id])
     guildmaster = acc.guildmaster

@@ -4,6 +4,13 @@ class QuestsController < ApplicationController
   before_action :authorize
 
   # POST /quests.json
+  # possible cmd: get
+  #
+  # ----- get --
+  # Pre-condition: signed in
+  # gets quests
+  # returns json format {msg: success, quests: guild.quests}
+  #
   def create
     acc = Account.find_by(id: session[:account_id])
     guildmaster = acc.guildmaster

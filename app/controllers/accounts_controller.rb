@@ -4,9 +4,36 @@ class AccountsController < ApplicationController
   respond_to :json
 
   # POST /accounts.json
-  # When a POST is done with parameters email and password, this function will check with if the post is a signup or login
-  # it will then redirect to the respective function in the model
-  # it then returns a json format of what the model returns
+  # Pre-condition: all required params cannot be nil
+  # password cannot be shorter than 6 characters
+  # username cannot be shorter than 5 characters
+  # username cannot be longer than 15 characters
+  # possible cmd: signup, activate_account, update_account, resend_email, send_password_token
+  #
+  # ----- signup --
+  # Pre-condition: email, password, username
+  # sends mail, creates account in db
+  # returns json format msg:success
+  #
+  # ----- activate_account --
+  # Pre-condition: require email, confirm_token
+  # updates account in db
+  # returns json format msg:success
+  #
+  # ----- update_account --
+  # Pre-condition: require email, password, confirm_token
+  # updates account in db
+  # returns json format msg:success
+  #
+  # ----- resend_email --
+  # Pre-condition: require email
+  # sends mail
+  # returns json format msg:success
+  #
+  # ----- send_password_token --
+  # Pre-condition: require email
+  # sends mail
+  # returns json format msg:success
   def create
     if params[:cmd] == 'signup'
       email = params[:email]

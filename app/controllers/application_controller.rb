@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected
 
   respond_to :json
-
+  # renders Error 401 if not authorized for game
   def authorize
     unless Account.find_by(id: session[:account_id])
       # redirect to index
@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # renders Error 401 if not authorized for admin page
   def authorized_admin
     unless Account.find_by(id: session[:admin_id])
       # redirect to index

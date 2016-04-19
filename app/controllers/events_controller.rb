@@ -4,6 +4,32 @@ class EventsController < ApplicationController
   respond_to :json
 
   # POST /events.json
+  # Pre-condition: all required params cannot be nil, must be signed in
+  # possible cmd: get, complete, create_guild_upgrade_event, create_quest_event, create_scout_event, create_facility_event
+  #
+  # ----- get --
+  # Pre-condition: signed in
+  # returns json format {events: array_of_events}
+  #
+  # ----- complete --
+  # Pre-condition: must be signed in, end_time
+  # returns json format {events: msgArray, refresh: refreshArray}
+  #
+  # ----- create_guild_upgrade_event --
+  # Pre-condition: must be signed in, email, password, confirm_token
+  # returns json format {msg: :success, gold_spent: somevalue, time_cost: somevalue}
+  #
+  # ----- create_quest_event --
+  # Pre-condition: must be signed in, quest_id,adventurers_ids
+  # returns json format {msg: :success}
+  #
+  # ----- create_scout_event --
+  # Pre-condition: must be signed in, time_spent,gold_spent
+  # returns json format {msg: :success}
+  #
+  # ----- create_facility_event --
+  # Pre-condition: must be signed in, facility_id,adventurers_ids
+  # returns json format {msg: :success, detail: msgArray}
   def create
     acc = Account.find_by(id: session[:account_id])
     guildmaster = acc.guildmaster
