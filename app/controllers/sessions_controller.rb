@@ -4,6 +4,11 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
+  # POST /sessions.json
+  #
+  # Pre-condition: email and password cannot be nil
+  # returns json format {msg: :success, guilds: guilds}
+  #
   def create
     is_admin_page = params[:is_admin_page]
     password = params[:password]
@@ -66,6 +71,10 @@ class SessionsController < ApplicationController
   end
 
   # DELETE /sessions.json
+  #
+  # destroys session
+  # returns json format {msg: :success}
+  #
   def destroy
     unless session[:admin_id].nil?
       acc_admin = Account.find(session[:admin_id])
