@@ -1,14 +1,14 @@
 <h1>Admin Dashboard - Sign in page</h1>
 
 <%= form_tag('/sessions', email: :email, password: :password) do %>
-    <%= hidden_field_tag :is_admin_page , true %>
+    <%= hidden_field_tag :is_admin_page, true %>
     <p>
       Email:<br />
       <%= text_field_tag "email" %>
     </p>
     <p>
       Password:<br />
-      <%= text_field_tag "password" %>
+      <%= password_field_tag :password %>
     </p>
     <p>
       <%= submit_tag 'Submit' %>
