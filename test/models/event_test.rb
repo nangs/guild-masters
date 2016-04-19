@@ -12,6 +12,6 @@ class EventTest < ActiveSupport::TestCase
     FacilityEvent.assign(facilities(:TestFac01), [adventurers(:Tester10)])
     FacilityEvent.assign(facilities(:TestFac02), [adventurers(:Tester09)])
     gm = guildmasters(:TestMaster02)
-    Event.complete(gm,12000)
+    Event.complete(gm, 12_000)
   end
 end

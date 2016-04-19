@@ -54,7 +54,7 @@ class ScoutEvent < ActiveRecord::Base
       quest.reward = quest.difficulty * (100 + gold / 10) + r.rand(0..100)
       quest.monster_template = MonsterTemplate.order('RANDOM()').first
       description = QuestDescription.order('RANDOM()').first.description
-      quest.description = description.sub("%s",quest.monster_template.name)
+      quest.description = description.sub('%s', quest.monster_template.name)
       quest.save
       guild.quests << quest
       qsts << quest
