@@ -12,6 +12,7 @@ AllCops:
     - 'test/models/game_test.rb'
     - 'db/schema.rb'
     - 'db/seeds.rb'
+    - 'spec/teaspoon_env.rb'
 Rails:
   Enabled: true
 
