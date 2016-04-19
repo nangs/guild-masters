@@ -7,6 +7,7 @@
 	<table class="table table-hover table-bordered">
 	    <thead>
 	      <tr>
+	      	<th>Ranking</th>
 	        <th>Guildmaster</th>
 	        <th>Level</th>
 	        <th>Popularity</th>
@@ -16,6 +17,7 @@
 	    </thead>
 		{{#each users as |user|}}
 			<tr>
+				<td>{{ranking}}</td>
 				<td>{{username}}</td>
 				<td>{{level}}</td>
 				<td>{{popularity}}</td>

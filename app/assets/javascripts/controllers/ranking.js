@@ -2,6 +2,9 @@ GM.RankingController = Ember.Controller.extend();
 
 GM.RankingController.displayRanking = function (players) {
 	players.sort(GM.RankingController.compareByLevelToTime);
+	for (var i = 0; i < players.length; i++) {
+		players[i].ranking = i + 1;
+	}
 	var view = rankingTemplate({'users':players});
 	$('#gameWindow').html(view);
 }
