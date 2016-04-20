@@ -9,17 +9,14 @@
       </tr>
     </thead>
 	{{#each quests as |quest|}}
-		{{#isCompleted state}}
-		{{else}}
-			<tr>
-		        <td>{{description}}</td>
-		        <td>{{state}}</td>
-		        <td>{{difficulty}}</td>
-		        <td>{{reward}}</td>
-		        <td>
-			        <button type='button' class='btn btn-primary' onclick='GM.QuestController.showQuestAssignPage({{id}})'>Assign Adventurer</button>
-			    </td>
-			</tr>
-		{{/isCompleted}}
+		<tr>
+	        <td>{{description}}</td>
+	        <td>{{state}}</td>
+	        <td>{{difficulty}}</td>
+	        <td>{{reward}}</td>
+	        <td>
+		        <button type='button' class='btn btn-primary' onclick='GM.QuestController.showQuestAssignPage({{id}})'>Assign Adventurer</button>
+		    </td>
+		</tr>
 	{{/each}}
 </table>

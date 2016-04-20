@@ -38,7 +38,7 @@ GM.QuestController.showMessage = function (message) {
 
 GM.QuestController.filterPending = function(quests) {
 	return quests.filter(function(quest) {
-		var isPending = (quest.state != 'assigned');
+		var isPending = (quest.state != 'assigned') && (quest.state != 'successful');
 		return isPending;
 	});	
 }
