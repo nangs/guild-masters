@@ -5,6 +5,7 @@ var MARK_STROKE_WIDTH = 6;
 var INFO_BACKGROUND_COLOR = 'rgb(200, 200, 255)';
 var INFO_TEXT_COLOR = 'rgb(50, 80, 50)';
 var TIMEBAR_COLOR = 'rgb(100, 255, 100)';
+var END_OF_DAY_COLOR = 'rgb(50, 100, 50)';
 function renderTimeBar(events, currentGameTime){
 	var canvas;
 	if (GM.timebar) {
@@ -29,9 +30,9 @@ function renderTimeBar(events, currentGameTime){
 
 	var nextDay = Math.floor(currentGameTime / 1000 + 1) * 1000;
 	var nextDayPoint = nextDay - currentGameTime + TIMEBAR_LEFT_PADDING;
-	var endOfDay = new fabric.Line([nextDayPoint , TIMEBAR_TOP_PADDING - 15, nextDayPoint, TIMEBAR_TOP_PADDING + 15], {
+	var endOfDay = new fabric.Line([nextDayPoint , TIMEBAR_TOP_PADDING - 10, nextDayPoint, TIMEBAR_TOP_PADDING + 10], {
 		strokeWidth: 10,
-		stroke: 'red',
+		stroke: END_OF_DAY_COLOR,
 		selectable: false
 	});
 	var endOfDayText = new fabric.Text(
@@ -40,7 +41,7 @@ function renderTimeBar(events, currentGameTime){
 			left: nextDayPoint,
 			top: TIMEBAR_TOP_PADDING + 30,
 			fontSize: 14,
-			stroke: 'rgb(200,100,200)'
+			stroke: END_OF_DAY_COLOR
 		}
 	);
 
@@ -102,7 +103,7 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 		strokeWidth: MARK_STROKE_WIDTH,
 		radius: MARK_RADIUS,
 		fill: '#fff',
-		stroke: 'blue'
+		stroke: 'rgb(50, 100, 255)'
 	});
 	circle.isInfoShown = false;
 
@@ -140,7 +141,7 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 		strokeWidth: MARK_STROKE_WIDTH,
 		radius: MARK_RADIUS,
 		fill: '#fff',
-		stroke: 'purple'
+		stroke: 'rgb(250, 100, 250)'
 	});
 	circle.isInfoShown = false;
 

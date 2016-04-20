@@ -2,6 +2,11 @@ section {
 	margin: 10px;
 }
 
+h1 {
+	font-family: fantasy !important;
+	font-weight: bold !important;
+}
+
 .checkbox {
 	margin: 0px !important;
 }
