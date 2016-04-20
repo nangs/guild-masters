@@ -28,10 +28,6 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 				show401Redirect(response);
 			}
 		},
-		fail: function (response) {
-			console.log('Error catched');
-			show401Redirect(response);
-		},
 	    success: function(data) {
 	    	GM.AdventurerModel.adventurers_list = data.adventurers;
 	    	func(GM.AdventurerModel.adventurers_list);
@@ -49,8 +45,6 @@ GM.AdventurerModel.getNewAdventurers = function () {
 			}
 		},
 	    success: function(data) {
-	    	console.log(data);
-	    	// GM.AdventurerModel.new_adventure = data;
 	    	var new_adventure = adventurerNewTemplate(data);
 	    	GM.AdventurerModel.adventurers_list.adventurers.push(data);
 	    	showView(new_adventure);
