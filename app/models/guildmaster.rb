@@ -31,7 +31,7 @@ class Guildmaster < ActiveRecord::Base
   def build_guild
     guild = Guild.new
     guild.level = 1
-    guild.popularity = 50
+    guild.popularity = 90
     guild.guildmaster = self
     clinic = Facility.new
     clinic.guild = guild

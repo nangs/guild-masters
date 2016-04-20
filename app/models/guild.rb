@@ -35,8 +35,8 @@ class Guild < ActiveRecord::Base
           return { msg: :error, detail: :facility_in_used, facility: fac }
         end
       end
-      if popularity < 50 * (2**(level - 1))
-        return { msg: :error, detail: :not_enough_popularity, require: 50 * (2**(level - 1)) - popularity }
+      if popularity < 100 * (2**(level - 1))
+        return { msg: :error, detail: :not_enough_popularity, require: 100 * (2**(level - 1)) - popularity }
       end
     end
   end
@@ -50,7 +50,7 @@ class Guild < ActiveRecord::Base
     facilities.each do |fac|
       return false if fac.capacity != fac.level * 2
     end
-    return false if popularity < 50 * (2**(level - 1))
+    return false if popularity < 100 * (2**(level - 1))
     true
   end
 
@@ -58,7 +58,7 @@ class Guild < ActiveRecord::Base
   def info
     { level: level,
       popularity: popularity,
-      pop_requirement: 50 * (2**(level - 1)),
+      pop_requirement: 100 * (2**(level - 1)),
       gold_requirement: 250 * (level + 1),
       number_adventurer: adv_count,
       number_quest: qst_count,
