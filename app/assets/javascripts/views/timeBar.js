@@ -67,18 +67,14 @@ function renderTimeBar(events, currentGameTime){
 	}
 	canvas.on('mouse:move', function(e) {
 		if (e.target) {
+			removeShowInfo(canvas);
 			if (!e.target.isInfoShown) {
 				if (e.target.showInfo) {
 					e.target.showInfo();
 				}
 			}
 		} else {
-			canvas.forEachObject(function(o) {
-				if (o.removeInfo) {
-					o.removeInfo();
-					o.isInfoShown = false;
-				}
-			});
+			removeShowInfo(canvas);
 		}
 		canvas.renderAll();
 	});
@@ -87,6 +83,15 @@ function renderTimeBar(events, currentGameTime){
 	});
 	GM.timebar = canvas;
 	return canvas;
+}
+
+function removeShowInfo(canvas) {
+	canvas.forEachObject(function(o) {
+		if (o.removeInfo) {
+			o.removeInfo();
+			o.isInfoShown = false;
+		}
+	});
 }
 
 function renderQuestMark(eve, currentGameTime, canvas) {
