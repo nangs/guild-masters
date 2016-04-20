@@ -2,6 +2,9 @@ var TIMEBAR_LEFT_PADDING = 20;
 var TIMEBAR_TOP_PADDING = 16;
 var MARK_RADIUS = 6;
 var MARK_STROKE_WIDTH = 6;
+var INFO_BACKGROUND_COLOR = 'rgb(200, 200, 255)';
+var INFO_TEXT_COLOR = 'rgb(50, 80, 50)';
+var TIMEBAR_COLOR = 'rgb(100, 255, 100)';
 function renderTimeBar(events, currentGameTime){
 	var canvas;
 	if (GM.timebar) {
@@ -12,7 +15,7 @@ function renderTimeBar(events, currentGameTime){
 	canvas.clear();
 	var timeBar = new fabric.Line([TIMEBAR_LEFT_PADDING, TIMEBAR_TOP_PADDING, 1100, TIMEBAR_TOP_PADDING], {
 		strokeWidth: 10,
-		stroke: 'green'
+		stroke: TIMEBAR_COLOR
 	});
 
 	var start = new fabric.Circle({
@@ -21,7 +24,7 @@ function renderTimeBar(events, currentGameTime){
 		strokeWidth: 10,
 		radius: 10,
 		fill: '#fff',
-		stroke: 'green'
+		stroke: TIMEBAR_COLOR
 	});
 
 	var nextDay = Math.floor(currentGameTime / 1000 + 1) * 1000;
@@ -105,10 +108,10 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
-			stroke: 'rgb(200,100,50)'
+			stroke: INFO_TEXT_COLOR
 		});
 		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
-		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.set('backgroundColor', INFO_BACKGROUND_COLOR);
 		text.setOpacity(0.8);
 		canvas.add(text);
 		text.selectable = false;
@@ -144,10 +147,10 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 25,
 			fontSize: 12,
-			stroke: 'rgb(200,100,50)'
+			stroke: INFO_TEXT_COLOR
 		});
 		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
-		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.set('backgroundColor', INFO_BACKGROUND_COLOR);
 		text.setOpacity(0.8);
 		canvas.add(text);
 		text.selectable = false;
@@ -181,10 +184,10 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
-			stroke: 'rgb(200,100,50)'
+			stroke: INFO_TEXT_COLOR
 		});
 		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
-		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.set('backgroundColor', INFO_BACKGROUND_COLOR);
 		text.setOpacity(0.8);
 		canvas.add(text);
 		text.selectable = false;
@@ -218,10 +221,10 @@ function renderUpgradeMark(eve, currentGameTime, canvas) {
 			left: endTime + TIMEBAR_LEFT_PADDING,
 			top: TIMEBAR_TOP_PADDING + 15,
 			fontSize: 12,
-			stroke: 'rgb(200,100,50)'
+			stroke: INFO_TEXT_COLOR
 		});
 		text.left = endTime + TIMEBAR_LEFT_PADDING + text.currentWidth / 2;
-		text.set('backgroundColor', 'rgb(0,200,200)');
+		text.set('backgroundColor', INFO_BACKGROUND_COLOR);
 		text.setOpacity(0.8);
 		canvas.add(text);
 		text.selectable = false;
