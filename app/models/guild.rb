@@ -15,19 +15,19 @@ class Guild < ActiveRecord::Base
     if upgradable?
 
       gm.state = 'upgrading'
-      guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time + level * 1000, gold_spent: 250 * (level + 1))
-      gm.gold = gm.gold - 250 * (level + 1)
+      guild_upgrade_events.create(start_time: gm.game_time, end_time: gm.game_time + level * 1000, gold_spent: 1000 * (level + 1))
+      gm.gold = gm.gold - 1000 * (level + 1)
       gm.save
       save
 
-      msg = { msg: :success, gold_spent: 250 * (level + 1), time_cost: level }
+      msg = { msg: :success, gold_spent: 1000 * (level + 1), time_cost: level }
       return msg
     else
       if gm.state != 'available'
         return { msg: :error, detail: :guildmaster_busy }
       end
-      if gm.gold < 250 * (level + 1)
-        return { msg: :error, detail: :not_enough_gold, require: 250 * (level + 1) }
+      if gm.gold < 1000 * (level + 1)
+        return { msg: :error, detail: :not_enough_gold, require: 1000 * (level + 1) }
       end
       facilities = self.facilities
       facilities.each do |fac|
@@ -45,7 +45,7 @@ class Guild < ActiveRecord::Base
   def upgradable?
     gm = guildmaster
     return false if gm.state != 'available'
-    return false if gm.gold < 250 * (level + 1)
+    return false if gm.gold < 1000 * (level + 1)
     facilities = self.facilities
     facilities.each do |fac|
       return false if fac.capacity != fac.level * 2
@@ -59,14 +59,14 @@ class Guild < ActiveRecord::Base
     { level: level,
       popularity: popularity,
       pop_requirement: 100 * (2**(level - 1)),
-      gold_requirement: 250 * (level + 1),
+      gold_requirement: 1000 * (level + 1),
       number_adventurer: adv_count,
       number_quest: qst_count,
       adventurer_capacity: level * 5,
       quest_capacity: level * 10,
       is_upgradable: upgradable?,
       is_full: full?,
-      max_adventurer_max_hp: 10_000,
+      max_adventurer_max_hp: 10000,
       max_adventurer_attributes: 1000
       }
   end
