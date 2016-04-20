@@ -1,16 +1,18 @@
-<table class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>HP</th>
-        <th>Energy</th>
-      </tr>
-    </thead>
-	{{#each adventurers as |adventurer|}}
-		<tr class='adventurer_row' id='{{id}}'>
-			<td>{{name}}</td>
-			<td>{{hp}}/{{max_hp}}</td>
-			<td>{{energy}}/{{max_energy}}</td>
-		</tr>
-	{{/each}}
-</table>
+<div style='height: 400px; overflow: auto'>
+	<table class="table table-hover table-bordered">
+	    <thead>
+	      <tr>
+	        <th>Name</th>
+	        <th>HP</th>
+	        <th>Energy</th>
+	      </tr>
+	    </thead>
+		{{#each adventurers as |adventurer|}}
+			<tr class='adventurer_row' id='{{id}}'>
+				<td>{{name}}</td>
+				<td>{{hp}}/{{max_hp}}</td>
+				<td>{{energy}}/{{max_energy}}</td>
+			</tr>
+		{{/each}}
+	</table>
+</div>
