@@ -171,7 +171,7 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 		strokeWidth: MARK_STROKE_WIDTH,
 		radius: MARK_RADIUS,
 		fill: '#fff',
-		stroke: 'yellow'
+		stroke: 'rgb(255, 200, 100)'
 	});
 	circle.isInfoShown = false;
 
@@ -208,7 +208,7 @@ function renderUpgradeMark(eve, currentGameTime, canvas) {
 		strokeWidth: MARK_STROKE_WIDTH,
 		radius: MARK_RADIUS,
 		fill: '#fff',
-		stroke: 'yellow'
+		stroke: 'rgb(255, 200, 100)'
 	});
 	circle.isInfoShown = false;
 
