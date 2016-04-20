@@ -5,7 +5,7 @@ GM.ScoutController.setupScout = function() {
 		showView("The GuildMaster is currently scouting for Adventurers and Quests.");
 	}
 	else if (GM.GuildmasterModel.guildmaster.state == "upgrading") {
-		showView("The GuildMaster is currently upgrading the Guild.");
+		showView("The GuildMaster is not available for scouting as the GuildMaster is currently upgrading the Guild.");
 	}
 	else {
 		showView(scoutSetTemplate);
