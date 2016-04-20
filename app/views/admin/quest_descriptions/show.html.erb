@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+<p><%= link_to 'Logout', admin_root_path %></p>
+<p>
+  <strong>Description:</strong>
+  <%= @quest_description.description %>
+</p>
+
+<%= link_to 'Edit', edit_admin_quest_description_path(@quest_description) %> |
+<%= link_to 'Back', admin_quest_descriptions_path %>

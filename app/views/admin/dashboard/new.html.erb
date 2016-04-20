@@ -1,17 +1,20 @@
-<h1>Admin Dashboard - Sign in page</h1>
+<div class="container-fluid">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
 
-<%= form_tag('/sessions') do %>
-    <%= hidden_field_tag :is_admin_page, true %>
-    <p>
-      Email:<br />
-      <%= text_field_tag :email %>
-    </p>
-    <p>
-      Password:<br />
-      <%= password_field_tag :password %>
-    </p>
-    <p>
-      <%= submit_tag 'Sign in' %>
-    </p>
-    <% session.delete(:admin_id) %>
-<% end %>
+    <h1>Admin Dashboard - Sign in page</h1>
+
+    <%= form_tag('/sessions') do %>
+      <%= hidden_field_tag :is_admin_page, true %>
+      <div class="form-group">
+        <%= label_tag :email %>
+        <%= text_field_tag :email, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :password %>
+        <%= password_field_tag :password, nil, class: "form-control" %>
+      </div>
+      <%= submit_tag "Sign in", class: "btn btn-primary" %>
+      <% session.delete(:admin_id) %>
+    <% end %>
+  </div>
+</div>

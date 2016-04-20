@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<p><%= link_to 'Logout', admin_root_path %></p>
+<p>
+  <strong>Email:</strong>
+  <%= @account.email %>
+</p>
+<p>
+  <strong>User Name:</strong>
+  <%= @account.username %>
+</p>
+<p>
+  <strong>Number of Failed Login Attempts:</strong>
+  <%= @account.num_failed_attempts %>
+</p>
+<p>
+  <strong>Is Admin:</strong>
+  <%= @account.is_admin %>
+</p>
+<p>
+  <strong>Is Logged In:</strong>
+  <%= @account.is_logged_in %>
+</p>
+
+<%= link_to 'Edit', edit_admin_account_path(@account) %> |
+<%= link_to 'Back', admin_accounts_path %>
