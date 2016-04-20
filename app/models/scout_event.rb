@@ -25,6 +25,7 @@ class ScoutEvent < ActiveRecord::Base
     nadv = 3 if nadv >= 3
     nque = time / 200
     nque = 5 if nque >= 5
+    nque = nque+r.rand(-1..1) if nque>1
     advs = []
     qsts = []
     nadv.times do
