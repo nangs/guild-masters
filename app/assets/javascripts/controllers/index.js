@@ -1,9 +1,5 @@
 GM.IndexController = Ember.Controller.extend();
 
-function showHomePage(data) {
-    showView(data);
-}
-
 function showSection(section){
 	var view;
     GM.renderDetailBox = null;
@@ -20,13 +16,14 @@ function showSection(section){
             GM.QuestController.showQuestPage();
 			break;
 		case 'home':
-			GM.GuildmasterModel.getGuildmaster(showHomePage);
+			GM.GuildmasterModel.getGuildmaster(showView);
             break;
         case 'facilities':
             GM.FacilityController.showFacilityPage();
             break;
         case 'scout':
             GM.ScoutController.setupScout();
+            break;
 	};
 }
 
