@@ -15,11 +15,11 @@ acc = Account.create(email: 'test@example.com',
 acc.initialize_guildmaster
 
 gm = acc.guildmaster
-gm.gold = 1_000_000
+gm.gold = 1000
 gm.save
 
 g = gm.guilds[0]
-g.popularity = 1000
+g.popularity = 50
 g.save
 
 AdventurerTemplate.create([
