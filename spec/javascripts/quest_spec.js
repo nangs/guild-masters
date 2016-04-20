@@ -123,6 +123,7 @@ describe("Testing frontend quest controller", function() {
         var filteredQuests = GM.QuestController.filterPending(quests);
         filteredQuests.forEach(function (quest){
             expect(quest.state).not.toBe('assigned');
+            expect(quest.state).not.toBe('successful');
         });
     });
 });
