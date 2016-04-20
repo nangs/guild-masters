@@ -32,6 +32,7 @@ class Quest < ActiveRecord::Base
       dead = { dead: nil }
       advs_phase = []
       # Adventurers` phase
+      total_energy = 0
       survivers.each do |adv_id|
         adventurer = adventurers[adv_id]
         if adventurer.energy > 0 && monster.hp > 0
@@ -41,15 +42,16 @@ class Quest < ActiveRecord::Base
           attacks[adv_id] = attacks[adv_id] + 1
           adventurer.energy = adventurer.energy - 2
           monster.hp = 0 if monster.hp < 0
-        else
+        elsif adventurer.energy<=0 && monster.hp>0
           adventurer.energy = 0
           dmg = 0
-          survivers.delete(adv_id)
-          end_of_battle = true if survivers.empty?
         end
+        total_energy = total_energy+adventurer.energy
         adv_msg = { adventurer_name: adventurer.name, adventurer_hp: adventurer.hp, dmg_deal: dmg, adventurer_energy: adventurer.energy }
         advs_phase << adv_msg
       end
+      
+      end_of_battle=true if total_energy==0
       # Monster`s phase
       if monster.hp > 0
         unless survivers.empty?
