@@ -1,0 +1,13 @@
+<h1>Listing Quest Description</h1>
+
+<p><%= link_to 'Logout', admin_root_path %></p>
+<p><%= link_to 'Back to Dashboard', :controller => 'admin/dashboard', :action => 'index' %></p>
+<p><%= link_to "New Quest Description", new_admin_quest_description_path %></p><br>
+
+
+<%= datagrid_form_for @grid, :method => :get, :url => admin_quest_descriptions_path %>
+
+<%= paginate(@grid.assets) %>
+<%#	assets = @grid.assets.page(params[:page]) %>
+<%= datagrid_table(@grid, :html => {:class => "table table-hover"}) %>
+<%= paginate(@grid.assets) %>

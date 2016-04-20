@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :adventurer_names
     resources :adventurer_templates
     resources :monster_templates
+    resources :accounts
+    resources :quest_descriptions
     resources :dashboard
   end
   get '*any', via: :all, to: 'errors#not_found'

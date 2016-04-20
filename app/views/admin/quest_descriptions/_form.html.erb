@@ -1,0 +1,22 @@
+<%= form_for [:admin, @quest_description] do |f| %>
+  <% if @quest_description.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quest_description.errors.count, "error") %> prohibited this quest description from being saved:</h2>
+
+      <ul>
+      <% @quest_description.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
