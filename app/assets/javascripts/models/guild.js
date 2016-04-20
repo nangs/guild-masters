@@ -93,6 +93,7 @@ GM.GuildModel.upgrade = function () {
 	    		console.log(feedback);
 	    		showView(guildUpgradingTemplate(feedback));
 	    		GM.GuildmasterModel.getGuildmaster();
+	    		setupTimeBar();
 	    	} else {
 	    		console.log(feedback);
 	    	}
