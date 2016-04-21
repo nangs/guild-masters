@@ -6,7 +6,11 @@ GM.Event = DS.Model.extend({
 
 GM.EventModel = DS.Model.extend();
 
-
+/**
+ * get all the events from the database
+ * @param  {function} func apply this input function to the events
+ * @return {void}     
+ */
 GM.EventModel.getAllEvents = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -28,6 +32,10 @@ GM.EventModel.getAllEvents = function (func) {
 	});
 }
 
+/**
+ * complete the next event
+ * @return {void}     
+ */
 GM.EventModel.completeNextEvent = function () {
 	$.ajax({
 		type: 'POST',
@@ -48,6 +56,11 @@ GM.EventModel.completeNextEvent = function () {
 	});
 }
 
+/**
+ * Complete all the event up to the given time
+ * @param  {string} a string representation of the game time
+ * @return {void}     
+ */
 GM.EventModel.completeEventsUntil = function (time) {
 	$.ajax({
 		type: 'POST',
