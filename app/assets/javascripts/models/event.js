@@ -8,7 +8,8 @@ GM.EventModel = DS.Model.extend();
 
 /**
  * get all the events from the database
- * @param  {function} func apply this input function to the events
+ * @param  {function} func
+ *         apply this input function to the events
  * @return {void}     
  */
 GM.EventModel.getAllEvents = function (func) {

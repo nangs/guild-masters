@@ -18,7 +18,8 @@ GM.AdventurerModel = DS.Model.extend();
 
 /**
  * get all the adventurers from the database
- * @param  {function} func apply this input function to the adventurers
+ * @param  {function} func
+ *         apply this input function to the adventurers
  * @return {void}     
  */
 GM.AdventurerModel.getAllAdventurers = function (func) {
@@ -42,7 +43,8 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 
 /**
  * get one new adventurers from the database
- * @param  {function} func apply this input function to the adventurer
+ * @param  {function} func
+ *         apply this input function to the adventurer
  * @return {void}     
  */
 GM.AdventurerModel.getNewAdventurers = function (func) {
