@@ -16,6 +16,12 @@ GM.Adventurer = DS.Model.extend({
 
 GM.AdventurerModel = DS.Model.extend();
 
+/**
+ * get all the adventurers from the database
+ * @param  {function} func
+ *         apply this input function to the adventurers
+ * @return {void}     
+ */
 GM.AdventurerModel.getAllAdventurers = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -35,7 +41,13 @@ GM.AdventurerModel.getAllAdventurers = function (func) {
 	});
 }
 
-GM.AdventurerModel.getNewAdventurers = function () {
+/**
+ * get one new adventurers from the database
+ * @param  {function} func
+ *         apply this input function to the adventurer
+ * @return {void}     
+ */
+GM.AdventurerModel.getNewAdventurers = function (func) {
 	$.ajax({
 		type: 'POST',
 	    url: 'adventurers.json',
@@ -47,7 +59,7 @@ GM.AdventurerModel.getNewAdventurers = function () {
 	    success: function(data) {
 	    	var new_adventure = adventurerNewTemplate(data);
 	    	GM.AdventurerModel.adventurers_list.adventurers.push(data);
-	    	showView(new_adventure);
+	    	func(new_adventure);
 	    }
 	});
 }

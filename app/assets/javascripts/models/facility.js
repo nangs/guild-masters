@@ -1,5 +1,11 @@
 GM.FacilityModel = DS.Model.extend();
 
+/**
+ * get all the facilities from the database
+ * @param  {function} func
+ *         apply this input function to the facilities
+ * @return {void}     
+ */
 GM.FacilityModel.getFacilities = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -19,6 +25,15 @@ GM.FacilityModel.getFacilities = function (func) {
 	});
 }
 
+/**
+ * assign some adventurers to the facility
+ * @param  {integar} id
+ *         the id of the facility
+ * @param  {array} assigned
+ *                   The array containing the ids for the adventurers
+ *                   which are assigned to the facility
+ * @return {void}
+ */
 GM.FacilityModel.assign = function(id, assigned) {
 	$.ajax({
 		type: 'POST',
