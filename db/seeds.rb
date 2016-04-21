@@ -7,20 +7,6 @@ Account.create(email: 'admin@example.com',
                email_confirmed: true,
                is_admin: true)
 
-acc = Account.create(email: 'test@example.com',
-                     password: '123456',
-                     username: 'testuser1',
-                     email_confirmed: true)
-
-acc.initialize_guildmaster
-
-gm = acc.guildmaster
-gm.gold = 1_000_000
-gm.save
-
-g = gm.guilds[0]
-g.popularity = 1000
-g.save
 
 AdventurerTemplate.create([
                             { max_hp: 1000, max_energy: 1000, attack: 100, defense: 100, vision: 100 },

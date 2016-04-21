@@ -2,8 +2,8 @@
 
 <p><%= link_to 'Logout', admin_root_path %></p>
 <p><%= link_to 'Back to Dashboard', :controller => 'admin/dashboard', :action => 'index' %></p>
-<p><%= link_to "New Account", new_admin_account_path %></p><br>
-
+<!-- <p><%= link_to "New Account", new_admin_account_path %></p><br>
+ -->
 
 <%= datagrid_form_for @grid, :method => :get, :url => admin_accounts_path %>
 
