@@ -1,5 +1,11 @@
 GM.IndexController = Ember.Controller.extend();
 
+/**
+ * show a particular section
+ * @param  {string} section
+ *         the name of the section
+ * @return {void}
+ */
 function showSection(section){
 	var view;
     GM.renderDetailBox = null;
@@ -40,6 +46,10 @@ $(function(){
 	}	
 });
 
+/**
+ * show the login page and setup relevant event listeners
+ * @return {void}
+ */
 function setupLoginPage() {
 	$('#indexPage').html(loginTemplate);
 	var submitted = false;
@@ -77,6 +87,14 @@ function setupLoginPage() {
     });
 }
 
+/**
+ * show the signup page and setup relevant event listeners
+ * @param  {string} email
+ *         email entered by user
+ * @param  {string} password
+ *         password entered by user
+ * @return {void}
+ */
 function setupSignupPage(email, password) {
     var submitted = false;
     $('#email').val(email);
@@ -110,6 +128,10 @@ function setupSignupPage(email, password) {
     });
 }
 
+/**
+ * show the game page
+ * @return {void}
+ */
 function showGame() {
     GM.timebar = null;
 	$('#indexPage').html(gameTemplate);
@@ -121,6 +143,10 @@ function showGame() {
     setupTimeBar();
 }
 
+/**
+ * show or update the timebar
+ * @return {void}
+ */
 function setupTimeBar(){
     GM.GuildmasterModel.getGuildmaster(function() {
         GM.EventModel.getAllEvents(function(events) {
@@ -129,11 +155,14 @@ function setupTimeBar(){
     })
 }
 
-function showDifferentPasswordError() {
-	showAlertMessage('The two password you entered are different');
-}
-
-
+/**
+ * show the forget password page and setup relevant event listeners
+ * @param  {string} email
+ *         email entered by user
+ * @param  {string} password
+ *         password entered by user
+ * @return {void}
+ */
 function setupForgetPasswordPage(email, password) {
     $('#indexPage').html(resetPasswordTemplate);
     $('#email').val(email);
@@ -169,6 +198,10 @@ function setupForgetPasswordPage(email, password) {
     });
 }
 
+/**
+ * show the success changed password page and setup relevant event listeners
+ * @return {void}
+ */
 function showSuccessChangePasswordPage() {
     $('#indexPage').html(resetPasswordSuccessTemplate);
     $('#goToLogin').mouseup(function() {
@@ -176,12 +209,22 @@ function showSuccessChangePasswordPage() {
     });
 }
 
+/**
+ * show the successful signup page and setup relevant event listeners
+ * @return {void}
+ */
 function showSuccessSignupPage(email) {
 	$('#indexPage').html(signupSuccessTemplate);
     setupActivateAccountButton(email);
     setupResendEmailButton(email);
 }
 
+/**
+ * add event listener for the activate account button
+ * @param  {string} email
+ *         email entered by user
+ * @return {void}
+ */
 function setupActivateAccountButton(email) {
     $('#activateAccount').mouseup(function() {
         var code = $('#activationCode').val();
@@ -194,12 +237,22 @@ function setupActivateAccountButton(email) {
     });
 }
 
+/**
+ * add event listener for the resend email
+ * @param  {string} email
+ *         email entered by user
+ * @return {void}
+ */
 function setupResendEmailButton(email) {
     $('#resendEmail').mouseup(function() {
         GM.AccountModel.resendEmail(email);
     });
 }
 
+/**
+ * show the successful account activation page and setup relevant event listeners
+ * @return {void}
+ */
 function showSuccessActivatePage() {
     $('#indexPage').html(activateSuccessTemplate);
     $('#goToLogin').mouseup(function() {
@@ -207,8 +260,58 @@ function showSuccessActivatePage() {
     });
 }
 
+/**
+ * show the email not activated page and setup relevant event listeners
+ * @return {void}
+ */
+GM.IndexController.showEmailNotActivated = function(email) {
+    $('#indexPage').html(emailNotActivatedTemplate);
+    setupActivateAccountButton(email);
+    setupResendEmailButton(email);
+}
+
+/**
+ * show the ranking page and setup relevant event listeners
+ * @return {void}
+ */
+function showRankings() {
+    GM.timebar = null;
+    GM.GuildmasterModel.getAll(GM.RankingController.displayRanking);
+}
+
+/**
+ * show the alert error message
+ * @param  {string} message
+ * @return {void}
+ */
+function showAlertMessage(message) {
+    var alertMessage = alertMessageTemplate({'message' : message});
+    $('#alert').html(alertMessage);
+}
+
+
+/**
+ * show the session expire page and setup relevant event listeners
+ * @return {void}
+ */
+function show401Redirect(message) {
+    $('#indexPage').html(unauthorizedTemplate);
+    sessionStorage.removeItem('loggedIn');
+    $('#goToLogin').mouseup(function() {
+        setupLoginPage();
+    });
+}
+
+/**
+ * logout from the game
+ * @return {void}
+ */
 function logout() {
     GM.AccountModel.logout();
+}
+
+function showDifferentPasswordError() {
+    showAlertMessage('The two password you entered are different');
 }
 
 function showWrongPasswordError() {
@@ -229,12 +332,6 @@ function showUsernameTaken() {
 
 function showEmailNotValid() {
     showAlertMessage('The email you entered is not valid.');
-}
-    
-GM.IndexController.showEmailNotActivated = function(email) {
-    $('#indexPage').html(emailNotActivatedTemplate);
-    setupActivateAccountButton(email);
-    setupResendEmailButton(email);
 }
 
 function showEmailAlreadyActivated() {
@@ -263,22 +360,4 @@ function showUsernameTooLongError() {
 
 function showLoginError() {
     showAlertMessage('Some error occured during login...');
-}
-
-function showAlertMessage(message) {
-    var alertMessage = alertMessageTemplate({'message' : message});
-    $('#alert').html(alertMessage);
-}
-
-function showRankings() {
-    GM.timebar = null;
-    GM.GuildmasterModel.getAll(GM.RankingController.displayRanking);
-}
-
-function show401Redirect(message) {
-    $('#indexPage').html(unauthorizedTemplate);
-    sessionStorage.removeItem('loggedIn');
-    $('#goToLogin').mouseup(function() {
-        setupLoginPage();
-    });
 }
