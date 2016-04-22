@@ -1,5 +1,10 @@
 GM.AdventurerController = Ember.Controller.extend();
 
+/**
+ * filter the list of adventurers who are alive
+ * @param  {array} adventurers
+ * @return {array} list of filtered adventurers
+ */
 GM.AdventurerController.filterAlive = function (adventurers) {
 	return adventurers.filter(function(adventurer) {
 		var isAlive = (adventurer.state != 'dead');
@@ -7,6 +12,11 @@ GM.AdventurerController.filterAlive = function (adventurers) {
 	});	
 }
 
+/**
+ * filter the list of adventurers who are suitable for going to clinic
+ * @param  {array} adventurers
+ * @return {array} list of filtered adventurers
+ */
 GM.AdventurerController.filterForClinic = function (adventurers) {
 	return adventurers.filter(function(adventurer) {
 		var isHPLow = (adventurer.hp < adventurer.max_hp);
@@ -15,6 +25,11 @@ GM.AdventurerController.filterForClinic = function (adventurers) {
 	});
 };
 
+/**
+ * filter the list of adventurers who are suitable for going to canteen
+ * @param  {array} adventurers
+ * @return {array} list of filtered adventurers
+ */
 GM.AdventurerController.filterForCanteen = function (adventurers) {
 	return adventurers.filter(function(adventurer) {
 		var isHPLow = (adventurer.energy < adventurer.max_energy);
@@ -23,6 +38,11 @@ GM.AdventurerController.filterForCanteen = function (adventurers) {
 	});
 };
 
+/**
+ * filter the list of adventurers who are suitable for going to quest
+ * @param  {array} adventurers
+ * @return {array} list of filtered adventurers
+ */
 GM.AdventurerController.filterForQuest = function (adventurers) {
 	return adventurers.filter(function(adventurer) {
 		var isReady = (adventurer.energy > 0 && adventurer.hp > 0);
@@ -31,6 +51,11 @@ GM.AdventurerController.filterForQuest = function (adventurers) {
 	});
 };
 
+/**
+ * search adventurer by id
+ * @param  {integer} id
+ * @return {adventurer}
+ */
 GM.AdventurerController.searchById = function (id) {
 	var adventurers = GM.AdventurerModel.adventurers_list;
 	for (var ad in adventurers) {
@@ -42,6 +67,10 @@ GM.AdventurerController.searchById = function (id) {
 	return null;
 }
 
+/**
+ * show the Adventurer Page
+ * @return {void}
+ */
 GM.AdventurerController.showAdventurerPage = function() {
 	GM.AdventurerModel.getAllAdventurers(function (data) {
 	    var adventurers = GM.AdventurerController.filterAlive(data);
@@ -49,6 +78,15 @@ GM.AdventurerController.showAdventurerPage = function() {
 	});
 };
 
+/**
+ * show the adventurer attributes with graph
+ * @param  {array} adventurers
+ * @param  {template} tableTemplate
+ *         template for rendering the table of adventurers
+ * @param  {string} prependHtml
+ *         HTML which can be prepend before the adventurers
+ * @return {void}
+ */
 GM.AdventurerController.showAdventurerWithGraph = function(adventurers, tableTemplate, prependHtml) {
     if (adventurers.length == 0) {
     	showView("There is no Adventurer in your Guild, please try scouting for some Adventurers and Quests");
