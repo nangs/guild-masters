@@ -9,6 +9,12 @@ GM.GuildMaster = DS.Model.extend({
 
 GM.GuildmasterModel = DS.Model.extend();
 
+/**
+ * get the guildmaster for the player
+ * @param  {function} func
+ *         apply the function to the guildmaster obtained
+ * @return {void}     
+ */
 GM.GuildmasterModel.getGuildmaster = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -34,6 +40,12 @@ GM.GuildmasterModel.getGuildmaster = function (func) {
 	});
 }
 
+/**
+ * get all the guildmasters summary from the backend for ranking
+ * @param  {function} func
+ *         apply the function to the guildmasters
+ * @return {void}    
+ */
 GM.GuildmasterModel.getAll = function (func) {
 	$.ajax({
 		type: 'POST',
