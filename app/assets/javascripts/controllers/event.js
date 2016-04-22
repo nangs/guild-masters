@@ -1,5 +1,12 @@
 GM.EventController = Ember.Controller.extend();
 
+/**
+ * filter the events which are going to end in the future in terms of game time
+ * @param  {array} events
+ * @param  {integer} gameTime
+ *         the current game time
+ * @return {array} the filtered events
+ */
 GM.EventController.filterFuture = function (events, gameTime){
 	events = events.filter(function(e) {
 		return e.end_time > gameTime;
@@ -10,6 +17,12 @@ GM.EventController.filterFuture = function (events, gameTime){
 	return events;
 }
 
+/**
+ * display the results of the events
+ * @param  {array} eventResults
+ *         an array of results of events
+ * @return {void}
+ */
 GM.EventController.showEventResults = function (eventResults) {
 	var message = '';
 	var events = eventResults.events;
@@ -49,11 +62,21 @@ GM.EventController.showEventResults = function (eventResults) {
 	showView(message);
 }
 
+/**
+ * show events page
+ * @return {void}
+ */
 GM.EventController.showEventPage = function () {
     GM.EventModel.getAllEvents(function (events) {
         GM.EventController.showEvents(events);          
     });
 }
+
+/**
+ * show the events that are currently in progress
+ * @param  {array} events
+ * @return {void}
+ */
 GM.EventController.showEvents = function (events) {
 	if (events.length == 0) {
 		return showView("There is no event that is in progress");
