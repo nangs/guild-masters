@@ -1,5 +1,13 @@
 GM.ScoutModel = DS.Model.extend();
 
+/**
+ * send the guildmaster to scout
+ * @param  {integer} time
+ *         the time spend for scouting
+ * @param  {integer} gold
+ *         the gold spend for scouting
+ * @return {void}
+ */
 GM.ScoutModel.scout = function (time, gold) {
 	$.ajax({
 		type: 'POST',
