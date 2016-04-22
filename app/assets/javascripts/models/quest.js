@@ -30,6 +30,12 @@ GM.QuestModel.getNewQuests = function(){
 	});
 }
 
+/**
+ * get all the quests belong to the current guild
+ * @param  {function} func
+ *         apply the function to the quests obtained
+ * @return {void}
+ */
 GM.QuestModel.getAllQuests = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -49,6 +55,14 @@ GM.QuestModel.getAllQuests = function (func) {
 	});
 }
 
+/**
+ * assign adventurers to a quest
+ * @param  {integer} id
+ *         the id of the quest
+ * @param  {integer[]} assigned
+ *         a array containing the ids of the adventurers
+ * @return {void} 
+ */
 GM.QuestModel.assign = function(id, assigned) {
 	$.ajax({
 		type: 'POST',
