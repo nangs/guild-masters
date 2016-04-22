@@ -6,6 +6,14 @@ var INFO_BACKGROUND_COLOR = 'rgb(200, 200, 255)';
 var INFO_TEXT_COLOR = 'rgb(50, 80, 50)';
 var TIMEBAR_COLOR = 'rgb(100, 255, 100)';
 var END_OF_DAY_COLOR = 'rgb(50, 100, 50)';
+
+/**
+ * render the time bar
+ * @param  {array} events
+ *         the upcoming events
+ * @param  {integer} currentGameTime
+ * @return {Canvas} the canvas representing the timeBar
+ */
 function renderTimeBar(events, currentGameTime){
 	var canvas;
 	if (GM.timebar) {
@@ -86,6 +94,12 @@ function renderTimeBar(events, currentGameTime){
 	return canvas;
 }
 
+/**
+ * hide the info box of all the events on the time bar
+ * @param  {canvas} canvas
+ *         the timebar
+ * @return {void}
+ */
 function removeShowInfo(canvas) {
 	canvas.forEachObject(function(o) {
 		if (o.removeInfo) {
@@ -95,6 +109,14 @@ function removeShowInfo(canvas) {
 	});
 }
 
+/**
+ * render a mark on the time bar for a quest event
+ * @param  {event} eve             
+ * @param  {integer} currentGameTime
+ * @param  {canvas} canvas
+ *         the time bar        
+ * @return {void}
+ */
 function renderQuestMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
@@ -133,6 +155,14 @@ function renderQuestMark(eve, currentGameTime, canvas) {
 	canvas.add(circle);
 }
 
+/**
+ * render a mark on the time bar for a facility event
+ * @param  {event} eve             
+ * @param  {integer} currentGameTime
+ * @param  {canvas} canvas
+ *         the time bar        
+ * @return {void}
+ */
 function renderFacilityMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
@@ -172,6 +202,14 @@ function renderFacilityMark(eve, currentGameTime, canvas) {
 	canvas.add(circle);
 }
 
+/**
+ * render a mark on the time bar for a scout event
+ * @param  {event} eve             
+ * @param  {integer} currentGameTime
+ * @param  {canvas} canvas
+ *         the time bar        
+ * @return {void}
+ */
 function renderScoutMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
@@ -209,6 +247,14 @@ function renderScoutMark(eve, currentGameTime, canvas) {
 	canvas.add(circle);
 }
 
+/**
+ * render a mark on the time bar for an upgrade event
+ * @param  {event} eve             
+ * @param  {integer} currentGameTime
+ * @param  {canvas} canvas
+ *         the time bar        
+ * @return {void}
+ */
 function renderUpgradeMark(eve, currentGameTime, canvas) {
 	var endTime = eve.end_time - currentGameTime;
 	var circle = new fabric.Circle({
