@@ -124,7 +124,6 @@ function showGame() {
 function setupTimeBar(){
     GM.GuildmasterModel.getGuildmaster(function() {
         GM.EventModel.getAllEvents(function(events) {
-            console.log(events);
             renderTimeBar(events, GM.GuildmasterModel.guildmaster.game_time);
         });        
     })
@@ -178,7 +177,6 @@ function showSuccessChangePasswordPage() {
 }
 
 function showSuccessSignupPage(email) {
-	console.log('Signup is successful!');
 	$('#indexPage').html(signupSuccessTemplate);
     setupActivateAccountButton(email);
     setupResendEmailButton(email);

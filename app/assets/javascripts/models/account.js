@@ -9,7 +9,6 @@ GM.AccountModel.login = function (email, password) {
 	        password: password
 	    },
 	    success: function(feedback) {
-	    	console.log(feedback);
 	        var msg = feedback.msg;
 	        if (msg == 'success') {
 	            var guild = feedback.guilds[0];
@@ -47,7 +46,6 @@ GM.AccountModel.signup = function (email, username, password) {
 	        password: password
 	    },
 	    success: function(feedback) {
-	    	console.log(feedback);
 	        var msg = feedback.msg;
 	        if (msg == 'success') {
 	            showSuccessSignupPage(email);
@@ -80,7 +78,6 @@ GM.AccountModel.sendPasswordToken = function (email) {
             email: email
         },
         success: function(feedback) {
-            console.log(feedback);
             var msg = feedback.msg;
             if (msg == 'success') {
                 showAlertMessage("The confirmation token has been sent to your email.");
@@ -112,7 +109,6 @@ GM.AccountModel.updateAccount = function (email, password, token) {
             confirm_token: token
         },
         success: function(feedback) {
-            console.log(feedback);
             var msg = feedback.msg;
             if (msg == 'success') {
                 showSuccessChangePasswordPage();
@@ -146,7 +142,6 @@ GM.AccountModel.activateAccount = function (code, email) {
             email: email
         },
         success: function(feedback) {
-            console.log(feedback);
             if (feedback.msg == 'success') {
                 showSuccessActivatePage();
             }
@@ -176,7 +171,6 @@ GM.AccountModel.resendEmail = function (email) {
             email: email
         },
         success: function(feedback) {
-            console.log(feedback);
             if (feedback.msg == 'success') {
                 showAlertMessage("Another email has been sent to you.");
             }
@@ -202,7 +196,6 @@ GM.AccountModel.logout = function () {
         type: 'DELETE',
         url: 'sessions.json',
         success: function(feedback) {
-            console.log(feedback);
             sessionStorage.removeItem('loggedIn');
             location.reload();
         }

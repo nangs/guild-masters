@@ -7,7 +7,6 @@ GM.Quest = DS.Model.extend({
 	adventurers: DS.hasMany('adventurer')
 });
 
-
 GM.QuestModel = DS.Model.extend();
 
 GM.QuestModel.getNewQuests = function(){
@@ -78,7 +77,6 @@ GM.QuestModel.assign = function(id, assigned) {
 			}
 		},
 	    success: function(data) {
-	    	console.log(data);
 	    	showView('Quest successfully assigned!');
 	    	setupTimeBar();
 	    }

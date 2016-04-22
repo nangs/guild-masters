@@ -82,7 +82,6 @@ GM.GuildModel.getGuildInfo = function (func) {
 			}
 		},
 	    success: function(feedback) {
-	    	console.log(feedback);
 	    	GM.GuildmasterModel.guildmaster.guild = feedback.guild;
 	    	GM.max_adventurer_max_hp = feedback.guild.max_adventurer_max_hp;
 	    	GM.max_adventurer_attributes = feedback.guild.max_adventurer_attributes;
@@ -112,12 +111,11 @@ GM.GuildModel.upgrade = function () {
 		},
 	    success: function(feedback) {
 	    	if (feedback.msg == 'success') {
-	    		console.log(feedback);
 	    		showView(guildUpgradingTemplate(feedback));
 	    		GM.GuildmasterModel.getGuildmaster();
 	    		setupTimeBar();
 	    	} else {
-	    		console.log(feedback);
+	    		console.log(feedback.detail);
 	    	}
 	    }
 	});
