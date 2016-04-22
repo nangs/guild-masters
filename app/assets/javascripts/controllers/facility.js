@@ -1,5 +1,9 @@
 GM.FacilityController = Ember.Controller.extend();
 
+/**
+ * show the facility page
+ * @return {void}
+ */
 GM.FacilityController.showFacilityPage = function() {
 	GM.FacilityModel.getFacilities(function (data) {
 		if (GM.GuildmasterModel.guildmaster.state != "upgrading") {
@@ -10,6 +14,12 @@ GM.FacilityController.showFacilityPage = function() {
 	});
 }
 
+/**
+ * show the page for assinging adventurer to facility
+ * @param  {integer} id
+ *         the id of the facility
+ * @return {void}
+ */
 GM.FacilityController.showAssign = function(id) {
 	var facilities = GM.FacilityModel.facilities;
 	var facility;
@@ -38,6 +48,14 @@ GM.FacilityController.showAssign = function(id) {
 	});
 }
 
+/**
+ * assign the adventurers to the facility
+ * @param  {integer} id
+ *         the id of the facility
+ * @param  {integer} capacity
+ *         the capacity of the facility
+ * @return {void}
+ */
 GM.FacilityController.assign = function(id, capacity) {
 	var assigned = [];
 	$.each($("input:checked"), function (){
@@ -52,6 +70,12 @@ GM.FacilityController.assign = function(id, capacity) {
 	}	
 }
 
+/**
+ * [processErrorMessage description]
+ * @param  {string} error_msg
+ *         the error msg flag returned from the backend
+ * @return {void}
+ */
 GM.FacilityController.processErrorMessage = function (error_msg) {
 	var message = '';
 	switch (error_msg) {
@@ -64,6 +88,11 @@ GM.FacilityController.processErrorMessage = function (error_msg) {
 	GM.FacilityController.renderAlertMessage(message);
 }
 
+/**
+ * render alert message
+ * @param  {string} message
+ * @return {void}
+ */
 GM.FacilityController.renderAlertMessage = function (message) {
 	var alertMessage = alertMessageTemplate({'message' : message});
     $('#alert').html(alertMessage);
