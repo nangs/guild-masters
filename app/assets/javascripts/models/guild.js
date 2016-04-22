@@ -9,6 +9,12 @@ GM.Guild = DS.Model.extend({
 
 GM.GuildModel = DS.Model.extend();
 
+/**
+ * get all the guilds from the database (only one guild in the current version)
+ * @param  {function} func
+ *         apply this input function to the guild
+ * @return {void}     
+ */
 GM.GuildModel.getAllGuilds = function (func) {
 	$.ajax({
 		type: 'POST',
@@ -33,6 +39,12 @@ GM.GuildModel.getAllGuilds = function (func) {
 	});
 }
 
+/**
+ * Post the if of the current guild to the backend for session tracking
+ * @param  {integer} guildID
+ *         the id of the guild
+ * @return {void}      
+ */
 GM.GuildModel.postGuildID = function (guildID) {
     $.ajax({
 	    type: 'POST',
@@ -51,6 +63,12 @@ GM.GuildModel.postGuildID = function (guildID) {
 	});
 }
 
+/**
+ * get the guild infoomation for the current guild
+ * @param  {function} func
+ *         apply the function to the info obtained
+ * @return {void}    
+ */
 GM.GuildModel.getGuildInfo = function (func) {
     $.ajax({
 	    type: 'POST',
@@ -76,6 +94,10 @@ GM.GuildModel.getGuildInfo = function (func) {
 	});
 }
 
+/**
+ * Upgrade the guild
+ * @return {void}
+ */
 GM.GuildModel.upgrade = function () {
     $.ajax({
 	    type: 'POST',
