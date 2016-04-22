@@ -1,5 +1,9 @@
 GM.ScoutController = Ember.Controller.extend();
 
+/**
+ * show the scout page and set of relevant event listeners
+ * @return {void}
+ */
 GM.ScoutController.setupScout = function() {
 	if (GM.GuildmasterModel.guildmaster.state == "scouting") {
 		showView("The GuildMaster is currently scouting for Adventurers and Quests.");

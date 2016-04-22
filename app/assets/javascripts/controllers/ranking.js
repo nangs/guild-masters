@@ -1,5 +1,10 @@
 GM.RankingController = Ember.Controller.extend();
 
+/**
+ * display the ranking of players
+ * @param  {array} players
+ * @return {void}
+ */
 GM.RankingController.displayRanking = function (players) {
 	players.sort(GM.RankingController.defaultRanking);
 	for (var i = 0; i < players.length; i++) {
@@ -9,6 +14,16 @@ GM.RankingController.displayRanking = function (players) {
 	$('#gameWindow').html(view);
 }
 
+/**
+ * default comparator of players, based on the following priority:
+ * 	1. higher level
+ * 	2. higher popularity
+ * 	3. higher gold
+ * 	4. less game time
+ * @param  {player} p1 
+ * @param  {player} p2
+ * @return {integer} the comparison result of p1 and p2
+ */
 GM.RankingController.defaultRanking = function (p1, p2) {
 	if (p2.level != p1.level) {
 		return p2.level - p1.level;
