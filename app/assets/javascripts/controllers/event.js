@@ -49,6 +49,11 @@ GM.EventController.showEventResults = function (eventResults) {
 	showView(message);
 }
 
+GM.EventController.showEventPage = function () {
+    GM.EventModel.getAllEvents(function (events) {
+        GM.EventController.showEvents(events);          
+    });
+}
 GM.EventController.showEvents = function (events) {
 	if (events.length == 0) {
 		return showView("There is no event that is in progress");

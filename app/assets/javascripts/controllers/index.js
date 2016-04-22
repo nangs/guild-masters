@@ -5,9 +5,7 @@ function showSection(section){
     GM.renderDetailBox = null;
 	switch(section){
 		case 'events':
-            GM.EventModel.getAllEvents(function (events) {
-                GM.EventController.showEvents(events);          
-            });
+            GM.EventController.showEventPage();
             break;
 		case 'adventurers':
             GM.AdventurerController.showAdventurerPage();
