@@ -1,5 +1,11 @@
 GM.QuestController = Ember.Controller.extend();
 
+/**
+ * show page for assigning adventurers to quests
+ * @param  {integer} id
+ *         id of the quest
+ * @return {void} 
+ */
 GM.QuestController.showQuestAssignPage = function(id) {
 	var quests = GM.QuestModel.quest_list;
 	var quest;
@@ -19,6 +25,12 @@ GM.QuestController.showQuestAssignPage = function(id) {
 	});
 }
 
+/**
+ * assign adventurers to the quest
+ * @param  {integer} id 
+ *         the id of the quest
+ * @return {void}
+ */
 GM.QuestController.assign = function(id) {
 	var assigned = [];
 	$.each($("input:checked"), function (){
@@ -36,6 +48,11 @@ GM.QuestController.showMessage = function (message) {
     $('#alert').html(alertMessage);
 }
 
+/**
+ * get the quests which are in pending state
+ * @param  {array} quests
+ * @return {array} filtered quests
+ */
 GM.QuestController.filterPending = function(quests) {
 	return quests.filter(function(quest) {
 		var isPending = (quest.state != 'assigned') && (quest.state != 'successful');
@@ -43,6 +60,10 @@ GM.QuestController.filterPending = function(quests) {
 	});	
 }
 
+/**
+ * show the quest page
+ * @return {void}
+ */
 GM.QuestController.showQuestPage = function() {
 	GM.QuestModel.getAllQuests(function(data) {
 		var quests = GM.QuestController.filterPending(data);
